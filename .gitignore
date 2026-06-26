@@ -6,15 +6,10 @@ storybook-static/
 .emdesign/
 .medesign/
 bench-results/
-**/a11y-check.mjs
-**/a11y-detail.mjs
+**/*.mjs
 **/a11y-result.json
-**/debug-story.mjs
-**/mcp-call*.mjs
-**/screenshot.mjs
-**/take-screenshot.mjs
-**/visual-test.mjs
 **/.medesign/
+**/gen-args.json
 .mcp.json
 test-results/
 playwright-report/

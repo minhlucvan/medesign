@@ -74,7 +74,7 @@ function graphWithCurrent(store: Store, paths: RepoPaths) {
 
 /** ── 13 tools consolidated from 38 ──────────────────────────────── */
 
-export function createMcpServer(store: Store, paths: RepoPaths): McpServer {
+export async function createMcpServer(store: Store, paths: RepoPaths, _orch?: any): Promise<McpServer> {
   const server = new McpServer({ name: 'emdesign', version: '0.0.0' });
 
   // ── 1. Design context ──────────────────────────────────────────
@@ -451,6 +451,14 @@ export function createMcpServer(store: Store, paths: RepoPaths): McpServer {
     const out = await captureComponent(paths, name);
     return text(`Captured ${name} → ${out}`);
   });
+
+  // Register session management tools if orchestrator is provided
+  if (_orch) {
+    try {
+      const { registerSessionMcpTools } = await import('@emdesign/session');
+      registerSessionMcpTools(server, _orch);
+    } catch { /* @emdesign/session not available */ }
+  }
 
   return server;
 }

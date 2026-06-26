@@ -7,6 +7,7 @@ import {
   type RepoPaths,
   Store,
   createHttpBridge,
+  startHttpBridge,
   resolveDesignSystem,
   composePrompt,
   countMustFix,
@@ -93,13 +94,20 @@ async function main() {
 
   switch (cmd) {
     case 'mcp': {
-      await createMcpServer(store, paths).connect(new StdioServerTransport());
+      (await createMcpServer(store, paths)).connect(new StdioServerTransport());
       console.error('[emdesign] MCP server ready on stdio.');
       break;
     }
     case 'serve': {
       if (!store.get().activeDesignSystem) store.update({ activeDesignSystem: 'atelier' });
-      const app = await createHttpBridge(store, paths);
+      // Create platform orchestrator and mount session/service routes if available
+      let orch: any;
+      try {
+        const { PlatformManager } = await import('@emdesign/session');
+        orch = new PlatformManager(paths);
+      } catch { /* session package not available — proceed without orchestrator */ }
+
+      const app = await createHttpBridge(store, paths, orch);
       // Mount MCP over HTTP so any MCP-capable agent can connect via http://localhost:4321/mcp
       try {
         const mcpRouter = await createMcpHttpRouter({ store, paths });
@@ -108,9 +116,17 @@ async function main() {
       } catch (e) {
         console.error('[emdesign] Could not mount MCP HTTP transport:', e);
       }
-      app.listen(PORT, () => {
+      const server = app.listen(PORT, () => {
         console.error(`[emdesign] Server running on http://localhost:${PORT}`);
       });
+      // Attach WebSocket and health checks if orchestrator available
+      if (orch) {
+        try {
+          const { attachWebSocket } = await import('@emdesign/session');
+          attachWebSocket(server as any, orch.bus);
+        } catch { /* ws not supported */ }
+        orch.services.startHealthChecks();
+      }
       break;
     }
     case 'use': {
@@ -289,6 +305,93 @@ async function main() {
             { component: a1, mode: 'reference', provider: cmpProvider, referenceImagePath: a2 },
           );
       out(cmpResult);
+      break;
+    }
+    case 'session': {
+      const { PlatformManager } = await import('@emdesign/session');
+      const orch = new PlatformManager(paths);
+      switch (a1) {
+        case 'list':
+          out(orch.listSessions());
+          break;
+        case 'create': {
+          if (!a2) throw new Error('usage: emdesign session create <type> [--instruction "..."]');
+          const session = await orch.createSession({
+            type: a2 as any,
+            workflow: a2,
+            args: { instruction: argv.includes('--instruction') ? argv[argv.indexOf('--instruction') + 1] : undefined },
+            instruction: argv.includes('--instruction') ? argv[argv.indexOf('--instruction') + 1] : undefined,
+          });
+          out(session);
+          break;
+        }
+        case 'cancel':
+          if (!a2) throw new Error('usage: emdesign session cancel <id>');
+          await orch.cancelSession(a2);
+          out({ ok: true });
+          break;
+        case 'claude':
+          out(await orch.getClaudeSessions());
+          break;
+        default:
+          throw new Error('usage: emdesign session list|create|cancel|claude');
+      }
+      break;
+    }
+    case 'service': {
+      const { PlatformManager } = await import('@emdesign/session');
+      const orch = new PlatformManager(paths);
+      switch (a1) {
+        case 'start':
+          if (!a2) throw new Error('usage: emdesign service start <type>');
+          out(await orch.startService(a2 as any));
+          break;
+        case 'stop':
+          if (!a2) throw new Error('usage: emdesign service stop <type>');
+          await orch.stopService(a2 as any);
+          out({ ok: true });
+          break;
+        case 'restart':
+          if (!a2) throw new Error('usage: emdesign service restart <type>');
+          out(await orch.restartService(a2 as any));
+          break;
+        case 'status':
+          out(orch.listServices());
+          break;
+        default:
+          throw new Error('usage: emdesign service start|stop|restart|status');
+      }
+      break;
+    }
+    case 'up': {
+      // Single-command: start everything
+      const { PlatformManager, attachWebSocket, createSessionRouter } = await import('@emdesign/session');
+      const orch = new PlatformManager(paths);
+      if (!store.get().activeDesignSystem) store.update({ activeDesignSystem: 'atelier' });
+
+      // Start HTTP bridge with orchestrator
+      const server = await startHttpBridge(store, paths, PORT, orch);
+
+      // Attach WebSocket
+      try { attachWebSocket(server as any, orch.bus); } catch { /* ws not available */ }
+
+      // Start MCP server
+      try {
+        const { createMcpServer } = await import('@emdesign/mcp-server');
+        const { StdioServerTransport } = await import('@modelcontextprotocol/sdk/server/stdio.js');
+        (await createMcpServer(store, paths, orch)).connect(new StdioServerTransport());
+      } catch (e) {
+        console.error('[emdesign] Failed to start MCP server:', e);
+      }
+
+
+      // Start Storybook
+      orch.startService('storybook').catch(() => {});
+
+      // Start health checks
+      orch.services.startHealthChecks();
+
+      console.error('[emdesign] Platform running. Ctrl+C to stop.');
       break;
     }
     default:

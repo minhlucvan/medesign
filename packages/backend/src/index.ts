@@ -10,7 +10,9 @@ export { lintComponent, lintTokenReferences, renderFindingsForAgent, countMustFi
 export type { Finding, Severity } from './lint/index.js';
 export { computeComposite, decideRound, selectFallbackRound, DEFAULT_WEIGHTS } from './critique/scoreboard.js';
 export { scoreComponent, DEFAULT_SOURCE_FLOORS } from './critique/score.js';
-export { runVisualTest, toStoryId } from './visualTest.js';
+export { collectScores } from './critique/collector.js';
+export type { CollectOptions, CollectResult } from './critique/collector.js';
+export { runVisualTest, toStoryId, toVisualScore, checkStorybookHealth } from './visualTest.js';
 export { renderSnapshot } from './renderProbe.js';
 export type { RenderSnapshotOutput, RenderSnapshotOptions } from './renderProbe.js';
 export { captureComponent, captureWithBaseline } from './capture.js';

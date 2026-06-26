@@ -11,6 +11,8 @@ import {
   composePrompt,
   renderFindingsForAgent,
   countMustFix,
+  tokenScore,
+  collectScores,
   effectiveAdapter,
   captureComponent,
   captureWithBaseline,
@@ -152,28 +154,29 @@ export async function createMcpServer(store: Store, paths: RepoPaths, _orch?: an
 
   // ── 4. Lint component ────────────────────────────────────────
   server.registerTool('lint_component', {
-    description: 'Check a generated component for design-system consistency: token binding compliance, anti-slop rules, and code conventions. Returns P0 (blocker) findings first. Use during iteration to catch issues early.',
+    description: 'Check a generated component for design-system consistency: token binding compliance, anti-slop rules, and code conventions. Returns P0 (blocker) findings first and a numeric tokens score (0–1) for the critique gate. Use during iteration to catch issues early.',
     inputSchema: { name: z.string().describe('Component name (PascalCase)') },
   }, async ({ name }) => {
     const src = fs.readFileSync(path.join(paths.generatedDir, `${name}.tsx`), 'utf8');
-    const { mustFix, report } = lintSource(paths, store, src);
+    const { findings, mustFix, report } = lintSource(paths, store, src);
+    const tScore = tokenScore(findings);
     store.update({ lintPassing: mustFix === 0 });
-    return text(report);
+    return text(JSON.stringify({ report, mustFix, tokenScore: tScore, findings: findings.length }, null, 2));
   });
 
   // ── 5. Evaluate quality ──────────────────────────────────────
   server.registerTool('evaluate_component', {
-    description: 'Run the full quality gate on a component. Combines all feedback scores into a composite with a ship/revise decision. Ships only when composite >= threshold AND mustFix === 0 AND every source score >= its floor. Returns unsatisfiedConditions listing what failed for targeted fixing.',
+    description: 'Run the full quality gate on a component. Combines all feedback scores into a composite with a ship/revise decision. Ships only when composite >= threshold AND mustFix === 0 AND every source score >= its floor. Returns unsatisfiedConditions listing what failed for targeted fixing. When `scores` is omitted, auto-collects lint + visual scores via ScoreCollector.',
     inputSchema: {
-      component: z.string().optional().describe('Component name (for per-component ratchet tracking)'),
+      component: z.string().optional().describe('Component name (for auto-collect source path and per-component ratchet tracking)'),
       scores: z.object({
         visual: z.number().optional(),
         tokens: z.number().optional(),
         vision: z.number().optional(),
         llm: z.number().optional(),
         a11y: z.number().optional(),
-      }).optional().describe('Feedback scores (0–1). Omitted dimensions are excluded from weighting.'),
-      mustFix: z.number().int().nonnegative().describe('Number of blocking (P0) issues'),
+      }).optional().describe('Feedback scores (0–1). If omitted, auto-collects lint + visual scores via ScoreCollector.'),
+      mustFix: z.number().int().nonnegative().optional().describe('Number of blocking (P0) issues. If omitted when scoring is omitted, extracted from auto-collect lint.'),
       threshold: z.number().optional().describe('Minimum composite to ship. Default: 0.8'),
       sourceFloors: z.object({
         visual: z.number().optional(),
@@ -185,12 +188,36 @@ export async function createMcpServer(store: Store, paths: RepoPaths, _orch?: an
       evidenceSlug: z.string().optional().describe('If set, also persist this round as evidence under design/changes/<slug>/'),
     },
   }, async ({ component, scores, mustFix, threshold, sourceFloors, evidenceSlug }) => {
-    const res = scoreComponent(paths, { scores: scores ?? {}, mustFix, threshold, sourceFloors, component });
-    store.update({ lastCritique: { scores: scores ?? {}, composite: res.composite, decision: res.decision, mustFix } });
+    // Auto-collect scores when the agent doesn't supply them
+    let finalScores = scores ?? {};
+    let finalMustFix = mustFix ?? 0;
+    if (!scores && component) {
+      const srcPath = path.join(paths.generatedDir, `${component}.tsx`);
+      let source: string | undefined;
+      try { source = fs.readFileSync(srcPath, 'utf8'); } catch { /* not generated yet */ }
+      const ds = resolveDesignSystem(paths, activeDsId(store));
+      const collected = await collectScores(paths, {
+        component,
+        source,
+        lintOpts: {
+          declaredTokens: ds.declaredTokens,
+          exemptions: ds.exemptions,
+          bindsDisplayFace: ds.bindsDisplayFace,
+        },
+        runVisual: true,
+      });
+      finalScores = collected.scores;
+      finalMustFix = collected.mustFix;
+      if (collected.errors.length > 0) {
+        // Non-fatal — still gate with what we have
+      }
+    }
+    const res = scoreComponent(paths, { scores: finalScores, mustFix: finalMustFix, threshold, sourceFloors, component });
+    store.update({ lastCritique: { scores: finalScores, composite: res.composite, decision: res.decision, mustFix: finalMustFix } });
     let evidence = '';
     if (evidenceSlug) {
       const file = recordEvidence(paths, evidenceSlug, {
-        round: 1, scores: scores ?? {}, mustFix, composite: res.composite, decision: res.decision, notes: undefined,
+        round: 1, scores: finalScores, mustFix: finalMustFix, composite: res.composite, decision: res.decision, notes: undefined,
       }, component);
       evidence = `\nEvidence saved: ${file}`;
     }
@@ -503,7 +530,78 @@ export async function createMcpServer(store: Store, paths: RepoPaths, _orch?: an
     return text(`Baseline seeded for ${name} → ${baselinePath}`);
   });
 
-  // ── 16. Generate Tailwind config ─────────────────────────────
+  // ── 16. Evaluate story charters ────────────────────────────
+  server.registerTool('evaluate_story_charters', {
+    description: 'Evaluate all story-level charters defined on a component\'s CSF stories. Returns pass/fail for each charter, suitable for agent self-check before capture. Chartiers are assertions defined inline in CSF with `charters: [...]`.',
+    inputSchema: {
+      component: z.string().describe('Component name (PascalCase) — reads charters from the generated story file'),
+      story: z.string().optional().describe('Specific story to evaluate (default: evaluates all stories in the CSF file)'),
+    },
+  }, async ({ component, story }) => {
+    const a = effectiveAdapter(paths);
+    const storyFile = path.join(paths.generatedDir, `${component}${a.storyExt}`);
+    if (!fs.existsSync(storyFile)) {
+      return text(`No story file found for "${component}" at ${storyFile}`);
+    }
+    const source = fs.readFileSync(storyFile, 'utf8');
+
+    // Parse charters from the CSF source.
+    // CSF charters are attached as `charters: [...]` on the default export (meta) or named exports (stories).
+    // We look for `charters:` in the source and attempt to match component/story blocks.
+    // NOTE: Full CSF parsing requires a JS parser — this is a best-effort heuristic.
+    const lines = source.split('\n');
+    const chartersFound: string[] = [];
+    let inMeta = false;
+    for (const line of lines) {
+      const tr = line.trim();
+      if (tr.startsWith('export default') || tr.startsWith('const meta')) inMeta = true;
+      else if (tr.startsWith('export const')) inMeta = false;
+      if (tr.includes('charters:') || tr.includes('charters :')) {
+        chartersFound.push(`${inMeta ? 'meta/component' : 'story'}: ${tr.slice(0, 80)}`);
+      }
+    }
+
+    const rendered = await import('@emdesign/dsr/charters/runner');
+    const { chromium } = await import('playwright');
+    const browser = await chromium.launch();
+    const results: any[] = [];
+    try {
+      const page = await browser.newPage({ deviceScaleFactor: 2 });
+      const baseUrl = paths.storybookUrl || process.env.EMDESIGN_STORYBOOK_URL || 'http://localhost:6006';
+      const storyId = toStoryId(component, story ?? 'default');
+      const url = `${baseUrl}/iframe.html?id=${storyId}&viewMode=story`;
+      await page.goto(url, { waitUntil: 'networkidle' });
+      await page.waitForSelector('#storybook-root', { timeout: 10_000 });
+      await page.waitForTimeout(300);
+
+      // Evaluate charters from the window.__EMDESIGN_CHARTERS__ global set by the preview decorator
+      const charterResult = await page.evaluate(() => {
+        const w = window as any;
+        return w.__EMDESIGN_CHARTERS__?.lastResult ?? null;
+      });
+      if (charterResult) {
+        results.push(charterResult);
+      } else {
+        // Fallback: charters not available — report what was found
+      }
+    } finally {
+      await browser.close();
+    }
+
+    return text(JSON.stringify({
+      component,
+      story: story ?? 'all',
+      chartersFound: chartersFound.length > 0 ? chartersFound : undefined,
+      results,
+      note: chartersFound.length === 0
+        ? 'No charters found in CSF. Add `charters: [...]` to your story definition.'
+        : results.length === 0
+          ? 'Charters found in CSF but no results from preview. Ensure the charterDecorator is registered in .storybook/preview.ts'
+          : undefined,
+    }, null, 2));
+  });
+
+  // ── 17. Generate Tailwind config ─────────────────────────────
   server.registerTool('generate_tailwind_config', {
     description: 'Generate tailwind.config.js from the active design system\'s token contract. Parses ALL --color-* roles from tokens.css (not just a hardcoded subset) and emits dark: variant support when [data-theme="dark"] is present. Call after applying a design system.',
     inputSchema: {

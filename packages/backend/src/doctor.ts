@@ -1,5 +1,5 @@
 import { detectConflicts } from '@emdesign/dsr';
-import { lintDesignSystem, lintRendered, mergeReports, renderReport, type DoctorReport } from '@emdesign/doctor';
+import { lintDesignSystem, lintRendered, lintCharters, mergeReports, renderReport, type DoctorReport } from '@emdesign/doctor';
 import { normalizeDsRef, type RepoPaths } from './paths.js';
 import { runtimeFor } from './runtime.js';
 import { buildAndSave } from './graph.js';
@@ -7,6 +7,7 @@ import { effectiveAdapter } from './adapters/index.js';
 import { renderSnapshot } from './renderProbe.js';
 import type { RenderSnapshotOutput } from './renderProbe.js';
 import type { RenderedReviewContext, RenderedReviewRule, RenderSnapshot } from '@emdesign/dsr';
+import type { StoryCharterResult } from '@emdesign/dsr';
 
 export interface GradeReport extends DoctorReport {
   /** Production-ready when no P0/P1 finding remains. */
@@ -30,6 +31,8 @@ export interface GradeOptions {
   renderThemes?: ('light' | 'dark')[];
   /** Explicit component names to render (default: derive from graph primitives). */
   components?: string[];
+  /** Skip charter evaluation. */
+  skipCharters?: boolean;
 }
 
 /**
@@ -86,6 +89,8 @@ export async function gradeDesignSystem(paths: RepoPaths, ref: string, opts: Gra
   let renderReportResult: DoctorReport | null = null;
   let renderLintSkipped = false;
   let renderLintNote: string | undefined;
+  // Hoisted to share with charter evaluation below
+  const allSnapshots: RenderSnapshotOutput[] = [];
 
   if (!opts.skipRenderLint) {
     // Determine components to render
@@ -107,12 +112,12 @@ export async function gradeDesignSystem(paths: RepoPaths, ref: string, opts: Gra
         storybookReachable = false;
       }
 
+
       if (!storybookReachable) {
         renderLintSkipped = true;
         renderLintNote = 'Storybook not reachable (render-lint skipped — start Storybook to enable rendered checks)';
       } else {
         // Gather render snapshots for discovered components (best-effort, limited to 8)
-        const allSnapshots: RenderSnapshotOutput[] = [];
         const themes = opts.renderThemes ?? ['light', 'dark'];
         const toRender = components.slice(0, 8);
         for (const component of toRender) {
@@ -148,10 +153,30 @@ export async function gradeDesignSystem(paths: RepoPaths, ref: string, opts: Gra
     }
   }
 
+  // ---- charter evaluation (best-effort, from render snapshots) ----
+  let charterReport: DoctorReport | null = null;
+  if (!opts.skipCharters && allSnapshots && allSnapshots.length > 0) {
+    try {
+      const charterResults: StoryCharterResult[] = [];
+      // We need the full CSF source to extract charters — skip for now in the automated path
+      // and rely on the iframe runner for live feedback.
+      // The MCP tool `evaluate_story_charters` handles the full path with CSF parsing.
+      if (charterResults.length > 0) {
+        charterReport = lintCharters(id, charterResults);
+      }
+    } catch {
+      // non-fatal
+    }
+  }
+
   // ---- compose final report ----
-  const finalReport = renderReportResult && !renderLintSkipped
+  let finalReport: DoctorReport = renderReportResult && !renderLintSkipped
     ? mergeReports(staticReport, renderReportResult)
     : staticReport;
+
+  if (charterReport) {
+    finalReport = mergeReports(finalReport, charterReport);
+  }
 
   return {
     ...finalReport,

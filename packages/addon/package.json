@@ -6,6 +6,8 @@
   "exports": {
     "./manager": "./src/manager.tsx",
     "./preview": "./src/preview.tsx",
+    "./charters/preview": "./src/charters/preview.ts",
+    "./charters/channel": "./src/charters/channel.ts",
     "./preset": "./src/preset.js",
     "./package.json": "./package.json"
   },
@@ -23,6 +25,7 @@
   },
   "dependencies": {
     "@emdesign/chat-ui": "^0.0.0",
+    "@emdesign/dsr": "*",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1"
   }

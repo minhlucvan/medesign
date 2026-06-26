@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { addons } from '@storybook/manager-api';
 import { api } from './api';
 import {
   useStudioState, Page, PageTitle, Sub, Section, SectionTitle, Row, Stack, Muted, Pill, Mono, ErrorBanner,
 } from './ui';
+import { EVT_CHARTER_RESULT } from './charters/channel';
 import type { HealthInfo, LogsResponse, GraphStats, ServiceInfo, ServiceType, ServiceStatus } from './constants';
+import type { CharterResultPayload } from './charters/channel';
 
 /** The "emdesign" tab: a system/status/logs dashboard — health, activity feed, evidence logs, graph. */
 export function SystemTab() {
@@ -12,6 +15,15 @@ export function SystemTab() {
   const [logs, setLogs] = useState<LogsResponse | null>(null);
   const [graph, setGraph] = useState<GraphStats | null>(null);
   const [services, setServices] = useState<Record<string, ServiceInfo> | null>(null);
+  const [charterResult, setCharterResult] = useState<CharterResultPayload | null>(null);
+
+  // Listen for charter evaluation results from the preview iframe
+  useEffect(() => {
+    const channel = addons.getChannel();
+    const handler = (payload: CharterResultPayload) => setCharterResult(payload);
+    channel.on(EVT_CHARTER_RESULT, handler);
+    return () => { channel.off(EVT_CHARTER_RESULT, handler); };
+  }, []);
 
   const loadServices = useCallback(async () => {
     try { setServices(await api.listServices()); } catch { /* not available */ }
@@ -55,6 +67,12 @@ export function SystemTab() {
               <Row gap={8} wrap><Muted>active system</Muted><strong>{health?.activeDesignSystem ?? '—'}</strong></Row>
               <Row gap={8} wrap><Muted>component</Muted><strong>{health?.currentComponent ?? 'none'}</strong></Row>
               <Row gap={8}><Muted>lint</Muted>{state?.lintPassing == null ? <Muted>—</Muted> : <Pill tone={state.lintPassing ? 'ok' : 'bad'}>{state.lintPassing ? 'passing' : 'P0s'}</Pill>}</Row>
+{charterResult && (
+  <Row gap={8}>
+    <Muted>charters</Muted>
+    <Pill tone={charterResult.allPass ? 'ok' : 'bad'}>{charterResult.failed} fail / {charterResult.passed} pass</Pill>
+  </Row>
+)}
             </Stack>
           </Section>
 

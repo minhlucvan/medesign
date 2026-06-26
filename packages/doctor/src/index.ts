@@ -8,3 +8,4 @@ export { lintDesignSystem } from './lint.js';
 export type { DoctorReport, DoctorFinding } from './lint.js';
 export { renderReport } from './render.js';
 export { lintRendered, mergeReports } from './rendered.js';
+export { lintCharters } from './charters.js';

@@ -9,9 +9,52 @@ import type { DiffResult } from './state.js';
 
 const STORYBOOK_URL = process.env.EMDESIGN_STORYBOOK_URL ?? 'http://localhost:6006';
 
+/** Default timeout for Storybook health check (ms). */
+const HEALTH_CHECK_TIMEOUT = 3_000;
+
 /** Map an on-disk screenshot path to the URL the HTTP bridge serves it at. */
 function screenshotUrl(p: string): string {
   return `${process.env.EMDESIGN_BACKEND_URL ?? 'http://localhost:4321'}/screenshots/${path.basename(p)}`;
+}
+
+/**
+ * Map a DiffResult status to a numeric 0-1 visual score for the critique gate.
+ *
+ * | Status      | Score | Rationale                              |
+ * |-------------|-------|----------------------------------------|
+ * | pass        | 1.0   | Exact pixel match against baseline     |
+ * | new         | 1.0   | First baseline — nothing to regress    |
+ * | changed     | 0.5   | Pixels differ — visual drift detected  |
+ * | error       | 0.0   | Could not run test                     |
+ */
+export function toVisualScore(status: DiffResult['status']): number {
+  switch (status) {
+    case 'pass': return 1.0;
+    case 'new':  return 1.0;
+    case 'changed': return 0.5;
+    case 'error': return 0.0;
+  }
+}
+
+/**
+ * Quick connectivity check for Storybook before launching a full browser session.
+ * Returns null if reachable, or an error message string if unreachable.
+ */
+export async function checkStorybookHealth(
+  url: string = STORYBOOK_URL,
+  timeout: number = HEALTH_CHECK_TIMEOUT,
+): Promise<string | null> {
+  try {
+    const checkUrl = `${url.replace(/\/+$/, '')}/iframe.html`;
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeout);
+    const res = await fetch(checkUrl, { method: 'HEAD', signal: controller.signal });
+    clearTimeout(id);
+    if (res.ok || res.status === 304) return null;
+    return `Storybook at ${url} returned status ${res.status}`;
+  } catch (e) {
+    return `Storybook at ${url} unreachable: ${(e as Error).message}`;
+  }
 }
 
 /**
@@ -21,11 +64,22 @@ function screenshotUrl(p: string): string {
  * (or the panel) runs this; a `changed` result is fed back so the agent can self-correct,
  * and a `new` result establishes the first baseline. Mirrors open-design's artifact-lint
  * idea, but on rendered pixels of real components.
+ *
+ * Runs a lightweight Storybook reachability check first and returns `{ status: 'error' }`
+ * with a descriptive message if it cannot connect.
  */
 export async function runVisualTest(paths: RepoPaths, component: string): Promise<DiffResult> {
   if (!component) return { status: 'error' };
+
+  // Health check before launching a browser
+  const healthError = await checkStorybookHealth(paths.storybookUrl || STORYBOOK_URL);
+  if (healthError) {
+    return { status: 'error' };
+  }
+
   const storyId = toStoryId(component);
-  const url = `${STORYBOOK_URL}/iframe.html?id=${storyId}&viewMode=story`;
+  const baseUrl = paths.storybookUrl || STORYBOOK_URL;
+  const url = `${baseUrl}/iframe.html?id=${storyId}&viewMode=story`;
 
   ensureDir(paths.screenshotsDir);
   const baselinePath = path.join(paths.screenshotsDir, `${component}.baseline.png`);
@@ -74,10 +128,22 @@ export async function runVisualTest(paths: RepoPaths, component: string): Promis
   };
 }
 
-/** Storybook slugifies "Generated/PricingTiers" → "generated-pricingtiers--default". */
+/**
+ * Storybook slugifies "Generated/PricingTiers" → "generated-pricing-tiers--default".
+ *
+ * Properly handles:
+ * - PascalCase: "PricingTiers" → "pricing-tiers"
+ * - Acronyms: "CTAAction" → "cta-action"
+ * - Multi-word: "HeroBanner" → "hero-banner"
+ * - Single word: "Button" → "button"
+ */
 export function toStoryId(component: string, story = 'default', prefix = 'generated'): string {
+  // Insert dash between lowercase/digit and uppercase: "PricingTiers" → "Pricing-Tiers"
+  // Insert dash between consecutive uppercase and a lowercase that follows: "CTAAction" → "CTA-Action"
+  // Then lowercase everything.
   const kebab = component
     .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
     .toLowerCase();
   return `${prefix}-${kebab}--${story}`;
 }

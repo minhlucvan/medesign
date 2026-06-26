@@ -199,14 +199,15 @@ for (const test of tests) {
     { schema: A11Y_SCHEMA, label: `a11y:${test.name}`, phase: 'Evaluate' },
   );
 
-  // Compute composites
+  // Compute composites with clamping to [0, 1]
   const elapsed = 0;
+  const clamp = (v) => Math.max(0, Math.min(1, typeof v === 'number' ? v : 0));
 
   const blackBoxComposite =
-    0.30 * (codeReview && codeReview.general || 0) +
-    0.30 * (visual && visual.visual || 0) +
-    0.25 * (functional && functional.functional || 0) +
-    0.15 * (a11y && a11y.accessibility || 0);
+    0.30 * clamp(codeReview && codeReview.general) +
+    0.30 * clamp(visual && visual.visual) +
+    0.25 * clamp(functional && functional.functional) +
+    0.15 * clamp(a11y && a11y.accessibility);
 
   const whiteBoxComposite = whiteBox ? whiteBox.composite : 0;
   const overall = 0.6 * blackBoxComposite + 0.4 * whiteBoxComposite;

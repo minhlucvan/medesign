@@ -206,6 +206,7 @@ const hadBaseline = history.cycles.length > 0;
 if (!hadBaseline) {
   log('No baseline found. Running initial benchmark...');
   const baseline = await workflow({ scriptPath: '/Users/minh/Documents/medesign/benchmarks/run-benchmark.js' }, { runId: `baseline-${cycleNumber}`, filter: '', threshold: 0.8 });
+  totalBenchmarkRuns++;
   history.initialBaseline = baseline && baseline.runId;
   currentResults = baseline;
   history.bestOverallAvg = baseline && baseline.results
@@ -226,6 +227,7 @@ let stalled = false;
 let keptChanges = [];
 let lastDiagnosis = null;
 let totalBenchmarkRuns = hadBaseline ? 1 : 0;
+let skipCounter = 0;
 
 while (!done && !stalled && cycleNumber <= MAX_CYCLES) {
   // ── 1. DIAGNOSE ───────────────────────────────────────────────────────
@@ -286,9 +288,24 @@ while (!done && !stalled && cycleNumber <= MAX_CYCLES) {
   );
 
   if (!hypothesis || !hypothesis.changeFile) {
-    log('Failed to form hypothesis. Skipping cycle.');
-    cycleNumber++;
-    continue;
+    log('Failed to form hypothesis. Scores may be invalid. Retrying with fallback prompt...');
+    skipCounter++;
+    // Second attempt with a simpler prompt
+    const retry = await agent(
+      `Given that the weakest test is "${diagnosis?.weakestTest || 'unknown'}" with low "${axis}" score (${diagnosis?.axisValue}), ` +
+      `propose ONE simple change to the engine file "${primaryFile}" to improve it. Keep it short. ` +
+      `Return JSON with hypothesis, changeFile (full path), operation, anchorText, insertText, targetMetric, expectedDelta, expectedDirection.`,
+      { label: `hypothesize:r${cycleNumber}:retry`, phase: 'Hypothesize', schema: HYPOTHESIS_SCHEMA },
+    );
+    if (retry && retry.changeFile) {
+      Object.assign(hypothesis, retry);
+    } else {
+      log('Failed to form hypothesis after retry. Skipping cycle.');
+      skipCounter++;
+      if (skipCounter >= 3) { stalled = true; log('Too many skipped cycles. Stalling.'); break; }
+      cycleNumber++;
+      continue;
+    }
   }
 
   log(`Hypothesis: ${hypothesis.hypothesis ? hypothesis.hypothesis.slice(0, 120) : 'N/A'}`);
@@ -305,6 +322,8 @@ while (!done && !stalled && cycleNumber <= MAX_CYCLES) {
   const stillClean = gitBefore && typeof gitBefore.stdout === 'string' && gitBefore.stdout.trim().length === 0;
   if (!stillClean) {
     log('Working tree changed unexpectedly. Aborting cycle.');
+    skipCounter++;
+    if (skipCounter >= 3) { stalled = true; log('Too many consecutive failures. Stalling.'); break; }
     cycleNumber++;
     continue;
   }
@@ -325,6 +344,8 @@ while (!done && !stalled && cycleNumber <= MAX_CYCLES) {
 
   if (!implementation || !implementation.applied) {
     log(`Implementation failed: ${implementation?.error || 'unknown error'}. Skipping verify.`);
+    skipCounter++;
+    if (skipCounter >= 3) { stalled = true; log('Too many consecutive failures. Stalling.'); break; }
     cycleNumber++;
     continue;
   }
@@ -408,6 +429,7 @@ while (!done && !stalled && cycleNumber <= MAX_CYCLES) {
     regressions: verification ? verification.regressions : [],
   };
   history.cycles.push(cycleEntry);
+  skipCounter = 0; // completed cycle resets the counter
 
   // Update best overall
   if (afterResults && afterResults.results) {

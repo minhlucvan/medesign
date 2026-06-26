@@ -1,0 +1,30 @@
+{
+  "activeDesignSystem": "atelier",
+  "currentComponent": null,
+  "changeRequests": [
+    {
+      "id": "cr_1782424824885_0",
+      "type": "comment",
+      "instruction": "translate into vietnames",
+      "status": "queued",
+      "createdAt": "2026-06-25T22:00:24.885Z",
+      "target": {
+        "selector": "",
+        "box": {
+          "x": 122,
+          "y": 16.3046875,
+          "width": 896,
+          "height": 514.390625
+        },
+        "text": "PricingPick a plan that fits the workSolo$01 projectCommunity supportLocal onlyChoose SoloStudioMost popular$24Unlimited",
+        "tag": "div",
+        "classes": "",
+        "storyId": "generated-pricingtiers--default",
+        "component": "PricingTiers"
+      }
+    }
+  ],
+  "lastDiff": null,
+  "lintPassing": null,
+  "lastCritique": null
+}

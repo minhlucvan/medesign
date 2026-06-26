@@ -1,0 +1,31 @@
+/* Deck — Guizang Editorial — token contract (draft mapped from open-design/deck-guizang-editorial). */
+:root {
+  --color-surface: #0a0a0b;
+  --color-surface-raised: #17160f;
+  --color-text: #f1efea;
+  --color-text-muted: #6b665b;
+  --color-accent: #c9b27a;
+  --color-accent-hover: #b59c63;
+  --color-border: #3a382f;
+  --color-success: #15803d;
+  --color-warn: #b45309;
+  --color-danger: #b91c1c;
+
+  --font-display: "Fraunces", "Playfair Display", "Noto Serif SC", Georgia, serif;
+  --font-sans: "Inter", "Noto Sans SC", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius: 4px;
+  --radius-sm: 2px;
+  --radius-pill: 999px;
+  --space-unit: 8px;
+  --shadow-raised: 0 1px 2px rgba(0,0,0,0.55), 0 18px 44px rgba(0,0,0,0.55);
+  --focus-ring: 0 0 0 3px rgba(201,178,122,0.35);
+
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  --container-max: 1180px;
+  --section-y: 96px;
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "od-design-system-project/v1",
+  "id": "keynote-warm",
+  "name": "Keynote Warm",
+  "category": "Deck",
+  "description": "Apple-Keynote-grade slides on warm linen — one idea per screen, huge bold sans headlines, serif-italic flourishes, rust + gold accents.",
+  "files": {
+    "design": "DESIGN.md",
+    "tokens": "tokens.css"
+  },
+  "craft": {
+    "applies": [
+      "off-token-color",
+      "ai-default-indigo",
+      "purple-gradient",
+      "trust-gradient",
+      "accent-overuse",
+      "emoji-icon",
+      "invented-metric",
+      "filler-copy",
+      "external-image",
+      "token-self-check"
+    ],
+    "exemptions": [
+      "sans-display"
+    ]
+  },
+  "surface": "web",
+  "source": {
+    "type": "open-design",
+    "skill": "ppt-keynote",
+    "upstream": "https://github.com/nexu-io/open-design",
+    "license": "Apache-2.0"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "od-design-system-project/v1",
+  "id": "brutalist",
+  "name": "Industrial Brutalist",
+  "category": "Brutalist",
+  "description": "Tactical-telemetry brutalism — bone paper, hard ink, alarm-red + signal-green, zero radius.",
+  "files": {
+    "design": "DESIGN.md",
+    "tokens": "tokens.css"
+  },
+  "craft": {
+    "applies": [
+      "off-token-color",
+      "ai-default-indigo",
+      "accent-overuse",
+      "token-self-check"
+    ],
+    "exemptions": [
+      "accent-overuse"
+    ]
+  },
+  "surface": "web",
+  "source": {
+    "type": "open-design",
+    "skill": "brutalist-skill",
+    "upstream": "https://github.com/Leonxlnx/taste-skill",
+    "license": "Apache-2.0"
+  }
+}

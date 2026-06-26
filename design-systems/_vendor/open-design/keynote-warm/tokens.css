@@ -1,0 +1,44 @@
+/* Keynote Warm — token contract (mapped from open-design/ppt-keynote). */
+/* Generated/captured components reference these roles only. */
+:root {
+  /* ---- color ---- */
+  --color-surface: #f4f1ec;          /* linen — the stage / light slide */
+  --color-surface-raised: #fafaf7;   /* warm white — raised cards, inputs */
+  --color-surface-inverse: #15140f;  /* espresso — dark slide ground */
+  --color-text: #15140f;             /* espresso ink */
+  --color-text-muted: rgba(21, 20, 15, 0.62); /* aged ink — meta, captions */
+  --color-accent: #c96442;           /* fired rust — the one CTA / emphasis */
+  --color-accent-hover: #a94f32;     /* deep rust — hover/active */
+  --color-accent-gold: #e9b94a;      /* amber gold — figures on dark slides */
+  --color-border: #e7e5e0;           /* warm hairline */
+  --color-success: #15803d;
+  --color-warn: #b45309;
+  --color-danger: #b91c1c;
+
+  /* ---- type ---- */
+  --font-display: "Inter Tight", "Inter", system-ui, sans-serif; /* big keynote headlines */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;    /* body / UI */
+  --font-serif: "Fraunces", Georgia, serif;                       /* italic emphasis flourish */
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;         /* slide numbers, code */
+
+  /* ---- shape / depth ---- */
+  --radius: 8px;
+  --radius-sm: 5px;
+  --radius-lg: 18px;        /* slide corner */
+  --radius-pill: 999px;
+  --space-unit: 8px;
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.05);
+  --shadow-slide: 0 30px 80px -20px rgba(0, 0, 0, 0.45); /* deep stage lift under a slide */
+  --focus-ring: 0 0 0 3px rgba(201, 100, 66, 0.30);      /* rust focus, never blue */
+
+  /* ---- motion ---- */
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --motion-slide: 420ms;   /* slide-to-slide cross-fade */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- layout ---- */
+  --container-max: 1280px;  /* slide width (16:9 @ 1280×720) */
+  --slide-pad: 80px;        /* in-slide horizontal padding */
+  --section-y: 96px;
+}

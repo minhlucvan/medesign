@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "od-design-system-project/v1",
+  "id": "deck-guizang-editorial",
+  "name": "Deck — Guizang Editorial",
+  "category": "Deck",
+  "description": "Dark editorial deck — near-black ground, warm-paper type, olive depth, restrained.",
+  "files": {
+    "design": "DESIGN.md",
+    "tokens": "tokens.css"
+  },
+  "craft": {
+    "applies": [
+      "off-token-color",
+      "ai-default-indigo",
+      "accent-overuse",
+      "token-self-check"
+    ],
+    "exemptions": []
+  },
+  "surface": "web",
+  "source": {
+    "type": "open-design",
+    "skill": "deck-guizang-editorial",
+    "upstream": "https://github.com/nexu-io/open-design",
+    "license": "Apache-2.0"
+  }
+}

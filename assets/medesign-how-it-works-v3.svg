@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" fill="none">
+  <style>text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }</style>
+
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#5a5a5a"/>
+    </marker>
+    <marker id="arr-fb" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#aaa"/>
+    </marker>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="#0000000a"/></filter>
+  </defs>
+
+  <rect width="960" height="300" rx="14" fill="#f8f6f3"/>
+
+  <!-- Title -->
+  <text x="480" y="34" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="700" letter-spacing="1">HOW IT WORKS</text>
+  <line x1="380" y1="44" x2="580" y2="44" stroke="#ddd" stroke-width="1"/>
+
+  <!-- ROW: 5 stages -->
+  <!-- Row base y=65, box height=120, bottom at y=185 -->
+
+  <!-- STAGE 1: You (blue) -->
+  <rect x="35" y="65" width="150" height="120" rx="10" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <rect x="35" y="65" width="150" height="4" rx="2" fill="#4a4a4a"/>
+  <circle cx="70" cy="97" r="13" fill="#4a4a4a"/>
+  <text x="70" y="102" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">1</text>
+  <text x="140" y="102" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">You</text>
+  <text x="110" y="140" text-anchor="middle" fill="#4a4a4a" font-size="13">Describe an idea</text>
+  <text x="110" y="160" text-anchor="middle" fill="#4a4a4a" font-size="13">or change request</text>
+  <text x="110" y="178" text-anchor="middle" fill="#4a4a4a" font-size="11">in plain language</text>
+
+  <line x1="190" y1="125" x2="215" y2="125" stroke="#5a5a5a" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- STAGE 2: Agent (teal) -->
+  <rect x="220" y="60" width="155" height="130" rx="10" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <rect x="220" y="60" width="155" height="4" rx="2" fill="#4a4a4a"/>
+  <circle cx="258" cy="92" r="13" fill="#4a4a4a"/>
+  <text x="258" y="97" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">2</text>
+  <text x="320" y="97" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">Agent</text>
+  <text x="297" y="135" text-anchor="middle" fill="#4a4a4a" font-size="13">Claude Code</text>
+  <text x="297" y="155" text-anchor="middle" fill="#4a4a4a" font-size="13">reads DESIGN.md</text>
+  <text x="297" y="175" text-anchor="middle" fill="#4a4a4a" font-size="13">+ tokens + rules</text>
+
+  <line x1="380" y1="125" x2="405" y2="125" stroke="#5a5a5a" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- STAGE 3: Backend (beige) -->
+  <rect x="410" y="60" width="175" height="130" rx="10" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <rect x="410" y="60" width="175" height="4" rx="2" fill="#4a4a4a"/>
+  <circle cx="450" cy="92" r="13" fill="#4a4a4a"/>
+  <text x="450" y="97" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">3</text>
+  <text x="515" y="97" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">Backend</text>
+  <text x="497" y="135" text-anchor="middle" fill="#4a4a4a" font-size="13">Generates component</text>
+  <text x="497" y="155" text-anchor="middle" fill="#4a4a4a" font-size="13">Runs consistency lint</text>
+  <text x="497" y="175" text-anchor="middle" fill="#4a4a4a" font-size="13">Visual diff + critique</text>
+
+  <line x1="590" y1="125" x2="615" y2="125" stroke="#5a5a5a" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- STAGE 4: Storybook (teal) -->
+  <rect x="620" y="65" width="150" height="120" rx="10" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <rect x="620" y="65" width="150" height="4" rx="2" fill="#4a4a4a"/>
+  <circle cx="660" cy="97" r="13" fill="#4a4a4a"/>
+  <text x="660" y="102" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">4</text>
+  <text x="715" y="102" text-anchor="middle" fill="#1a1a1a" font-size="16" font-weight="600">Storybook</text>
+  <text x="695" y="140" text-anchor="middle" fill="#4a4a4a" font-size="13">Hot-reloads story</text>
+  <text x="695" y="160" text-anchor="middle" fill="#4a4a4a" font-size="13">Shows scores</text>
+  <text x="695" y="178" text-anchor="middle" fill="#4a4a4a" font-size="11">+ visual diff</text>
+
+  <line x1="775" y1="125" x2="800" y2="125" stroke="#5a5a5a" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- STAGE 5: Your Repo (gray, dashed) -->
+  <rect x="805" y="65" width="120" height="120" rx="10" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2" stroke-dasharray="6,4" filter="url(#s)"/>
+  <rect x="805" y="65" width="120" height="4" rx="2" fill="#4a4a4a"/>
+  <circle cx="840" cy="97" r="13" fill="#4a4a4a"/>
+  <text x="840" y="102" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">5</text>
+  <text x="870" y="130" text-anchor="middle" fill="#1a1a1a" font-size="15" font-weight="600">Repo</text>
+  <text x="865" y="158" text-anchor="middle" fill="#4a4a4a" font-size="13">Captured</text>
+  <text x="865" y="178" text-anchor="middle" fill="#4a4a4a" font-size="13">git-tracked</text>
+
+  <!-- FEEDBACK LOOP -->
+  <!-- Curved arrow from Storybook back to Agent -->
+  <path d="M695 185 C695 240, 297 240, 297 195" stroke="#aaa" stroke-width="2" stroke-dasharray="6,3" fill="none" marker-end="url(#arr-fb)"/>
+
+  <!-- Feedback label along the arc, away from all boxes -->
+  <rect x="380" y="238" width="240" height="22" rx="4" fill="#f8f6f3" fill-opacity="0.95"/>
+  <text x="500" y="253" text-anchor="middle" fill="#aaa" font-size="12" font-weight="500">FEEDBACK · lint + visual diff + scores</text>
+
+  <!-- Bottom note -->
+  <text x="480" y="288" text-anchor="middle" fill="#bbb" font-size="11">You refine via change requests → the loop repeats until the critique gate says "ship"</text>
+</svg>

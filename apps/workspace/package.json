@@ -1,0 +1,18 @@
+{
+  "name": "@medesign/workspace",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "medesign workspace core — the abstract, framework-agnostic installer (init/attach), canonical .claude template, config schema, and the framework registry. Concrete stacks build on it (e.g. @medesign/workspace-react).",
+  "exports": {
+    ".": "./src/index.ts",
+    "./install": "./src/install.ts",
+    "./registry": "./src/registry.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.5.0"
+  }
+}

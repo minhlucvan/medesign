@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "od-design-system-project/v1",
+  "id": "stitch",
+  "name": "Stitch",
+  "category": "Product",
+  "description": "Balanced product system — clean neutrals, weight-driven hierarchy, dialable expressiveness.",
+  "files": {
+    "design": "DESIGN.md",
+    "tokens": "tokens.css"
+  },
+  "craft": {
+    "applies": [
+      "off-token-color",
+      "ai-default-indigo",
+      "accent-overuse",
+      "token-self-check"
+    ],
+    "exemptions": []
+  },
+  "surface": "web",
+  "source": {
+    "type": "open-design",
+    "skill": "stitch-skill",
+    "upstream": "https://github.com/google/stitch",
+    "license": "Apache-2.0"
+  }
+}

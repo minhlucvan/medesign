@@ -1,0 +1,17 @@
+{
+  "name": "@medesign/plugin-react",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "medesign React renderer plugin (framework) — generates on-system .tsx components + CSF stories for Storybook, provides React consistency lint rules, and code-parses TSX into the knowledge graph.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": { "@medesign/plugin-api": "*" },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.5.0"
+  }
+}

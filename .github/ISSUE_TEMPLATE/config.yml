@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: GitHub Discussions
+    url: https://github.com/medesign/medesign/discussions
+    about: Ask questions, share ideas, or get help
+  - name: Documentation
+    url: https://github.com/medesign/medesign/blob/main/docs/README.md
+    about: Read the docs before opening an issue

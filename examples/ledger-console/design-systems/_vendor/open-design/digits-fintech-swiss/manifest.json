@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "od-design-system-project/v1",
+  "id": "digits-fintech-swiss",
+  "name": "Digits Fintech Swiss",
+  "category": "Fintech",
+  "description": "Swiss fintech — bone paper, ink-black type, electric-lime accent, hairline grid.",
+  "files": {
+    "design": "DESIGN.md",
+    "tokens": "tokens.css"
+  },
+  "craft": {
+    "applies": [
+      "off-token-color",
+      "ai-default-indigo",
+      "purple-gradient",
+      "trust-gradient",
+      "emoji-icon",
+      "invented-metric",
+      "filler-copy",
+      "external-image",
+      "accent-overuse",
+      "token-self-check"
+    ],
+    "exemptions": []
+  },
+  "surface": "web",
+  "source": {
+    "type": "open-design",
+    "skill": "digits-fintech-swiss-template",
+    "upstream": "https://github.com/nexu-io/open-design",
+    "license": "Apache-2.0"
+  }
+}

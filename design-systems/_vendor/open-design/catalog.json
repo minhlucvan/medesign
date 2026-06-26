@@ -1,0 +1,188 @@
+{
+  "generatedFrom": "skills/_vendor/open-design",
+  "schemaVersion": "od-base-catalog/v1",
+  "bases": [
+    {
+      "id": "after-hours",
+      "ref": "open-design/after-hours",
+      "name": "After Hours",
+      "category": "Editorial",
+      "surface": "web",
+      "description": "Near-black nocturnal editorial — violet-white type, hot-pink accent, fine seams.",
+      "source": {
+        "type": "open-design",
+        "skill": "after-hours-editorial-template",
+        "upstream": "https://github.com/nexu-io/open-design",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "brutalist",
+      "ref": "open-design/brutalist",
+      "name": "Industrial Brutalist",
+      "category": "Brutalist",
+      "surface": "web",
+      "description": "Tactical-telemetry brutalism — bone paper, hard ink, alarm-red + signal-green, zero radius.",
+      "source": {
+        "type": "open-design",
+        "skill": "brutalist-skill",
+        "upstream": "https://github.com/Leonxlnx/taste-skill",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "deck-guizang-editorial",
+      "ref": "open-design/deck-guizang-editorial",
+      "name": "Deck — Guizang Editorial",
+      "category": "Deck",
+      "surface": "web",
+      "description": "Dark editorial deck — near-black ground, warm-paper type, olive depth, restrained.",
+      "source": {
+        "type": "open-design",
+        "skill": "deck-guizang-editorial",
+        "upstream": "https://github.com/nexu-io/open-design",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "deck-open-canvas",
+      "ref": "open-design/deck-open-canvas",
+      "name": "Deck — Open Slide Canvas",
+      "category": "Deck",
+      "surface": "web",
+      "description": "Deep-space slide canvas — midnight ground, sky-blue accent, crisp light type.",
+      "source": {
+        "type": "open-design",
+        "skill": "deck-open-slide-canvas",
+        "upstream": "https://github.com/nexu-io/open-design",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "deck-swiss-international",
+      "ref": "open-design/deck-swiss-international",
+      "name": "Deck — Swiss International",
+      "category": "Deck",
+      "surface": "web",
+      "description": "International Typographic deck — paper white, ink black, Klein-blue accent, 16-col grid.",
+      "source": {
+        "type": "open-design",
+        "skill": "deck-swiss-international",
+        "upstream": "https://github.com/nexu-io/open-design",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "digits-fintech-swiss",
+      "ref": "open-design/digits-fintech-swiss",
+      "name": "Digits Fintech Swiss",
+      "category": "Fintech",
+      "surface": "web",
+      "description": "Swiss fintech — bone paper, ink-black type, electric-lime accent, hairline grid.",
+      "source": {
+        "type": "open-design",
+        "skill": "digits-fintech-swiss-template",
+        "upstream": "https://github.com/nexu-io/open-design",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "editorial-burgundy",
+      "ref": "open-design/editorial-burgundy",
+      "name": "Editorial Burgundy",
+      "category": "Editorial",
+      "surface": "web",
+      "description": "Wine-on-blush editorial — burgundy ink, gold accent, soft paper warmth, serif-led.",
+      "source": {
+        "type": "open-design",
+        "skill": "editorial-burgundy-principles-template",
+        "upstream": "https://github.com/nexu-io/open-design",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "field-notes-editorial",
+      "ref": "open-design/field-notes-editorial",
+      "name": "Field Notes Editorial",
+      "category": "Editorial",
+      "surface": "web",
+      "description": "Warm-paper field-notes editorial — soft ink, lime/pink/peach trims, rounded cards.",
+      "source": {
+        "type": "open-design",
+        "skill": "field-notes-editorial-template",
+        "upstream": "https://github.com/nexu-io/open-design",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "keynote-warm",
+      "ref": "open-design/keynote-warm",
+      "name": "Keynote Warm",
+      "category": "Deck",
+      "surface": "web",
+      "description": "Apple-Keynote-grade slides on warm linen — one idea per screen, huge bold sans headlines, serif-italic flourishes, rust + gold accents.",
+      "source": {
+        "type": "open-design",
+        "skill": "ppt-keynote",
+        "upstream": "https://github.com/nexu-io/open-design",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "minimalist",
+      "ref": "open-design/minimalist",
+      "name": "Quiet Minimalist",
+      "category": "Minimalist",
+      "surface": "web",
+      "description": "Warm-monochrome minimalism — paper white, soft graphite type, one whisper-quiet accent.",
+      "source": {
+        "type": "open-design",
+        "skill": "minimalist-skill",
+        "upstream": "https://github.com/Leonxlnx/taste-skill",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "soft",
+      "ref": "open-design/soft",
+      "name": "Soft Studio",
+      "category": "Expressive",
+      "surface": "web",
+      "description": "Awwwards-soft agency — near-black ground, warm-cream type, pillowy radius and depth.",
+      "source": {
+        "type": "open-design",
+        "skill": "soft-skill",
+        "upstream": "https://github.com/Leonxlnx/taste-skill",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "stitch",
+      "ref": "open-design/stitch",
+      "name": "Stitch",
+      "category": "Product",
+      "surface": "web",
+      "description": "Balanced product system — clean neutrals, weight-driven hierarchy, dialable expressiveness.",
+      "source": {
+        "type": "open-design",
+        "skill": "stitch-skill",
+        "upstream": "https://github.com/google/stitch",
+        "license": "Apache-2.0"
+      }
+    },
+    {
+      "id": "swiss-creative",
+      "ref": "open-design/swiss-creative",
+      "name": "Swiss Creative",
+      "category": "Swiss",
+      "surface": "web",
+      "description": "Playful Swiss grid — oat paper, ink type, four-color pop, hard offset shadows.",
+      "source": {
+        "type": "open-design",
+        "skill": "swiss-creative-mode-template",
+        "upstream": "https://github.com/nexu-io/open-design",
+        "license": "Apache-2.0"
+      }
+    }
+  ]
+}

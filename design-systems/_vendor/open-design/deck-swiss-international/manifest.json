@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "od-design-system-project/v1",
+  "id": "deck-swiss-international",
+  "name": "Deck — Swiss International",
+  "category": "Deck",
+  "description": "International Typographic deck — paper white, ink black, Klein-blue accent, 16-col grid.",
+  "files": {
+    "design": "DESIGN.md",
+    "tokens": "tokens.css"
+  },
+  "craft": {
+    "applies": [
+      "off-token-color",
+      "ai-default-indigo",
+      "purple-gradient",
+      "trust-gradient",
+      "emoji-icon",
+      "invented-metric",
+      "filler-copy",
+      "external-image",
+      "token-self-check"
+    ],
+    "exemptions": [
+      "accent-overuse"
+    ]
+  },
+  "surface": "web",
+  "source": {
+    "type": "open-design",
+    "skill": "deck-swiss-international",
+    "upstream": "https://github.com/nexu-io/open-design",
+    "license": "Apache-2.0"
+  }
+}

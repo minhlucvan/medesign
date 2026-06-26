@@ -1,0 +1,67 @@
+/* Digits Fintech Swiss — token contract. Captured/generated components reference these roles only. */
+:root {
+  /* ---- color ---- */
+  --color-surface: #f2f2ed;                 /* bone paper */
+  --color-surface-raised: #ffffff;          /* white metric card */
+  --color-text: #0a0a0a;                    /* ink */
+  --color-text-muted: rgba(10,10,10,0.60);  /* 60% ink — meta / tags / kickers */
+  --color-accent: #0a0a0a;                  /* ink — the one decisive action (white text on it) */
+  --color-accent-hover: #2a2a2a;            /* charcoal — accent hover / press */
+  --color-border: rgba(10,10,10,0.12);      /* hairline rule */
+
+  /* identity highlight — FILL ONLY: ink type sits on lime, never lime type on paper */
+  --color-highlight: #e2ff41;               /* electric lime — the signature plane */
+  --color-highlight-ink: #0a0a0a;           /* text / figures painted on lime */
+
+  /* status */
+  --color-success: #15803d;
+  --color-warn: #b45309;
+  --color-danger: #b91c1c;
+
+  /* fintech delta — gains vs losses on figures/deltas (tabular) */
+  --color-positive: #15803d;
+  --color-negative: #b91c1c;
+
+  /* ---- type ---- */
+  --font-display: "Geist", "Inter Tight", "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+
+  /* ---- shape / depth ---- */
+  --radius: 0px;                            /* sharp Swiss corners */
+  --radius-sm: 0px;                         /* inputs are squared too */
+  --radius-pill: 999px;                     /* nav chrome only (prev/next, dots) */
+  --space-unit: 8px;
+  --shadow-raised: none;                    /* flat — depth is hairline borders + color planes */
+  --focus-ring: 0 0 0 3px rgba(226,255,65,0.55); /* electric-lime focus halo */
+
+  /* ---- motion ---- */
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- layout ---- */
+  --container-max: 1400px;                  /* deck stage width */
+  --section-y: 64px;
+}
+
+/* Dark theme — light-on-near-black console; lime becomes the decisive action.
+   Lint strips this block; primitives read :root. Every var re-declares a :root role. */
+html[data-theme="dark"] {
+  --color-surface: #0a0b0d;                 /* near-black canvas */
+  --color-surface-raised: #14161a;          /* raised metric card */
+  --color-text: #f4f5f7;                    /* paper-white ink */
+  --color-text-muted: rgba(244,245,247,0.60);
+  --color-accent: #e2ff41;                  /* lime is the action on dark (ink text on it) */
+  --color-accent-hover: #c8e63a;
+  --color-border: rgba(244,245,247,0.14);   /* hairline on dark */
+  --color-highlight: #e2ff41;
+  --color-highlight-ink: #0a0a0a;
+  --color-success: #4ade80;
+  --color-warn: #fbbf24;
+  --color-danger: #f87171;
+  --color-positive: #4ade80;
+  --color-negative: #f87171;
+  --shadow-raised: 0 1px 0 rgba(255,255,255,0.04);
+  --focus-ring: 0 0 0 3px rgba(226,255,65,0.45);
+}

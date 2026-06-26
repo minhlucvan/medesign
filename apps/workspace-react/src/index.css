@@ -1,0 +1,10 @@
+/*
+ * The active design system is selected by symlinking / copying its tokens.css here.
+ * `medesign use <design-system>` (backend CLI) updates this import. Everything renders
+ * against the selected system's CSS custom properties.
+ */
+@import "./active-design-system.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

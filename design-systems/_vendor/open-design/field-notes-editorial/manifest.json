@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "od-design-system-project/v1",
+  "id": "field-notes-editorial",
+  "name": "Field Notes Editorial",
+  "category": "Editorial",
+  "description": "Warm-paper field-notes editorial — soft ink, lime/pink/peach trims, rounded cards.",
+  "files": {
+    "design": "DESIGN.md",
+    "tokens": "tokens.css"
+  },
+  "craft": {
+    "applies": [
+      "off-token-color",
+      "ai-default-indigo",
+      "accent-overuse",
+      "token-self-check"
+    ],
+    "exemptions": []
+  },
+  "surface": "web",
+  "source": {
+    "type": "open-design",
+    "skill": "field-notes-editorial-template",
+    "upstream": "https://github.com/nexu-io/open-design",
+    "license": "Apache-2.0"
+  }
+}

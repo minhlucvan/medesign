@@ -1,0 +1,24 @@
+medesign
+Copyright 2026 the medesign authors
+
+This product includes software design and code patterns adapted from open-design
+(https://github.com/nexu-io/open-design), Copyright the open-design authors,
+licensed under the Apache License, Version 2.0.
+
+Specifically, the agent-harness adapter pattern (the pure `buildArgs` adapter shape,
+stdin stream-json prompt transport, capability probing, session resume, and `.mcp.json`
+artifact-capture injection) and the design-system "token contract" / artifact-conformance
+concepts are adapted from open-design's daemon (apps/daemon/src/runtimes, /critique,
+and /design-systems).
+
+In addition, the prebuilt design-system bases under `design-systems/_vendor/open-design/`
+are derived from open-design's vendored skills (`skills/_vendor/open-design/`): their
+palettes, type, and visual specifications are mapped into medesign's DESIGN.md + token
+contract, and each base bundles its origin SKILL.md and reference assets. Per-base
+provenance (the source skill, its `upstream`, and license) is recorded in each base's
+`manifest.json` `source` block and in `design-systems/_vendor/open-design/catalog.json`.
+These skills are Apache-2.0 unless a skill's own LICENSE says otherwise; see
+`skills/_vendor/open-design/ATTRIBUTION.md` and `CATALOG.md`.
+
+A copy of the Apache License 2.0 is available at:
+http://www.apache.org/licenses/LICENSE-2.0

@@ -1,0 +1,37 @@
+/* Industrial Brutalist — token contract (open-design/brutalist-skill). Swiss-Industrial light substrate.
+   Generated/captured components reference these roles only. Zero radius, hard ink, alarm red. */
+:root {
+  /* ---- color: matte unbleached documentation paper + carbon ink ---- */
+  --color-surface: #f4f4f0;          /* bone paper substrate */
+  --color-surface-raised: #eae8e3;   /* compartment fill, raised panels */
+  --color-text: #050505;             /* carbon ink — primary foreground */
+  --color-text-muted: rgba(5,5,5,0.62); /* dimmed metadata / telemetry labels */
+  --color-accent: #e61919;           /* aviation / hazard red — the ONLY accent */
+  --color-accent-hover: #c41212;     /* depressed red */
+  --color-border: #050505;           /* full-strength ink rules — visible compartmentalization */
+  --color-success: #2f6b34;          /* status only; signal-green #4af626 reserved for dark telemetry */
+  --color-warn: #b45309;             /* caution status */
+  --color-danger: #b91c1c;           /* fault / destructive status */
+
+  /* ---- type: heavy neo-grotesque structure + monospace telemetry ---- */
+  --font-display: "Neue Haas Grotesk", "Archivo Black", "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+
+  /* ---- shape / depth: 90-degree corners, no soft shadow ---- */
+  --radius: 0px;       /* mechanical rigidity — every corner is exactly 90 degrees */
+  --radius-sm: 0px;    /* inputs are hard-edged too */
+  --radius-pill: 0px;  /* badges are rectangular plates, never pills */
+  --space-unit: 8px;
+  --shadow-raised: none;  /* drop shadows are strictly prohibited */
+  --focus-ring: 0 0 0 2px #050505, 0 0 0 4px #e61919; /* hard double outline, ink + red */
+
+  /* ---- motion: instantaneous, mechanical ---- */
+  --motion-fast: 90ms;
+  --motion-base: 140ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- layout: blueprint grid ---- */
+  --container-max: 1180px;
+  --section-y: 96px;
+}

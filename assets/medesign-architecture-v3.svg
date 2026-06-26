@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" fill="none">
+  <style>text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }</style>
+
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#5a5a5a"/>
+    </marker>
+    <marker id="arr-fb" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#9a9a9a"/>
+    </marker>
+    <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0000000a"/></filter>
+  </defs>
+
+  <rect width="960" height="540" rx="14" fill="#f8f6f3"/>
+
+  <!-- Title -->
+  <text x="480" y="40" text-anchor="middle" fill="#1a1a1a" font-size="18" font-weight="700" letter-spacing="1.5">SYSTEM ARCHITECTURE</text>
+  <line x1="340" y1="52" x2="620" y2="52" stroke="#ddd" stroke-width="1"/>
+
+  <!-- ═══ ROW 1: CORE PIPELINE ═══ -->
+  <!-- Column backgrounds -->
+  <rect x="50" y="80" width="250" height="310" rx="10" fill="none" stroke="#e0ddd8" stroke-width="1"/>
+  <rect x="330" y="80" width="300" height="310" rx="10" fill="none" stroke="#e0ddd8" stroke-width="1"/>
+  <rect x="660" y="80" width="250" height="310" rx="10" fill="none" stroke="#e0ddd8" stroke-width="1"/>
+
+  <!-- Column headers -->
+  <rect x="50" y="80" width="250" height="40" rx="10" fill="#9dd4c7"/>
+  <rect x="50" y="100" width="250" height="20" fill="#9dd4c7"/>
+  <text x="175" y="106" text-anchor="middle" fill="#1a1a1a" font-size="14" font-weight="700" letter-spacing="1">AGENT</text>
+
+  <rect x="330" y="80" width="300" height="40" rx="10" fill="#4a4a4a"/>
+  <rect x="330" y="100" width="300" height="20" fill="#4a4a4a"/>
+  <text x="480" y="106" text-anchor="middle" fill="#f8f6f3" font-size="14" font-weight="700" letter-spacing="1">BACKEND ENGINE</text>
+
+  <rect x="660" y="80" width="250" height="40" rx="10" fill="#9dd4c7"/>
+  <rect x="660" y="100" width="250" height="20" fill="#9dd4c7"/>
+  <text x="785" y="106" text-anchor="middle" fill="#1a1a1a" font-size="14" font-weight="700" letter-spacing="1">FRONTEND</text>
+
+  <!-- === AGENT ITEMS === -->
+  <!-- Primary: Claude Code -->
+  <rect x="70" y="140" width="210" height="60" rx="8" fill="#9dd4c7" fill-opacity="0.2" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <text x="175" y="166" text-anchor="middle" fill="#1a1a1a" font-size="15" font-weight="600">Claude Code</text>
+  <text x="175" y="186" text-anchor="middle" fill="#5a5a5a" font-size="12">or any MCP agent</text>
+
+  <!-- Workspace -->
+  <rect x="70" y="215" width="210" height="50" rx="8" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="1.5" filter="url(#s)"/>
+  <text x="175" y="240" text-anchor="middle" fill="#1a1a1a" font-size="14" font-weight="600">/mds:* Workspace</text>
+  <text x="175" y="257" text-anchor="middle" fill="#5a5a5a" font-size="11">Commands · Critics · Skills</text>
+
+  <!-- CLI -->
+  <rect x="70" y="280" width="210" height="50" rx="8" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="1.5" filter="url(#s)"/>
+  <text x="175" y="305" text-anchor="middle" fill="#1a1a1a" font-size="14" font-weight="600">CLI</text>
+  <text x="175" y="322" text-anchor="middle" fill="#5a5a5a" font-size="11">Thin client · Gates</text>
+
+  <!-- === BACKEND ITEMS === -->
+  <!-- MCP Server -->
+  <rect x="350" y="140" width="260" height="60" rx="8" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <text x="480" y="166" text-anchor="middle" fill="#1a1a1a" font-size="15" font-weight="600">MCP Server</text>
+  <text x="480" y="186" text-anchor="middle" fill="#5a5a5a" font-size="12">Tool surface: get_design_context · create_component · lint_consistency · run_visual_test</text>
+
+  <!-- Lint + Visual Test row -->
+  <rect x="350" y="215" width="125" height="50" rx="8" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="1.5" filter="url(#s)"/>
+  <text x="412" y="240" text-anchor="middle" fill="#1a1a1a" font-size="13" font-weight="600">Consistency Lint</text>
+  <text x="412" y="257" text-anchor="middle" fill="#5a5a5a" font-size="11">Token · Anti-slop</text>
+
+  <rect x="485" y="215" width="125" height="50" rx="8" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="1.5" filter="url(#s)"/>
+  <text x="547" y="240" text-anchor="middle" fill="#1a1a1a" font-size="13" font-weight="600">Visual Test</text>
+  <text x="547" y="257" text-anchor="middle" fill="#5a5a5a" font-size="11">Playwright + diff</text>
+
+  <!-- Prompt Composer + Graph row -->
+  <rect x="350" y="280" width="125" height="50" rx="8" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="1.5" filter="url(#s)"/>
+  <text x="412" y="305" text-anchor="middle" fill="#1a1a1a" font-size="13" font-weight="600">Prompt Composer</text>
+  <text x="412" y="322" text-anchor="middle" fill="#5a5a5a" font-size="11">DESIGN.md + tokens</text>
+
+  <rect x="485" y="280" width="125" height="50" rx="8" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="1.5" filter="url(#s)"/>
+  <text x="547" y="305" text-anchor="middle" fill="#1a1a1a" font-size="13" font-weight="600">Knowledge Graph</text>
+  <text x="547" y="322" text-anchor="middle" fill="#5a5a5a" font-size="11">Impact · Where-to-fix</text>
+
+  <!-- Critique Gate + Capture -->
+  <rect x="350" y="345" width="260" height="30" rx="6" fill="#4a4a4a" filter="url(#s)"/>
+  <text x="480" y="366" text-anchor="middle" fill="#f8f6f3" font-size="13" font-weight="700">Critique Gate + Capture</text>
+
+  <!-- === FRONTEND ITEMS === -->
+  <rect x="680" y="140" width="210" height="60" rx="8" fill="#9dd4c7" fill-opacity="0.2" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <text x="785" y="166" text-anchor="middle" fill="#1a1a1a" font-size="15" font-weight="600">Storybook</text>
+  <text x="785" y="186" text-anchor="middle" fill="#5a5a5a" font-size="12">HMR · Live component preview</text>
+
+  <rect x="680" y="215" width="210" height="65" rx="8" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="1.5" filter="url(#s)"/>
+  <text x="785" y="240" text-anchor="middle" fill="#1a1a1a" font-size="14" font-weight="600">medesign Addon</text>
+  <text x="785" y="260" text-anchor="middle" fill="#5a5a5a" font-size="12">Chat · Scores</text>
+  <text x="785" y="276" text-anchor="middle" fill="#5a5a5a" font-size="12">Visual Diff · Capture</text>
+
+  <!-- === ARROWS: Pipeline === -->
+  <line x1="300" y1="170" x2="325" y2="170" stroke="#5a5a5a" stroke-width="2.5" marker-end="url(#arr)"/>
+  <line x1="630" y1="170" x2="675" y2="170" stroke="#5a5a5a" stroke-width="2.5" marker-end="url(#arr)"/>
+
+  <!-- === FEEDBACK LOOP === -->
+  <path d="M785 280 C785 420, 260 420, 175 340" stroke="#9a9a9a" stroke-width="2" stroke-dasharray="6,3" fill="none" marker-end="url(#arr-fb)"/>
+  <rect x="370" y="428" width="220" height="22" rx="4" fill="#f8f6f3" fill-opacity="0.95"/>
+  <text x="480" y="443" text-anchor="middle" fill="#9a9a9a" font-size="12" font-weight="500">FEEDBACK (lint + visual diff + scores)</text>
+
+  <!-- ═══ ROW 2: INFRASTRUCTURE ═══ -->
+  <rect x="50" y="420" width="430" height="95" rx="10" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <rect x="50" y="420" width="430" height="4" rx="2" fill="#4a4a4a"/>
+  <text x="265" y="455" text-anchor="middle" fill="#1a1a1a" font-size="15" font-weight="600">Design Systems</text>
+  <text x="265" y="478" text-anchor="middle" fill="#5a5a5a" font-size="13">DESIGN.md contract · tokens.css · code/ primitives</text>
+  <text x="265" y="498" text-anchor="middle" fill="#5a5a5a" font-size="13">Knowledge graph (graph.json) · Prebuilt bases (open-design)</text>
+
+  <rect x="500" y="420" width="410" height="95" rx="10" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2" stroke-dasharray="6,4" filter="url(#s)"/>
+  <rect x="500" y="420" width="410" height="4" rx="2" fill="#4a4a4a"/>
+  <text x="705" y="455" text-anchor="middle" fill="#1a1a1a" font-size="15" font-weight="600">Generated Components</text>
+  <text x="705" y="478" text-anchor="middle" fill="#5a5a5a" font-size="13">React + Tailwind · src/generated/ · .stories.tsx</text>
+  <text x="705" y="498" text-anchor="middle" fill="#5a5a5a" font-size="13">Capture → src/components/ (git-tracked, reusable)</text>
+
+  <!-- Backend → Design Systems arrow -->
+  <path d="M480 345 C480 380, 265 380, 265 418" stroke="#5a5a5a" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#arr)"/>
+</svg>

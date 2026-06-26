@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "od-design-system-project/v1",
+  "id": "deck-open-canvas",
+  "name": "Deck — Open Slide Canvas",
+  "category": "Deck",
+  "description": "Deep-space slide canvas — midnight ground, sky-blue accent, crisp light type.",
+  "files": {
+    "design": "DESIGN.md",
+    "tokens": "tokens.css"
+  },
+  "craft": {
+    "applies": [
+      "off-token-color",
+      "ai-default-indigo",
+      "accent-overuse",
+      "token-self-check"
+    ],
+    "exemptions": [
+      "sans-display"
+    ]
+  },
+  "surface": "web",
+  "source": {
+    "type": "open-design",
+    "skill": "deck-open-slide-canvas",
+    "upstream": "https://github.com/nexu-io/open-design",
+    "license": "Apache-2.0"
+  }
+}

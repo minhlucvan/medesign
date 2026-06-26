@@ -1,0 +1,23 @@
+{
+  "name": "@medesign/addon",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "medesign Storybook addon — the live design ↔ change-request loop panel (chat · capture · visual-diff).",
+  "exports": {
+    "./manager": "./src/manager.tsx",
+    "./preview": "./src/preview.tsx",
+    "./preset": "./src/preset.js",
+    "./package.json": "./package.json"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@storybook/components": "^8.2.0",
+    "@storybook/manager-api": "^8.2.0",
+    "@storybook/preview-api": "^8.2.0",
+    "@storybook/theming": "^8.2.0",
+    "typescript": "^5.5.0"
+  }
+}

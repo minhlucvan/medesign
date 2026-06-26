@@ -1,0 +1,36 @@
+/* Noir — token contract (derived from the Atelier prebuilt). Components reference these roles only. */
+:root {
+  /* ---- color ---- */
+  --color-surface: #0f0f10;          /* near-black canvas */
+  --color-surface-raised: #18181b;   /* raised panel */
+  --color-text: #f4f4f5;             /* off-white */
+  --color-text-muted: #a1a1aa;       /* muted grey */
+  --color-accent: #c4f042;           /* electric lime */
+  --color-accent-hover: #aee02f;     /* brighter lime */
+  --color-border: #2a2a2e;           /* hairline on dark */
+  --color-success: #4ade80;
+  --color-warn: #fbbf24;
+  --color-danger: #f87171;
+
+  /* ---- type ---- */
+  --font-display: "Newsreader", "Georgia", serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* ---- shape / depth ---- */
+  --radius: 8px;
+  --radius-sm: 5px;
+  --radius-pill: 999px;
+  --space-unit: 8px;
+  --shadow-raised: 0 1px 2px rgba(26, 23, 20, 0.06), 0 8px 24px rgba(26, 23, 20, 0.05);
+  --focus-ring: 0 0 0 3px rgba(180, 83, 42, 0.28);
+
+  /* ---- motion ---- */
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- layout ---- */
+  --container-max: 1180px;
+  --section-y: 96px;
+}

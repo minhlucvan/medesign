@@ -1,0 +1,43 @@
+/* Field Notes Editorial — token contract. Captured/generated components reference these roles only. */
+:root {
+  /* ---- color ---- */
+  --color-surface: #f4f0e8;          /* warm paper */
+  --color-surface-raised: #fbf9f3;   /* lifted paper (cards, inputs) */
+  --color-text: #181715;             /* deep ink */
+  --color-text-muted: #5c5853;       /* soft ink (≈ rgba(24,23,21,0.72) on paper) */
+  --color-accent: #9e5572;           /* field rose (deepened for AA on white) */
+  --color-accent-hover: #854a64;     /* pressed rose */
+  --color-border: #e6a2bc;           /* pink trim line */
+  --color-success: #3f6b42;
+  --color-warn: #9a6b1f;
+  --color-danger: #b3473c;
+
+  /* ---- decorative pastels (insight/metric card fills only — never text) ---- */
+  --color-lime: #c9d57a;             /* hero / insight #2 */
+  --color-pink: #e4b8cc;             /* metric / insight #1 */
+  --color-peach: #e9cbaf;            /* metric / insight #3 */
+  --color-line-yellow: #ddd06a;      /* chart series — written welcome */
+  --color-line-ink: #1d1d1d;         /* chart series — written + human reply */
+
+  /* ---- type ---- */
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* ---- shape / depth ---- */
+  --radius: 28px;                    /* signature pillow-rounded cards */
+  --radius-sm: 14px;                 /* inputs, badges, smaller blocks */
+  --radius-pill: 999px;              /* pager, pills */
+  --space-unit: 8px;
+  --shadow-raised: 0 1px 2px rgba(24, 23, 21, 0.05), 0 14px 44px rgba(24, 23, 21, 0.10);
+  --focus-ring: 0 0 0 3px rgba(158, 85, 114, 0.30);
+
+  /* ---- motion ---- */
+  --motion-fast: 120ms;
+  --motion-base: 250ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- layout ---- */
+  --container-max: 1280px;
+  --section-y: 88px;
+}

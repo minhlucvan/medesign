@@ -1,0 +1,37 @@
+/* Stitch — token contract (open-design/stitch-skill). Balanced premium product system.
+   Generated/captured components reference these roles only. Max 1 accent, saturation < 80%. */
+:root {
+  /* ---- color: absolute zinc neutrals + one calibrated accent ---- */
+  --color-surface: #ffffff;          /* page canvas */
+  --color-surface-raised: #f9fafb;   /* card / container fill (zinc-50) */
+  --color-text: #18181b;             /* charcoal ink (zinc-950) — never pure #000 */
+  --color-text-muted: #71717a;       /* muted steel (zinc-500), secondary text */
+  --color-accent: #3b82f6;           /* the single accent — CTAs, active, focus (no glow) */
+  --color-accent-hover: #2563eb;     /* depressed accent */
+  --color-border: #e5e7eb;           /* whisper hairline (zinc-200) */
+  --color-success: #10b981;          /* emerald status */
+  --color-warn: #f59e0b;             /* amber status */
+  --color-danger: #e11d48;           /* rose status */
+
+  /* ---- type: Geist sans display/body + Geist Mono; Inter is BANNED for premium ---- */
+  --font-display: "Geist", "Satoshi", "Outfit", system-ui, sans-serif;
+  --font-sans: "Geist", "Satoshi", system-ui, sans-serif;
+  --font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+
+  /* ---- shape / depth: balanced radii, tinted whisper shadow ---- */
+  --radius: 8px;
+  --radius-sm: 5px;
+  --radius-pill: 999px;
+  --space-unit: 8px;
+  --shadow-raised: 0 1px 2px rgba(24,24,27,0.06), 0 8px 24px rgba(24,24,27,0.05); /* tinted to bg, no glow */
+  --focus-ring: 0 0 0 3px rgba(59,130,246,0.28);
+
+  /* ---- motion: spring-weighted, premium ---- */
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- layout ---- */
+  --container-max: 1180px;
+  --section-y: 96px;
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@medesign/doctor",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "medesign design-system doctor — rule-based production-readiness linting over the dsr/graph data model. Runs core + plugin DesignReviewRules and reports findings (severity, fix, where) + X/Y rules passed.",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "build": "tsc -p tsconfig.json" },
+  "dependencies": { "@medesign/dsr": "*" },
+  "devDependencies": { "@types/node": "^20.14.0", "typescript": "^5.5.0" }
+}

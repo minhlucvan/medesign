@@ -1,0 +1,31 @@
+/* Deck — Open Slide Canvas — token contract (draft mapped from open-design/deck-open-slide-canvas). */
+:root {
+  --color-surface: #0a0e1a;
+  --color-surface-raised: #11172a;
+  --color-text: #f5f5f7;
+  --color-text-muted: rgba(245,245,247,0.62);
+  --color-accent: #5ac8fa;
+  --color-accent-hover: #3bb6ef;
+  --color-border: rgba(245,245,247,0.14);
+  --color-success: #15803d;
+  --color-warn: #b45309;
+  --color-danger: #b91c1c;
+
+  --font-display: "Inter Tight", "Source Serif Pro", system-ui, sans-serif;
+  --font-sans: "Inter", "Noto Sans SC", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius: 12px;
+  --radius-sm: 6px;
+  --radius-pill: 999px;
+  --space-unit: 8px;
+  --shadow-raised: 0 1px 2px rgba(0,0,0,0.5), 0 20px 50px rgba(0,0,0,0.55);
+  --focus-ring: 0 0 0 3px rgba(90,200,250,0.35);
+
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  --container-max: 1180px;
+  --section-y: 96px;
+}

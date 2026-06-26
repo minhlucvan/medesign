@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "od-design-system-project/v1",
+  "id": "after-hours",
+  "name": "After Hours",
+  "category": "Editorial",
+  "description": "Near-black nocturnal editorial — violet-white type, hot-pink accent, fine seams.",
+  "files": {
+    "design": "DESIGN.md",
+    "tokens": "tokens.css"
+  },
+  "craft": {
+    "applies": [
+      "off-token-color",
+      "ai-default-indigo",
+      "accent-overuse",
+      "token-self-check"
+    ],
+    "exemptions": []
+  },
+  "surface": "web",
+  "source": {
+    "type": "open-design",
+    "skill": "after-hours-editorial-template",
+    "upstream": "https://github.com/nexu-io/open-design",
+    "license": "Apache-2.0"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@medesign/backend",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "medesign Studio backend — headless design-engineering engine (library): MCP server, agent harness, prompt composer, code-first capture, visual testing, consistency linter, graph + critique. The executable lives in @medesign/cli.",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@medesign/dsr": "*",
+    "@medesign/graph": "*",
+    "@medesign/doctor": "*",
+    "@medesign/plugin-api": "*",
+    "@medesign/plugin-core": "*",
+    "@medesign/plugin-react": "*",
+    "@medesign/plugin-css": "*",
+    "@medesign/plugin-tailwindcss": "*",
+    "@medesign/plugin-shadcn": "*",
+    "express": "^4.19.0",
+    "gray-matter": "^4.0.3",
+    "pixelmatch": "^6.0.0",
+    "playwright": "^1.45.0",
+    "pngjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.0",
+    "@types/pngjs": "^6.0.5",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  }
+}

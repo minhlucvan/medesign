@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "od-design-system-project/v1",
+  "id": "soft",
+  "name": "Soft Studio",
+  "category": "Expressive",
+  "description": "Awwwards-soft agency — near-black ground, warm-cream type, pillowy radius and depth.",
+  "files": {
+    "design": "DESIGN.md",
+    "tokens": "tokens.css"
+  },
+  "craft": {
+    "applies": [
+      "off-token-color",
+      "ai-default-indigo",
+      "token-self-check"
+    ],
+    "exemptions": [
+      "accent-overuse",
+      "sans-display"
+    ]
+  },
+  "surface": "web",
+  "source": {
+    "type": "open-design",
+    "skill": "soft-skill",
+    "upstream": "https://github.com/Leonxlnx/taste-skill",
+    "license": "Apache-2.0"
+  }
+}

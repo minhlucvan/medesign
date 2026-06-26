@@ -1,0 +1,36 @@
+/* Atelier — token contract. Generated/captured components reference these roles only. */
+:root {
+  /* ---- color ---- */
+  --color-surface: #fbfaf7;          /* paper */
+  --color-surface-raised: #ffffff;   /* raised paper (cards, inputs) */
+  --color-text: #1a1714;             /* ink */
+  --color-text-muted: #6b645c;       /* aged ink */
+  --color-accent: #4a7d33;           /* moss */
+  --color-accent-hover: #3c6628;     /* deep moss */
+  --color-border: #e6e1d8;           /* deckle edge */
+  --color-success: #3f6b42;
+  --color-warn: #9a6b1f;
+  --color-danger: #963228;
+
+  /* ---- type ---- */
+  --font-display: "Newsreader", "Georgia", serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* ---- shape / depth ---- */
+  --radius: 8px;
+  --radius-sm: 5px;
+  --radius-pill: 999px;
+  --space-unit: 8px;
+  --shadow-raised: 0 1px 2px rgba(26, 23, 20, 0.06), 0 8px 24px rgba(26, 23, 20, 0.05);
+  --focus-ring: 0 0 0 3px rgba(74, 125, 51, 0.28);
+
+  /* ---- motion ---- */
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- layout ---- */
+  --container-max: 1180px;
+  --section-y: 96px;
+}

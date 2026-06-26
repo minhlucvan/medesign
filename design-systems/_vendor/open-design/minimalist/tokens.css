@@ -1,0 +1,37 @@
+/* Quiet Minimalist — token contract (open-design/minimalist-skill). Warm monochrome, editorial.
+   Generated/captured components reference these roles only. Color is a scarce resource. */
+:root {
+  /* ---- color: warm monochrome; accent IS the ink (deliberately monochrome) ---- */
+  --color-surface: #ffffff;          /* pure white canvas */
+  --color-surface-raised: #f7f6f3;   /* warm bone / off-white card fill */
+  --color-text: #111111;             /* off-black charcoal — never pure #000 for text */
+  --color-text-muted: #787774;       /* muted warm gray, secondary text */
+  --color-accent: #111111;           /* monochrome accent = the ink; CTAs use the same charcoal */
+  --color-accent-hover: #333333;     /* subtle shift on hover, per source spec */
+  --color-border: #eaeaea;           /* ultra-light structural hairline */
+  --color-success: #346538;          /* pale-green text token */
+  --color-warn: #956400;             /* pale-yellow text token */
+  --color-danger: #9f2f2d;           /* pale-red text token */
+
+  /* ---- type: editorial serif display + premium geometric sans + Geist mono ---- */
+  --font-display: "Lyon Text", "Newsreader", "Instrument Serif", "Playfair Display", Georgia, serif;
+  --font-sans: "SF Pro Display", "Geist", "Helvetica Neue", "Switzer", system-ui, sans-serif;
+  --font-mono: "Geist Mono", "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+
+  /* ---- shape / depth: crisp small radii, ultra-diffuse near-invisible shadow ---- */
+  --radius: 6px;       /* crisp; 8–12px max for cards, 4–6px for buttons */
+  --radius-sm: 5px;
+  --radius-pill: 999px; /* tags/badges only — never on large containers or primary buttons */
+  --space-unit: 8px;
+  --shadow-raised: 0 1px 2px rgba(0,0,0,0.03), 0 8px 24px rgba(0,0,0,0.04); /* < 0.05 opacity */
+  --focus-ring: 0 0 0 3px rgba(17,17,17,0.18); /* charcoal, quiet */
+
+  /* ---- motion: invisible, quiet ---- */
+  --motion-fast: 200ms;
+  --motion-base: 600ms;
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ---- layout: macro whitespace ---- */
+  --container-max: 1180px;
+  --section-y: 96px;
+}

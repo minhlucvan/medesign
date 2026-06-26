@@ -1,0 +1,31 @@
+/* Soft Studio — token contract (draft mapped from open-design/soft-skill). */
+:root {
+  --color-surface: #050505;
+  --color-surface-raised: #141414;
+  --color-text: #fdfbf7;
+  --color-text-muted: rgba(253,251,247,0.64);
+  --color-accent: #fdfbf7;
+  --color-accent-hover: #e9e5dc;
+  --color-border: rgba(253,251,247,0.14);
+  --color-success: #15803d;
+  --color-warn: #b45309;
+  --color-danger: #b91c1c;
+
+  --font-display: "Cabinet Grotesk", "Clash Display", system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", "Geist", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius: 20px;
+  --radius-sm: 8px;
+  --radius-pill: 999px;
+  --space-unit: 8px;
+  --shadow-raised: 0 2px 4px rgba(0,0,0,0.35), 0 32px 80px rgba(0,0,0,0.55);
+  --focus-ring: 0 0 0 3px rgba(253,251,247,0.3);
+
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  --container-max: 1180px;
+  --section-y: 96px;
+}

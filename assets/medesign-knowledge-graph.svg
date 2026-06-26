@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 620" fill="none">
+  <style>text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }</style>
+
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#5a5a5a"/>
+    </marker>
+    <marker id="arr-red" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#b91c1c"/>
+    </marker>
+    <filter id="s"><feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#0000000a"/></filter>
+  </defs>
+
+  <rect width="860" height="620" rx="14" fill="#f8f6f3"/>
+
+  <!-- Title -->
+  <text x="430" y="38" text-anchor="middle" fill="#1a1a1a" font-size="17" font-weight="700" letter-spacing="1.5">DESIGN-SYSTEM KNOWLEDGE GRAPH</text>
+  <line x1="230" y1="52" x2="630" y2="52" stroke="#ddd" stroke-width="1"/>
+
+  <!-- Subtitle -->
+  <text x="430" y="72" text-anchor="middle" fill="#888" font-size="12">A labeled property graph connecting tokens, components, stories, rules, and artifacts</text>
+
+  <!-- ═══ EDGES (drawn first so they appear behind nodes) ═══ -->
+
+  <!-- composes: PricingTiers → Button -->
+  <path d="M370 210 Q280 160 240 150" stroke="#5a5a5a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="270" y="140" width="65" height="18" rx="3" fill="#f8f6f3" fill-opacity="0.9"/>
+  <text x="302" y="153" text-anchor="middle" fill="#5a5a5a" font-size="10" font-style="italic">composes</text>
+
+  <!-- composes: PricingTiers → Card -->
+  <line x1="350" y1="230" x2="250" y2="290" stroke="#5a5a5a" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="270" y="245" width="65" height="18" rx="3" fill="#f8f6f3" fill-opacity="0.9"/>
+  <text x="302" y="258" text-anchor="middle" fill="#5a5a5a" font-size="10" font-style="italic">composes</text>
+
+  <!-- composes: PricingTiers → Badge -->
+  <path d="M390 230 Q460 280 490 330" stroke="#5a5a5a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="415" y="270" width="65" height="18" rx="3" fill="#f8f6f3" fill-opacity="0.9"/>
+  <text x="447" y="283" text-anchor="middle" fill="#5a5a5a" font-size="10" font-style="italic">composes</text>
+
+  <!-- uses: Button → -color-accent -->
+  <path d="M240 170 Q190 210 180 240" stroke="#5a5a5a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="175" y="190" width="55" height="18" rx="3" fill="#f8f6f3" fill-opacity="0.9"/>
+  <text x="202" y="203" text-anchor="middle" fill="#5a5a5a" font-size="10" font-style="italic">uses</text>
+
+  <!-- references: PricingTiers → -color-accent -->
+  <path d="M340 250 Q270 260 210 250" stroke="#5a5a5a" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#arr)"/>
+  <rect x="245" y="240" width="65" height="18" rx="3" fill="#f8f6f3" fill-opacity="0.9"/>
+  <text x="277" y="253" text-anchor="middle" fill="#5a5a5a" font-size="10" font-style="italic">references</text>
+
+  <!-- tokenValue: -color-accent → #b4532a -->
+  <path d="M160 270 Q120 320 140 370" stroke="#5a5a5a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="110" y="305" width="70" height="18" rx="3" fill="#f8f6f3" fill-opacity="0.9"/>
+  <text x="145" y="318" text-anchor="middle" fill="#5a5a5a" font-size="10" font-style="italic">tokenValue</text>
+
+  <!-- definedIn: -color-accent → §Color -->
+  <path d="M180 290 Q220 360 250 390" stroke="#5a5a5a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <rect x="185" y="335" width="65" height="18" rx="3" fill="#f8f6f3" fill-opacity="0.9"/>
+  <text x="217" y="348" text-anchor="middle" fill="#5a5a5a" font-size="10" font-style="italic">definedIn</text>
+
+  <!-- violates: PricingTiers → off-token-color rule -->
+  <path d="M410 230 Q490 220 530 200" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arr-red)"/>
+  <rect x="460" y="190" width="55" height="18" rx="3" fill="#fef2f2" fill-opacity="0.9"/>
+  <text x="487" y="203" text-anchor="middle" fill="#b91c1c" font-size="10" font-style="italic">violates</text>
+
+  <!-- storyOf: .stories → PricingTiers -->
+  <path d="M470 170 Q500 160 520 150" stroke="#5a5a5a" stroke-width="1.5" stroke-dasharray="3,2" fill="none" marker-end="url(#arr)"/>
+  <rect x="470" y="140" width="50" height="18" rx="3" fill="#f8f6f3" fill-opacity="0.9"/>
+  <text x="495" y="153" text-anchor="middle" fill="#5a5a5a" font-size="10" font-style="italic">storyOf</text>
+
+  <!-- hasVariant: Button → Button@primary -->
+  <path d="M230 130 Q200 100 170 90" stroke="#5a5a5a" stroke-width="1.5" stroke-dasharray="3,2" fill="none" marker-end="url(#arr)"/>
+  <rect x="175" y="100" width="65" height="18" rx="3" fill="#f8f6f3" fill-opacity="0.9"/>
+  <text x="207" y="113" text-anchor="middle" fill="#5a5a5a" font-size="10" font-style="italic">hasVariant</text>
+
+  <!-- ═══ NODES ═══ -->
+
+  <!-- CENTER: PricingTiers artifact -->
+  <circle cx="380" cy="230" r="3" fill="#999" opacity="0.3"/>
+  <rect x="310" y="200" width="140" height="60" rx="12" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="2.5" filter="url(#s)"/>
+  <text x="380" y="228" text-anchor="middle" fill="#1a1a1a" font-size="15" font-weight="700">PricingTiers</text>
+  <text x="380" y="248" text-anchor="middle" fill="#4a4a4a" font-size="12">artifact (generated)</text>
+
+  <!-- TOP-LEFT: Button primitive -->
+  <rect x="170" y="120" width="120" height="55" rx="8" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <text x="230" y="148" text-anchor="middle" fill="#1a1a1a" font-size="14" font-weight="600">Button</text>
+  <text x="230" y="167" text-anchor="middle" fill="#4a4a4a" font-size="10">primitive</text>
+
+  <!-- LEFT: Card primitive -->
+  <rect x="175" y="270" width="120" height="55" rx="8" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <text x="235" y="298" text-anchor="middle" fill="#1a1a1a" font-size="14" font-weight="600">Card</text>
+  <text x="235" y="317" text-anchor="middle" fill="#4a4a4a" font-size="10">primitive</text>
+
+  <!-- BOTTOM-RIGHT: Badge primitive -->
+  <rect x="430" y="310" width="120" height="55" rx="8" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <text x="490" y="338" text-anchor="middle" fill="#1a1a1a" font-size="14" font-weight="600">Badge</text>
+  <text x="490" y="357" text-anchor="middle" fill="#4a4a4a" font-size="10">primitive</text>
+
+  <!-- BOTTOM-LEFT: -color-accent token -->
+  <rect x="100" y="250" width="150" height="50" rx="8" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <text x="175" y="275" text-anchor="middle" fill="#1a1a1a" font-size="13" font-weight="600">--color-accent</text>
+  <text x="175" y="293" text-anchor="middle" fill="#4a4a4a" font-size="10">token (color role)</text>
+
+  <!-- BOTTOM: #b4532a color -->
+  <rect x="80" y="355" width="120" height="55" rx="8" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <rect x="80" y="355" width="120" height="4" rx="2" fill="#b4532a"/>
+  <text x="140" y="383" text-anchor="middle" fill="#1a1a1a" font-size="14" font-weight="600">#b4532a</text>
+  <text x="140" y="402" text-anchor="middle" fill="#4a4a4a" font-size="10">color (concrete)</text>
+
+  <!-- BOTTOM: §Color section -->
+  <rect x="200" y="370" width="120" height="55" rx="8" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <text x="260" y="398" text-anchor="middle" fill="#1a1a1a" font-size="14" font-weight="600">§ Color</text>
+  <text x="260" y="417" text-anchor="middle" fill="#4a4a4a" font-size="10">section (DESIGN.md)</text>
+
+  <!-- TOP-RIGHT: Button@primary variant -->
+  <rect x="100" y="80" width="100" height="46" rx="8" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="1.5" filter="url(#s)"/>
+  <text x="150" y="103" text-anchor="middle" fill="#1a1a1a" font-size="12" font-weight="600">@primary</text>
+  <text x="150" y="118" text-anchor="middle" fill="#4a4a4a" font-size="10">variant</text>
+
+  <!-- RIGHT: Story node -->
+  <rect x="480" y="120" width="120" height="55" rx="8" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <text x="540" y="148" text-anchor="middle" fill="#1a1a1a" font-size="14" font-weight="600">PricingTiers</text>
+  <text x="540" y="167" text-anchor="middle" fill="#4a4a4a" font-size="10">.stories.tsx</text>
+
+  <!-- RIGHT-BOTTOM: off-token-color rule -->
+  <rect x="510" y="180" width="140" height="55" rx="8" fill="#fef2f2" stroke="#b91c1c" stroke-width="1.5" filter="url(#s)"/>
+  <text x="580" y="208" text-anchor="middle" fill="#b91c1c" font-size="13" font-weight="600">off-token-color</text>
+  <text x="580" y="227" text-anchor="middle" fill="#b91c1c" font-size="10">rule (P0 block)</text>
+
+  <!-- ═══ LEGEND ═══ -->
+  <rect x="50" y="480" width="760" height="120" rx="10" fill="#f8f6f3" stroke="#ddd" stroke-width="1"/>
+  <text x="430" y="505" text-anchor="middle" fill="#1a1a1a" font-size="14" font-weight="600">How it reads</text>
+
+  <!-- Legend: node types -->
+  <rect x="70" y="520" width="16" height="16" rx="3" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="92" y="533" fill="#1a1a1a" font-size="12">Artifact</text>
+
+  <rect x="160" y="520" width="16" height="16" rx="3" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="182" y="533" fill="#1a1a1a" font-size="12">Primitive / Color</text>
+
+  <rect x="310" y="520" width="16" height="16" rx="3" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="332" y="533" fill="#1a1a1a" font-size="12">Token</text>
+
+  <rect x="400" y="520" width="16" height="16" rx="3" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="1"/>
+  <text x="422" y="533" fill="#1a1a1a" font-size="12">Section / Variant / Story</text>
+
+  <rect x="580" y="520" width="16" height="16" rx="3" fill="#fef2f2" stroke="#b91c1c" stroke-width="1"/>
+  <text x="602" y="533" fill="#1a1a1a" font-size="12">Rule</text>
+
+  <!-- Legend: edge types -->
+  <line x1="70" y1="555" x2="100" y2="555" stroke="#5a5a5a" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="108" y="559" fill="#5a5a5a" font-size="11" font-style="italic">composes / uses / references</text>
+
+  <line x1="300" y1="555" x2="330" y2="555" stroke="#5a5a5a" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+  <text x="338" y="559" fill="#5a5a5a" font-size="11" font-style="italic">references / definedIn</text>
+
+  <line x1="510" y1="555" x2="540" y2="555" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-red)"/>
+  <text x="548" y="559" fill="#b91c1c" font-size="11" font-style="italic">violates (P0)</text>
+
+  <!-- Legend: impact propagation -->
+  <text x="430" y="585" text-anchor="middle" fill="#888" font-size="11">"What breaks if I change --color-accent?" → Button, Card, Badge, PricingTiers, 3 stories</text>
+</svg>

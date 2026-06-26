@@ -1,0 +1,31 @@
+/* After Hours — token contract (draft mapped from open-design/after-hours-editorial-template). */
+:root {
+  --color-surface: #0a090f;
+  --color-surface-raised: #15131c;
+  --color-text: #f4f1f6;
+  --color-text-muted: #8f8698;
+  --color-accent: #ff4ea2;
+  --color-accent-hover: #e23b8c;
+  --color-border: #26232d;
+  --color-success: #15803d;
+  --color-warn: #b45309;
+  --color-danger: #b91c1c;
+
+  --font-display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --radius: 10px;
+  --radius-sm: 5px;
+  --radius-pill: 999px;
+  --space-unit: 8px;
+  --shadow-raised: 0 1px 2px rgba(0,0,0,0.55), 0 16px 40px rgba(0,0,0,0.5);
+  --focus-ring: 0 0 0 3px rgba(255,78,162,0.4);
+
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  --container-max: 1180px;
+  --section-y: 96px;
+}

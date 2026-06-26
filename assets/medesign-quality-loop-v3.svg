@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 740" fill="none">
+  <style>text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }</style>
+
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#888"/>
+    </marker>
+    <filter id="s"><feDropShadow dx="0" dy="1" stdDeviation="3" flood-color="#0000000c"/></filter>
+  </defs>
+
+  <rect width="760" height="740" rx="14" fill="#f8f6f3"/>
+
+  <!-- Title -->
+  <text x="380" y="42" text-anchor="middle" fill="#1a1a1a" font-size="17" font-weight="700" letter-spacing="1.5">THE QUALITY LOOP</text>
+  <line x1="260" y1="55" x2="500" y2="55" stroke="#ddd" stroke-width="1"/>
+
+  <!-- COMPONENT -->
+  <rect x="275" y="80" width="210" height="66" rx="12" fill="#9dd4c7" stroke="#4a4a4a" stroke-width="2.5" filter="url(#s)"/>
+  <text x="380" y="110" text-anchor="middle" fill="#1a1a1a" font-size="17" font-weight="700">COMPONENT</text>
+  <text x="380" y="133" text-anchor="middle" fill="#4a4a4a" font-size="13">.tsx + .stories.tsx</text>
+
+  <line x1="380" y1="146" x2="380" y2="185" stroke="#888" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- FEEDBACK SOURCES container -->
+  <rect x="80" y="200" width="600" height="290" rx="14" fill="none" stroke="#ddd" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <!-- Label tag floating on the dashed border -->
+  <rect x="290" y="192" width="180" height="20" rx="4" fill="#f8f6f3"/>
+  <text x="380" y="206" text-anchor="middle" fill="#888" font-size="12" font-weight="600" letter-spacing="1">FEEDBACK SOURCES</text>
+
+  <!-- Row 1 -->
+  <rect x="115" y="235" width="230" height="90" rx="10" fill="#f4e4c1" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <rect x="115" y="235" width="230" height="4" rx="2" fill="#4a4a4a"/>
+  <text x="230" y="270" text-anchor="middle" fill="#1a1a1a" font-size="15" font-weight="600">Rule / Lint</text>
+  <text x="230" y="295" text-anchor="middle" fill="#5a5a5a" font-size="13">Token contract · Anti-slop</text>
+  <text x="230" y="315" text-anchor="middle" fill="#5a5a5a" font-size="12">P0/P1 violation detection</text>
+
+  <rect x="415" y="235" width="230" height="90" rx="10" fill="#a8c5e6" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <rect x="415" y="235" width="230" height="4" rx="2" fill="#4a4a4a"/>
+  <text x="530" y="270" text-anchor="middle" fill="#1a1a1a" font-size="15" font-weight="600">Visual Diff</text>
+  <text x="530" y="295" text-anchor="middle" fill="#5a5a5a" font-size="13">Playwright snapshot</text>
+  <text x="530" y="315" text-anchor="middle" fill="#5a5a5a" font-size="12">Pixelmatch vs baseline</text>
+
+  <!-- Row 2 -->
+  <rect x="115" y="345" width="230" height="90" rx="10" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <rect x="115" y="345" width="230" height="4" rx="2" fill="#4a4a4a"/>
+  <text x="230" y="380" text-anchor="middle" fill="#1a1a1a" font-size="15" font-weight="600">Vision</text>
+  <text x="230" y="405" text-anchor="middle" fill="#5a5a5a" font-size="13">LLM reads screenshot</text>
+  <text x="230" y="425" text-anchor="middle" fill="#5a5a5a" font-size="12">5-axis critique (opt-in)</text>
+
+  <rect x="415" y="345" width="230" height="90" rx="10" fill="#e8e6e3" stroke="#4a4a4a" stroke-width="2" filter="url(#s)"/>
+  <rect x="415" y="345" width="230" height="4" rx="2" fill="#4a4a4a"/>
+  <text x="530" y="380" text-anchor="middle" fill="#1a1a1a" font-size="15" font-weight="600">LLM Review</text>
+  <text x="530" y="405" text-anchor="middle" fill="#5a5a5a" font-size="13">Design reviewer</text>
+  <text x="530" y="425" text-anchor="middle" fill="#5a5a5a" font-size="12">Spec + code audit</text>
+
+  <!-- Human inside the container, to the right -->
+  <rect x="660" y="310" width="110" height="40" rx="20" fill="#f8f6f3" stroke="#a8c5e6" stroke-width="1.5" stroke-dasharray="5,3" filter="url(#s)"/>
+  <text x="715" y="336" text-anchor="middle" fill="#5a5a5a" font-size="14" font-weight="600">+ Human</text>
+  <line x1="660" y1="330" x2="650" y2="330" stroke="#aaa" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Arrow down -->
+  <line x1="380" y1="490" x2="380" y2="525" stroke="#888" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- CRITIQUE GATE -->
+  <rect x="255" y="530" width="250" height="65" rx="12" fill="#4a4a4a" stroke="#9dd4c7" stroke-width="2" filter="url(#s)"/>
+  <text x="380" y="557" text-anchor="middle" fill="#f8f6f3" font-size="15" font-weight="700" letter-spacing="1">CRITIQUE GATE</text>
+  <text x="380" y="579" text-anchor="middle" fill="#ccc" font-size="13">composite ≥ 0.8  ·  mustFix === 0</text>
+
+  <!-- Arrow split -->
+  <line x1="380" y1="595" x2="380" y2="615" stroke="#888" stroke-width="2"/>
+
+  <!-- Outcomes -->
+  <line x1="380" y1="615" x2="300" y2="615" stroke="#2d6b4a" stroke-width="2.5"/>
+  <line x1="300" y1="615" x2="300" y2="630" stroke="#2d6b4a" stroke-width="2.5"/>
+  <rect x="230" y="635" width="140" height="60" rx="30" fill="#e6f4ea" stroke="#2d6b4a" stroke-width="2.5" filter="url(#s)"/>
+  <text x="300" y="666" text-anchor="middle" fill="#1a6b3a" font-size="20" font-weight="700">✓ SHIP</text>
+  <text x="300" y="688" text-anchor="middle" fill="#2d6b4a" font-size="13">Capture · Commit to repo</text>
+
+  <line x1="380" y1="615" x2="460" y2="615" stroke="#999" stroke-width="2.5"/>
+  <line x1="460" y1="615" x2="460" y2="630" stroke="#999" stroke-width="2.5"/>
+  <rect x="390" y="635" width="140" height="60" rx="30" fill="#f0f0f0" stroke="#999" stroke-width="2.5" filter="url(#s)"/>
+  <text x="460" y="666" text-anchor="middle" fill="#666" font-size="18" font-weight="600">⟲ ITERATE</text>
+  <text x="460" y="688" text-anchor="middle" fill="#888" font-size="13">Fix findings · Rebuild</text>
+</svg>

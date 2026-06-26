@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "od-design-system-project/v1",
+  "id": "swiss-creative",
+  "name": "Swiss Creative",
+  "category": "Swiss",
+  "description": "Playful Swiss grid — oat paper, ink type, four-color pop, hard offset shadows.",
+  "files": {
+    "design": "DESIGN.md",
+    "tokens": "tokens.css"
+  },
+  "craft": {
+    "applies": [
+      "off-token-color",
+      "ai-default-indigo",
+      "purple-gradient",
+      "trust-gradient",
+      "emoji-icon",
+      "invented-metric",
+      "filler-copy",
+      "external-image",
+      "token-self-check"
+    ],
+    "exemptions": [
+      "accent-overuse"
+    ]
+  },
+  "surface": "web",
+  "source": {
+    "type": "open-design",
+    "skill": "swiss-creative-mode-template",
+    "upstream": "https://github.com/nexu-io/open-design",
+    "license": "Apache-2.0"
+  }
+}

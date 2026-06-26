@@ -1,0 +1,21 @@
+{
+  "name": "@medesign/dsr",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "medesign design-system runtime — the DDD domain layer over the @medesign/graph data model. Load/read/manage a design system like a typed code library: aggregates, value objects, a rule engine, validation, references, conflicts, cache, and history. Design as code.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@medesign/graph": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}

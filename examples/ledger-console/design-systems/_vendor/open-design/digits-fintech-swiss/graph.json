@@ -1,0 +1,3105 @@
+{
+  "designSystem": "_vendor/open-design/digits-fintech-swiss",
+  "nodes": [
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss",
+      "label": "designSystem",
+      "props": {
+        "name": "_vendor/open-design/digits-fintech-swiss",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "label": "file",
+      "props": {
+        "path": "DESIGN.md",
+        "type": "design",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/DESIGN.md"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/graph.json",
+      "label": "file",
+      "props": {
+        "path": "graph.json",
+        "type": "asset",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/graph.json"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/manifest.json",
+      "label": "file",
+      "props": {
+        "path": "manifest.json",
+        "type": "manifest",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/manifest.json"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/reference-example.html",
+      "label": "file",
+      "props": {
+        "path": "reference-example.html",
+        "type": "asset",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/reference-example.html"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "file",
+      "props": {
+        "path": "tokens.css",
+        "type": "tokens",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/assets/template.html",
+      "label": "file",
+      "props": {
+        "path": "assets/template.html",
+        "type": "asset",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/assets/template.html"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/code/Badge.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Badge.tsx",
+        "type": "component",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Badge.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/code/Button.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Button.tsx",
+        "type": "component",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Button.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/code/Card.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Card.tsx",
+        "type": "component",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Card.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/code/Heading.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Heading.tsx",
+        "type": "component",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Heading.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/code/Input.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Input.tsx",
+        "type": "component",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Input.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/code/Showcase.stories.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Showcase.stories.tsx",
+        "type": "story",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Showcase.stories.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/code/Stack.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Stack.tsx",
+        "type": "component",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Stack.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/code/index.ts",
+      "label": "file",
+      "props": {
+        "path": "code/index.ts",
+        "type": "asset",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/index.ts"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/references/checklist.md",
+      "label": "file",
+      "props": {
+        "path": "references/checklist.md",
+        "type": "asset",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/references/checklist.md"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/skills/digits-fintech-swiss-template/SKILL.md",
+      "label": "file",
+      "props": {
+        "path": "skills/digits-fintech-swiss-template/SKILL.md",
+        "type": "asset",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/skills/digits-fintech-swiss-template/SKILL.md"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-surface",
+      "label": "token",
+      "props": {
+        "name": "--color-surface",
+        "kind": "color",
+        "value": "#f2f2ed",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 4
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/#f2f2ed",
+      "label": "color",
+      "props": {
+        "value": "#f2f2ed"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-surface-raised",
+      "label": "token",
+      "props": {
+        "name": "--color-surface-raised",
+        "kind": "color",
+        "value": "#ffffff",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 5
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/#ffffff",
+      "label": "color",
+      "props": {
+        "value": "#ffffff"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-text",
+      "label": "token",
+      "props": {
+        "name": "--color-text",
+        "kind": "color",
+        "value": "#0a0a0a",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 6
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/#0a0a0a",
+      "label": "color",
+      "props": {
+        "value": "#0a0a0a"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "label": "token",
+      "props": {
+        "name": "--color-text-muted",
+        "kind": "color",
+        "value": "rgba(10,10,10,0.60)",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 7
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/rgba(10,10,10,0.60)",
+      "label": "color",
+      "props": {
+        "value": "rgba(10,10,10,0.60)"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "label": "token",
+      "props": {
+        "name": "--color-accent",
+        "kind": "color",
+        "value": "#0a0a0a",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 8
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-accent-hover",
+      "label": "token",
+      "props": {
+        "name": "--color-accent-hover",
+        "kind": "color",
+        "value": "#2a2a2a",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 9
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/#2a2a2a",
+      "label": "color",
+      "props": {
+        "value": "#2a2a2a"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-border",
+      "label": "token",
+      "props": {
+        "name": "--color-border",
+        "kind": "color",
+        "value": "rgba(10,10,10,0.12)",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 10
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/rgba(10,10,10,0.12)",
+      "label": "color",
+      "props": {
+        "value": "rgba(10,10,10,0.12)"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-highlight",
+      "label": "token",
+      "props": {
+        "name": "--color-highlight",
+        "kind": "color",
+        "value": "#e2ff41",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 13
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/#e2ff41",
+      "label": "color",
+      "props": {
+        "value": "#e2ff41"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-highlight-ink",
+      "label": "token",
+      "props": {
+        "name": "--color-highlight-ink",
+        "kind": "color",
+        "value": "#0a0a0a",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 14
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-success",
+      "label": "token",
+      "props": {
+        "name": "--color-success",
+        "kind": "color",
+        "value": "#15803d",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 17
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/#15803d",
+      "label": "color",
+      "props": {
+        "value": "#15803d"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-warn",
+      "label": "token",
+      "props": {
+        "name": "--color-warn",
+        "kind": "color",
+        "value": "#b45309",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 18
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/#b45309",
+      "label": "color",
+      "props": {
+        "value": "#b45309"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-danger",
+      "label": "token",
+      "props": {
+        "name": "--color-danger",
+        "kind": "color",
+        "value": "#b91c1c",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 19
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/#b91c1c",
+      "label": "color",
+      "props": {
+        "value": "#b91c1c"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--font-display",
+      "label": "token",
+      "props": {
+        "name": "--font-display",
+        "kind": "type",
+        "value": "\"Geist\", \"Inter Tight\", \"Inter\", system-ui, sans-serif",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 22
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/face/Geist",
+      "label": "typeface",
+      "props": {
+        "family": "Geist",
+        "role": "display"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--font-sans",
+      "label": "token",
+      "props": {
+        "name": "--font-sans",
+        "kind": "type",
+        "value": "\"Inter\", system-ui, -apple-system, sans-serif",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 23
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/face/Inter",
+      "label": "typeface",
+      "props": {
+        "family": "Inter",
+        "role": "sans"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--font-mono",
+      "label": "token",
+      "props": {
+        "name": "--font-mono",
+        "kind": "type",
+        "value": "\"Geist Mono\", \"JetBrains Mono\", ui-monospace, monospace",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 24
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/face/Geist Mono",
+      "label": "typeface",
+      "props": {
+        "family": "Geist Mono",
+        "role": "mono"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--radius",
+      "label": "token",
+      "props": {
+        "name": "--radius",
+        "kind": "radius",
+        "value": "0px",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 27
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--radius-sm",
+      "label": "token",
+      "props": {
+        "name": "--radius-sm",
+        "kind": "radius",
+        "value": "0px",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 28
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--radius-pill",
+      "label": "token",
+      "props": {
+        "name": "--radius-pill",
+        "kind": "radius",
+        "value": "999px",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 29
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--space-unit",
+      "label": "token",
+      "props": {
+        "name": "--space-unit",
+        "kind": "spacing",
+        "value": "8px",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 30
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--shadow-raised",
+      "label": "token",
+      "props": {
+        "name": "--shadow-raised",
+        "kind": "shadow",
+        "value": "none",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 31
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--focus-ring",
+      "label": "token",
+      "props": {
+        "name": "--focus-ring",
+        "kind": "shadow",
+        "value": "0 0 0 3px rgba(226,255,65,0.55)",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 32
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--motion-fast",
+      "label": "token",
+      "props": {
+        "name": "--motion-fast",
+        "kind": "motion",
+        "value": "120ms",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 35
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--motion-base",
+      "label": "token",
+      "props": {
+        "name": "--motion-base",
+        "kind": "motion",
+        "value": "220ms",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 36
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--ease-standard",
+      "label": "token",
+      "props": {
+        "name": "--ease-standard",
+        "kind": "motion",
+        "value": "cubic-bezier(0.2, 0, 0, 1)",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 37
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--container-max",
+      "label": "token",
+      "props": {
+        "name": "--container-max",
+        "kind": "layout",
+        "value": "1400px",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 40
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--section-y",
+      "label": "token",
+      "props": {
+        "name": "--section-y",
+        "kind": "layout",
+        "value": "64px",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+          "line": 41
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "label": "section",
+      "props": {
+        "title": "Visual Theme & Atmosphere",
+        "index": 1,
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+          "line": 21
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§color",
+      "label": "section",
+      "props": {
+        "title": "Color",
+        "index": 2,
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+          "line": 27
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§typography",
+      "label": "section",
+      "props": {
+        "title": "Typography",
+        "index": 3,
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+          "line": 48
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§spacing",
+      "label": "section",
+      "props": {
+        "title": "Spacing",
+        "index": 4,
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+          "line": 71
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§layout-composition",
+      "label": "section",
+      "props": {
+        "title": "Layout & Composition",
+        "index": 5,
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+          "line": 75
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "section",
+      "props": {
+        "title": "Components",
+        "index": 6,
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+          "line": 79
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§motion-interaction",
+      "label": "section",
+      "props": {
+        "title": "Motion & Interaction",
+        "index": 7,
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+          "line": 93
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§voice-brand",
+      "label": "section",
+      "props": {
+        "title": "Voice & Brand",
+        "index": 8,
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+          "line": 97
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§anti-patterns",
+      "label": "section",
+      "props": {
+        "title": "Anti-patterns",
+        "index": 9,
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+          "line": 101
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§tokens",
+      "label": "section",
+      "props": {
+        "title": "Tokens",
+        "index": 10,
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+          "line": 118
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "label": "primitive",
+      "props": {
+        "name": "Badge",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Badge.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge#tone",
+      "label": "prop",
+      "props": {
+        "name": "tone",
+        "type": "Tone",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Badge.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge@neutral",
+      "label": "variant",
+      "props": {
+        "name": "neutral",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Badge.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge@accent",
+      "label": "variant",
+      "props": {
+        "name": "accent",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Badge.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button",
+      "label": "primitive",
+      "props": {
+        "name": "Button",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Button.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button#variant",
+      "label": "prop",
+      "props": {
+        "name": "variant",
+        "type": "Variant",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Button.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button@primary",
+      "label": "variant",
+      "props": {
+        "name": "primary",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Button.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button@secondary",
+      "label": "variant",
+      "props": {
+        "name": "secondary",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Button.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button:hover",
+      "label": "state",
+      "props": {
+        "name": "hover"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button:focus",
+      "label": "state",
+      "props": {
+        "name": "focus"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button:disabled",
+      "label": "state",
+      "props": {
+        "name": "disabled"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Card",
+      "label": "primitive",
+      "props": {
+        "name": "Card",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Card.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "primitive",
+      "props": {
+        "name": "Heading",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Heading.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Heading#level",
+      "label": "prop",
+      "props": {
+        "name": "level",
+        "type": "Level",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Heading.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "label": "primitive",
+      "props": {
+        "name": "Eyebrow",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Heading.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Input",
+      "label": "primitive",
+      "props": {
+        "name": "Input",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Input.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Input:focus",
+      "label": "state",
+      "props": {
+        "name": "focus"
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "label": "primitive",
+      "props": {
+        "name": "Stack",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Stack.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Stack#gap",
+      "label": "prop",
+      "props": {
+        "name": "gap",
+        "type": "number",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Stack.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Stack#direction",
+      "label": "prop",
+      "props": {
+        "name": "direction",
+        "type": "\"row\" | \"col\"",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Stack.tsx"
+        }
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Showcase.stories#Gallery",
+      "label": "story",
+      "props": {
+        "title": "Design System/Atelier",
+        "exportName": "Gallery",
+        "source": {
+          "file": "_vendor/open-design/digits-fintech-swiss/code/Showcase.stories.tsx"
+        }
+      }
+    },
+    {
+      "id": "rule/off-token-color",
+      "label": "rule",
+      "props": {
+        "ruleId": "off-token-color",
+        "severity": "P1",
+        "message": "Raw hex used where a token role exists.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Reference a token role (e.g. bg-accent / text-surface) instead of raw hex.",
+          "sectionHint": "Color"
+        }
+      }
+    },
+    {
+      "id": "rule/unresolved-token",
+      "label": "rule",
+      "props": {
+        "ruleId": "unresolved-token",
+        "severity": "P0",
+        "message": "var(--x) does not resolve to a declared token.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Use a declared role, or add the token to tokens.css.",
+          "sectionHint": "Tokens"
+        }
+      }
+    },
+    {
+      "id": "rule/ai-default-indigo",
+      "label": "rule",
+      "props": {
+        "ruleId": "ai-default-indigo",
+        "severity": "P0",
+        "message": "Solid AI-default indigo used outside token definitions.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Use the design-system accent token, not a raw indigo hex.",
+          "tokenRole": "color-accent",
+          "sectionHint": "Color"
+        }
+      }
+    },
+    {
+      "id": "rule/purple-gradient",
+      "label": "rule",
+      "props": {
+        "ruleId": "purple-gradient",
+        "severity": "P0",
+        "message": "Indigo/violet/purple gradient — the AI-default look.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Use the solid accent token; drop the gradient.",
+          "tokenRole": "color-accent",
+          "sectionHint": "Color"
+        }
+      }
+    },
+    {
+      "id": "rule/trust-gradient",
+      "label": "rule",
+      "props": {
+        "ruleId": "trust-gradient",
+        "severity": "P0",
+        "message": "Blue→cyan \"trust gradient\" hero cliché.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Use a flat surface + accent from the design system.",
+          "tokenRole": "color-surface",
+          "sectionHint": "Color"
+        }
+      }
+    },
+    {
+      "id": "rule/emoji-icon",
+      "label": "rule",
+      "props": {
+        "ruleId": "emoji-icon",
+        "severity": "P0",
+        "message": "Emoji used as an icon.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Use a real icon or omit it.",
+          "sectionHint": "Anti-patterns"
+        }
+      }
+    },
+    {
+      "id": "rule/left-accent-card",
+      "label": "rule",
+      "props": {
+        "ruleId": "left-accent-card",
+        "severity": "P0",
+        "message": "Rounded card with a colored left border.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Hairline border on all sides + the design-system shadow.",
+          "tokenRole": "shadow-raised",
+          "sectionHint": "Components"
+        }
+      }
+    },
+    {
+      "id": "rule/sans-display",
+      "label": "rule",
+      "props": {
+        "ruleId": "sans-display",
+        "severity": "P0",
+        "message": "Sans-serif family on a display heading.",
+        "appliesTo": "headings",
+        "remediation": {
+          "text": "Headings must use the display font.",
+          "tokenRole": "font-display",
+          "sectionHint": "Typography"
+        }
+      }
+    },
+    {
+      "id": "rule/invented-metric",
+      "label": "rule",
+      "props": {
+        "ruleId": "invented-metric",
+        "severity": "P0",
+        "message": "Invented marketing metric.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Remove fabricated metrics; use real copy or none.",
+          "sectionHint": "Voice & Brand"
+        }
+      }
+    },
+    {
+      "id": "rule/filler-copy",
+      "label": "rule",
+      "props": {
+        "ruleId": "filler-copy",
+        "severity": "P0",
+        "message": "Filler/placeholder copy.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Write real, specific copy.",
+          "sectionHint": "Voice & Brand"
+        }
+      }
+    },
+    {
+      "id": "rule/external-image",
+      "label": "rule",
+      "props": {
+        "ruleId": "external-image",
+        "severity": "P1",
+        "message": "External placeholder image host.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Use a local asset or a neutral solid block."
+        }
+      }
+    },
+    {
+      "id": "rule/accent-overuse",
+      "label": "rule",
+      "props": {
+        "ruleId": "accent-overuse",
+        "severity": "P1",
+        "message": "Accent used more than ~2 times per screen.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Reserve the accent for the single most important element.",
+          "tokenRole": "color-accent",
+          "sectionHint": "Color"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/graph.json",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/graph.json",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/manifest.json",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/manifest.json",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/reference-example.html",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/reference-example.html",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/assets/template.html",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/assets/template.html",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/code/Badge.tsx",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Badge.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/code/Button.tsx",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Button.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/code/Card.tsx",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Card.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/code/Heading.tsx",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Heading.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/code/Input.tsx",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Input.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/code/Showcase.stories.tsx",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Showcase.stories.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/code/Stack.tsx",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Stack.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/code/index.ts",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/index.ts",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/references/checklist.md",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/references/checklist.md",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/skills/digits-fintech-swiss-template/SKILL.md",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/skills/digits-fintech-swiss-template/SKILL.md",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--color-surface",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-surface",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-surface|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-surface",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 4
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-surface|tokenValue|_vendor/open-design/digits-fintech-swiss/#f2f2ed",
+      "label": "tokenValue",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-surface",
+      "to": "_vendor/open-design/digits-fintech-swiss/#f2f2ed",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--color-surface-raised",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-surface-raised",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-surface-raised|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-surface-raised",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 5
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-surface-raised|tokenValue|_vendor/open-design/digits-fintech-swiss/#ffffff",
+      "label": "tokenValue",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-surface-raised",
+      "to": "_vendor/open-design/digits-fintech-swiss/#ffffff",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--color-text",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-text",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-text|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-text",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 6
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-text|tokenValue|_vendor/open-design/digits-fintech-swiss/#0a0a0a",
+      "label": "tokenValue",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-text",
+      "to": "_vendor/open-design/digits-fintech-swiss/#0a0a0a",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-text-muted|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 7
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-text-muted|tokenValue|_vendor/open-design/digits-fintech-swiss/rgba(10,10,10,0.60)",
+      "label": "tokenValue",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "to": "_vendor/open-design/digits-fintech-swiss/rgba(10,10,10,0.60)",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-accent|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 8
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-accent|tokenValue|_vendor/open-design/digits-fintech-swiss/#0a0a0a",
+      "label": "tokenValue",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "to": "_vendor/open-design/digits-fintech-swiss/#0a0a0a",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--color-accent-hover",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-accent-hover",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-accent-hover|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-accent-hover",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 9
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-accent-hover|tokenValue|_vendor/open-design/digits-fintech-swiss/#2a2a2a",
+      "label": "tokenValue",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-accent-hover",
+      "to": "_vendor/open-design/digits-fintech-swiss/#2a2a2a",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--color-border",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-border",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-border|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-border",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 10
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-border|tokenValue|_vendor/open-design/digits-fintech-swiss/rgba(10,10,10,0.12)",
+      "label": "tokenValue",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-border",
+      "to": "_vendor/open-design/digits-fintech-swiss/rgba(10,10,10,0.12)",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--color-highlight",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-highlight",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-highlight|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-highlight",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 13
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-highlight|tokenValue|_vendor/open-design/digits-fintech-swiss/#e2ff41",
+      "label": "tokenValue",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-highlight",
+      "to": "_vendor/open-design/digits-fintech-swiss/#e2ff41",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--color-highlight-ink",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-highlight-ink",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-highlight-ink|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-highlight-ink",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 14
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-highlight-ink|tokenValue|_vendor/open-design/digits-fintech-swiss/#0a0a0a",
+      "label": "tokenValue",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-highlight-ink",
+      "to": "_vendor/open-design/digits-fintech-swiss/#0a0a0a",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--color-success",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-success",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-success|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-success",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 17
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-success|tokenValue|_vendor/open-design/digits-fintech-swiss/#15803d",
+      "label": "tokenValue",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-success",
+      "to": "_vendor/open-design/digits-fintech-swiss/#15803d",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--color-warn",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-warn",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-warn|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-warn",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 18
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-warn|tokenValue|_vendor/open-design/digits-fintech-swiss/#b45309",
+      "label": "tokenValue",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-warn",
+      "to": "_vendor/open-design/digits-fintech-swiss/#b45309",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--color-danger",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-danger",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-danger|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-danger",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 19
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-danger|tokenValue|_vendor/open-design/digits-fintech-swiss/#b91c1c",
+      "label": "tokenValue",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-danger",
+      "to": "_vendor/open-design/digits-fintech-swiss/#b91c1c",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--font-display",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--font-display",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--font-display|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--font-display",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 22
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--font-display|usesFont|_vendor/open-design/digits-fintech-swiss/face/Geist",
+      "label": "usesFont",
+      "from": "_vendor/open-design/digits-fintech-swiss/--font-display",
+      "to": "_vendor/open-design/digits-fintech-swiss/face/Geist",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--font-sans",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--font-sans",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--font-sans|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--font-sans",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 23
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--font-sans|usesFont|_vendor/open-design/digits-fintech-swiss/face/Inter",
+      "label": "usesFont",
+      "from": "_vendor/open-design/digits-fintech-swiss/--font-sans",
+      "to": "_vendor/open-design/digits-fintech-swiss/face/Inter",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--font-mono",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--font-mono",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--font-mono|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--font-mono",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 24
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--font-mono|usesFont|_vendor/open-design/digits-fintech-swiss/face/Geist Mono",
+      "label": "usesFont",
+      "from": "_vendor/open-design/digits-fintech-swiss/--font-mono",
+      "to": "_vendor/open-design/digits-fintech-swiss/face/Geist Mono",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--radius",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--radius",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--radius|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--radius",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 27
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--radius-sm",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--radius-sm",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--radius-sm|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--radius-sm",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 28
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--radius-pill",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--radius-pill",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--radius-pill|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--radius-pill",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 29
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--space-unit",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--space-unit",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--space-unit|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--space-unit",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 30
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--shadow-raised",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--shadow-raised",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--shadow-raised|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--shadow-raised",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 31
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--focus-ring",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--focus-ring",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--focus-ring|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--focus-ring",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 32
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--motion-fast",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--motion-fast",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--motion-fast|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--motion-fast",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 35
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--motion-base",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--motion-base",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--motion-base|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--motion-base",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 36
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--ease-standard",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--ease-standard",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--ease-standard|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--ease-standard",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 37
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--container-max",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--container-max",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--container-max|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--container-max",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 40
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/--section-y",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/--section-y",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--section-y|declaredIn|_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--section-y",
+      "to": "_vendor/open-design/digits-fintech-swiss/tokens.css",
+      "props": {
+        "line": 41
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere|declaredIn|_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "to": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "props": {
+        "line": 21
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/§color",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/§color",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§color|declaredIn|_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/§color",
+      "to": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "props": {
+        "line": 27
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/§typography",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/§typography",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§typography|declaredIn|_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/§typography",
+      "to": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "props": {
+        "line": 48
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/§spacing",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/§spacing",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§spacing|declaredIn|_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/§spacing",
+      "to": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "props": {
+        "line": 71
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/§layout-composition",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/§layout-composition",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§layout-composition|declaredIn|_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/§layout-composition",
+      "to": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "props": {
+        "line": 75
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§components|declaredIn|_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/§components",
+      "to": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "props": {
+        "line": 79
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/§motion-interaction",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/§motion-interaction",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§motion-interaction|declaredIn|_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/§motion-interaction",
+      "to": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "props": {
+        "line": 93
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/§voice-brand",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/§voice-brand",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§voice-brand|declaredIn|_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/§voice-brand",
+      "to": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "props": {
+        "line": 97
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/§anti-patterns",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/§anti-patterns",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§anti-patterns|declaredIn|_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/§anti-patterns",
+      "to": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "props": {
+        "line": 101
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/§tokens",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/§tokens",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/§tokens|declaredIn|_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/§tokens",
+      "to": "_vendor/open-design/digits-fintech-swiss/DESIGN.md",
+      "props": {
+        "line": 118
+      }
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-surface|definedIn|_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-surface",
+      "to": "_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-surface-raised|definedIn|_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-surface-raised",
+      "to": "_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-text|definedIn|_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-text",
+      "to": "_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-text-muted|definedIn|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-accent|definedIn|_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "to": "_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-accent-hover|definedIn|_vendor/open-design/digits-fintech-swiss/§color",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-accent-hover",
+      "to": "_vendor/open-design/digits-fintech-swiss/§color",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-border|definedIn|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-border",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-highlight|definedIn|_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-highlight",
+      "to": "_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-highlight-ink|definedIn|_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-highlight-ink",
+      "to": "_vendor/open-design/digits-fintech-swiss/§visual-theme-atmosphere",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-success|definedIn|_vendor/open-design/digits-fintech-swiss/§color",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-success",
+      "to": "_vendor/open-design/digits-fintech-swiss/§color",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-warn|definedIn|_vendor/open-design/digits-fintech-swiss/§color",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-warn",
+      "to": "_vendor/open-design/digits-fintech-swiss/§color",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--color-danger|definedIn|_vendor/open-design/digits-fintech-swiss/§color",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--color-danger",
+      "to": "_vendor/open-design/digits-fintech-swiss/§color",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--font-display|definedIn|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--font-display",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--font-sans|definedIn|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--font-sans",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--radius|definedIn|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--radius",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--radius-sm|definedIn|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--radius-sm",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--radius-pill|definedIn|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--radius-pill",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--space-unit|definedIn|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--space-unit",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--shadow-raised|definedIn|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--shadow-raised",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--focus-ring|definedIn|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--focus-ring",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--motion-fast|definedIn|_vendor/open-design/digits-fintech-swiss/§motion-interaction",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--motion-fast",
+      "to": "_vendor/open-design/digits-fintech-swiss/§motion-interaction",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--motion-base|definedIn|_vendor/open-design/digits-fintech-swiss/§motion-interaction",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--motion-base",
+      "to": "_vendor/open-design/digits-fintech-swiss/§motion-interaction",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--container-max|definedIn|_vendor/open-design/digits-fintech-swiss/§layout-composition",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--container-max",
+      "to": "_vendor/open-design/digits-fintech-swiss/§layout-composition",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/--section-y|definedIn|_vendor/open-design/digits-fintech-swiss/§spacing",
+      "label": "definedIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/--section-y",
+      "to": "_vendor/open-design/digits-fintech-swiss/§spacing",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/Badge",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge|declaredIn|_vendor/open-design/digits-fintech-swiss/code/Badge.tsx",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Badge.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge|hasProp|_vendor/open-design/digits-fintech-swiss/Badge#tone",
+      "label": "hasProp",
+      "from": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge#tone",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge|hasVariant|_vendor/open-design/digits-fintech-swiss/Badge@neutral",
+      "label": "hasVariant",
+      "from": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge@neutral",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge@neutral|uses|_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Badge@neutral",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge|hasVariant|_vendor/open-design/digits-fintech-swiss/Badge@accent",
+      "label": "hasVariant",
+      "from": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge@accent",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge@accent|uses|_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Badge@accent",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge|uses|_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge|uses|_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge|uses|_vendor/open-design/digits-fintech-swiss/--radius-pill",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "to": "_vendor/open-design/digits-fintech-swiss/--radius-pill",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/Button",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button|declaredIn|_vendor/open-design/digits-fintech-swiss/code/Button.tsx",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Button.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button|hasProp|_vendor/open-design/digits-fintech-swiss/Button#variant",
+      "label": "hasProp",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button#variant",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button|hasVariant|_vendor/open-design/digits-fintech-swiss/Button@primary",
+      "label": "hasVariant",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button@primary",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button@primary|uses|_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button@primary",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button@primary|uses|_vendor/open-design/digits-fintech-swiss/--color-accent-hover",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button@primary",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-accent-hover",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button|hasVariant|_vendor/open-design/digits-fintech-swiss/Button@secondary",
+      "label": "hasVariant",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button@secondary",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button@secondary|uses|_vendor/open-design/digits-fintech-swiss/--color-text",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button@secondary",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-text",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button@secondary|uses|_vendor/open-design/digits-fintech-swiss/--color-border",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button@secondary",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-border",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button|hasState|_vendor/open-design/digits-fintech-swiss/Button:hover",
+      "label": "hasState",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button:hover",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button|hasState|_vendor/open-design/digits-fintech-swiss/Button:focus",
+      "label": "hasState",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button:focus",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button|hasState|_vendor/open-design/digits-fintech-swiss/Button:disabled",
+      "label": "hasState",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button:disabled",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button|uses|_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button|uses|_vendor/open-design/digits-fintech-swiss/--color-accent-hover",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-accent-hover",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button|uses|_vendor/open-design/digits-fintech-swiss/--color-text",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-text",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button|uses|_vendor/open-design/digits-fintech-swiss/--color-border",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-border",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button|uses|_vendor/open-design/digits-fintech-swiss/--focus-ring",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button",
+      "to": "_vendor/open-design/digits-fintech-swiss/--focus-ring",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/Card",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/Card",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Card|declaredIn|_vendor/open-design/digits-fintech-swiss/code/Card.tsx",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/Card",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Card.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Card|uses|_vendor/open-design/digits-fintech-swiss/--color-surface-raised",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Card",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-surface-raised",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Card|uses|_vendor/open-design/digits-fintech-swiss/--color-border",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Card",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-border",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Card|uses|_vendor/open-design/digits-fintech-swiss/--shadow-raised",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Card",
+      "to": "_vendor/open-design/digits-fintech-swiss/--shadow-raised",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Heading|declaredIn|_vendor/open-design/digits-fintech-swiss/code/Heading.tsx",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Heading.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Heading|hasProp|_vendor/open-design/digits-fintech-swiss/Heading#level",
+      "label": "hasProp",
+      "from": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading#level",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Heading|uses|_vendor/open-design/digits-fintech-swiss/--color-text",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-text",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Heading|uses|_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Heading|uses|_vendor/open-design/digits-fintech-swiss/--font-display",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "to": "_vendor/open-design/digits-fintech-swiss/--font-display",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Heading|uses|_vendor/open-design/digits-fintech-swiss/--font-sans",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "to": "_vendor/open-design/digits-fintech-swiss/--font-sans",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Eyebrow|declaredIn|_vendor/open-design/digits-fintech-swiss/code/Heading.tsx",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Heading.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Eyebrow|uses|_vendor/open-design/digits-fintech-swiss/--color-text",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-text",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Eyebrow|uses|_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Eyebrow|uses|_vendor/open-design/digits-fintech-swiss/--font-display",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "to": "_vendor/open-design/digits-fintech-swiss/--font-display",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Eyebrow|uses|_vendor/open-design/digits-fintech-swiss/--font-sans",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "to": "_vendor/open-design/digits-fintech-swiss/--font-sans",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/Input",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/Input",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Input|declaredIn|_vendor/open-design/digits-fintech-swiss/code/Input.tsx",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/Input",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Input.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Input|hasState|_vendor/open-design/digits-fintech-swiss/Input:focus",
+      "label": "hasState",
+      "from": "_vendor/open-design/digits-fintech-swiss/Input",
+      "to": "_vendor/open-design/digits-fintech-swiss/Input:focus",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Input|uses|_vendor/open-design/digits-fintech-swiss/--color-surface-raised",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Input",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-surface-raised",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Input|uses|_vendor/open-design/digits-fintech-swiss/--color-text",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Input",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-text",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Input|uses|_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Input",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-text-muted",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Input|uses|_vendor/open-design/digits-fintech-swiss/--color-border",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Input",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-border",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Input|uses|_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Input",
+      "to": "_vendor/open-design/digits-fintech-swiss/--color-accent",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Input|uses|_vendor/open-design/digits-fintech-swiss/--radius-sm",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Input",
+      "to": "_vendor/open-design/digits-fintech-swiss/--radius-sm",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Input|uses|_vendor/open-design/digits-fintech-swiss/--focus-ring",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Input",
+      "to": "_vendor/open-design/digits-fintech-swiss/--focus-ring",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss|contains|_vendor/open-design/digits-fintech-swiss/Stack",
+      "label": "contains",
+      "from": "_vendor/open-design/digits-fintech-swiss",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Stack|declaredIn|_vendor/open-design/digits-fintech-swiss/code/Stack.tsx",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Stack.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Stack|hasProp|_vendor/open-design/digits-fintech-swiss/Stack#gap",
+      "label": "hasProp",
+      "from": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack#gap",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Stack|hasProp|_vendor/open-design/digits-fintech-swiss/Stack#direction",
+      "label": "hasProp",
+      "from": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack#direction",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Stack|uses|_vendor/open-design/digits-fintech-swiss/--space-unit",
+      "label": "uses",
+      "from": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "to": "_vendor/open-design/digits-fintech-swiss/--space-unit",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Showcase.stories#Gallery|declaredIn|_vendor/open-design/digits-fintech-swiss/code/Showcase.stories.tsx",
+      "label": "declaredIn",
+      "from": "_vendor/open-design/digits-fintech-swiss/Showcase.stories#Gallery",
+      "to": "_vendor/open-design/digits-fintech-swiss/code/Showcase.stories.tsx",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Badge|documentedBy|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "documentedBy",
+      "from": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Button|documentedBy|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "documentedBy",
+      "from": "_vendor/open-design/digits-fintech-swiss/Button",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Card|documentedBy|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "documentedBy",
+      "from": "_vendor/open-design/digits-fintech-swiss/Card",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Heading|documentedBy|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "documentedBy",
+      "from": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Eyebrow|documentedBy|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "documentedBy",
+      "from": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Input|documentedBy|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "documentedBy",
+      "from": "_vendor/open-design/digits-fintech-swiss/Input",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "_vendor/open-design/digits-fintech-swiss/Stack|documentedBy|_vendor/open-design/digits-fintech-swiss/§components",
+      "label": "documentedBy",
+      "from": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "to": "_vendor/open-design/digits-fintech-swiss/§components",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|_vendor/open-design/digits-fintech-swiss/Badge",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|_vendor/open-design/digits-fintech-swiss/Button",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|_vendor/open-design/digits-fintech-swiss/Card",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "_vendor/open-design/digits-fintech-swiss/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|_vendor/open-design/digits-fintech-swiss/Input",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "_vendor/open-design/digits-fintech-swiss/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|_vendor/open-design/digits-fintech-swiss/Stack",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|_vendor/open-design/digits-fintech-swiss/Badge",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|_vendor/open-design/digits-fintech-swiss/Button",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|_vendor/open-design/digits-fintech-swiss/Card",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "_vendor/open-design/digits-fintech-swiss/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|_vendor/open-design/digits-fintech-swiss/Input",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "_vendor/open-design/digits-fintech-swiss/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|_vendor/open-design/digits-fintech-swiss/Stack",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|_vendor/open-design/digits-fintech-swiss/Badge",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|_vendor/open-design/digits-fintech-swiss/Button",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|_vendor/open-design/digits-fintech-swiss/Card",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "_vendor/open-design/digits-fintech-swiss/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|_vendor/open-design/digits-fintech-swiss/Input",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "_vendor/open-design/digits-fintech-swiss/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|_vendor/open-design/digits-fintech-swiss/Stack",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|_vendor/open-design/digits-fintech-swiss/Badge",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|_vendor/open-design/digits-fintech-swiss/Button",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|_vendor/open-design/digits-fintech-swiss/Card",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|_vendor/open-design/digits-fintech-swiss/Input",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|_vendor/open-design/digits-fintech-swiss/Stack",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|_vendor/open-design/digits-fintech-swiss/Badge",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|_vendor/open-design/digits-fintech-swiss/Button",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|_vendor/open-design/digits-fintech-swiss/Card",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|_vendor/open-design/digits-fintech-swiss/Input",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|_vendor/open-design/digits-fintech-swiss/Stack",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|_vendor/open-design/digits-fintech-swiss/Badge",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|_vendor/open-design/digits-fintech-swiss/Button",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|_vendor/open-design/digits-fintech-swiss/Card",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "_vendor/open-design/digits-fintech-swiss/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|_vendor/open-design/digits-fintech-swiss/Input",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "_vendor/open-design/digits-fintech-swiss/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|_vendor/open-design/digits-fintech-swiss/Stack",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|_vendor/open-design/digits-fintech-swiss/Badge",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|_vendor/open-design/digits-fintech-swiss/Button",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|_vendor/open-design/digits-fintech-swiss/Card",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "_vendor/open-design/digits-fintech-swiss/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|_vendor/open-design/digits-fintech-swiss/Input",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "_vendor/open-design/digits-fintech-swiss/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|_vendor/open-design/digits-fintech-swiss/Stack",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/sans-display|governs|_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "governs",
+      "from": "rule/sans-display",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|_vendor/open-design/digits-fintech-swiss/Badge",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|_vendor/open-design/digits-fintech-swiss/Button",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|_vendor/open-design/digits-fintech-swiss/Card",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "_vendor/open-design/digits-fintech-swiss/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|_vendor/open-design/digits-fintech-swiss/Input",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "_vendor/open-design/digits-fintech-swiss/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|_vendor/open-design/digits-fintech-swiss/Stack",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|_vendor/open-design/digits-fintech-swiss/Badge",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|_vendor/open-design/digits-fintech-swiss/Button",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|_vendor/open-design/digits-fintech-swiss/Card",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "_vendor/open-design/digits-fintech-swiss/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|_vendor/open-design/digits-fintech-swiss/Input",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "_vendor/open-design/digits-fintech-swiss/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|_vendor/open-design/digits-fintech-swiss/Stack",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|_vendor/open-design/digits-fintech-swiss/Badge",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|_vendor/open-design/digits-fintech-swiss/Button",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|_vendor/open-design/digits-fintech-swiss/Card",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "_vendor/open-design/digits-fintech-swiss/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|_vendor/open-design/digits-fintech-swiss/Input",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "_vendor/open-design/digits-fintech-swiss/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|_vendor/open-design/digits-fintech-swiss/Stack",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|_vendor/open-design/digits-fintech-swiss/Badge",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "_vendor/open-design/digits-fintech-swiss/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|_vendor/open-design/digits-fintech-swiss/Button",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "_vendor/open-design/digits-fintech-swiss/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|_vendor/open-design/digits-fintech-swiss/Card",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "_vendor/open-design/digits-fintech-swiss/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|_vendor/open-design/digits-fintech-swiss/Heading",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "_vendor/open-design/digits-fintech-swiss/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "_vendor/open-design/digits-fintech-swiss/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|_vendor/open-design/digits-fintech-swiss/Input",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "_vendor/open-design/digits-fintech-swiss/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|_vendor/open-design/digits-fintech-swiss/Stack",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "_vendor/open-design/digits-fintech-swiss/Stack",
+      "props": {}
+    }
+  ]
+}

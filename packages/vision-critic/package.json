@@ -1,0 +1,20 @@
+{
+  "name": "@medesign/vision-critic",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Multi-model LLM vision critique for medesign — Claude, Gemini, Minimax providers. Captures screenshot + DOM + static analysis context and returns structured visual critique for the design feedback loop.",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "build": "tsc -p tsconfig.json", "test": "vitest run" },
+  "dependencies": {
+    "@medesign/dsr": "*",
+    "@anthropic-ai/sdk": "^0.32.0",
+    "@google/generative-ai": "^0.21.0",
+    "pngjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/pngjs": "^6.0.5",
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0"
+  }
+}

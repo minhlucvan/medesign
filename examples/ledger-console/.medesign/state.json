@@ -1,0 +1,19 @@
+{
+  "activeDesignSystem": "ledger",
+  "currentComponent": null,
+  "changeRequests": [
+    {
+      "id": "cr_1782429509301_0",
+      "type": "create-view",
+      "instruction": "a comprehensive landing page",
+      "status": "queued",
+      "createdAt": "2026-06-25T23:18:29.301Z",
+      "payload": {
+        "name": "landing"
+      }
+    }
+  ],
+  "lastDiff": null,
+  "lintPassing": null,
+  "lastCritique": null
+}

@@ -1,0 +1,2923 @@
+{
+  "designSystem": "noir",
+  "nodes": [
+    {
+      "id": "noir",
+      "label": "designSystem",
+      "props": {
+        "name": "noir",
+        "source": {
+          "file": "noir/"
+        }
+      }
+    },
+    {
+      "id": "noir/DESIGN.md",
+      "label": "file",
+      "props": {
+        "path": "DESIGN.md",
+        "type": "design",
+        "source": {
+          "file": "noir/DESIGN.md"
+        }
+      }
+    },
+    {
+      "id": "noir/components.html",
+      "label": "file",
+      "props": {
+        "path": "components.html",
+        "type": "asset",
+        "source": {
+          "file": "noir/components.html"
+        }
+      }
+    },
+    {
+      "id": "noir/graph.json",
+      "label": "file",
+      "props": {
+        "path": "graph.json",
+        "type": "asset",
+        "source": {
+          "file": "noir/graph.json"
+        }
+      }
+    },
+    {
+      "id": "noir/manifest.json",
+      "label": "file",
+      "props": {
+        "path": "manifest.json",
+        "type": "manifest",
+        "source": {
+          "file": "noir/manifest.json"
+        }
+      }
+    },
+    {
+      "id": "noir/tokens.css",
+      "label": "file",
+      "props": {
+        "path": "tokens.css",
+        "type": "tokens",
+        "source": {
+          "file": "noir/tokens.css"
+        }
+      }
+    },
+    {
+      "id": "noir/code/Badge.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Badge.tsx",
+        "type": "component",
+        "source": {
+          "file": "noir/code/Badge.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/code/Button.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Button.tsx",
+        "type": "component",
+        "source": {
+          "file": "noir/code/Button.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/code/Card.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Card.tsx",
+        "type": "component",
+        "source": {
+          "file": "noir/code/Card.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/code/Heading.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Heading.tsx",
+        "type": "component",
+        "source": {
+          "file": "noir/code/Heading.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/code/Input.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Input.tsx",
+        "type": "component",
+        "source": {
+          "file": "noir/code/Input.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/code/Showcase.stories.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Showcase.stories.tsx",
+        "type": "story",
+        "source": {
+          "file": "noir/code/Showcase.stories.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/code/Stack.tsx",
+      "label": "file",
+      "props": {
+        "path": "code/Stack.tsx",
+        "type": "component",
+        "source": {
+          "file": "noir/code/Stack.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/code/index.ts",
+      "label": "file",
+      "props": {
+        "path": "code/index.ts",
+        "type": "asset",
+        "source": {
+          "file": "noir/code/index.ts"
+        }
+      }
+    },
+    {
+      "id": "noir/--color-surface",
+      "label": "token",
+      "props": {
+        "name": "--color-surface",
+        "kind": "color",
+        "value": "#0f0f10",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 4
+        }
+      }
+    },
+    {
+      "id": "noir/#0f0f10",
+      "label": "color",
+      "props": {
+        "value": "#0f0f10"
+      }
+    },
+    {
+      "id": "noir/--color-surface-raised",
+      "label": "token",
+      "props": {
+        "name": "--color-surface-raised",
+        "kind": "color",
+        "value": "#18181b",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 5
+        }
+      }
+    },
+    {
+      "id": "noir/#18181b",
+      "label": "color",
+      "props": {
+        "value": "#18181b"
+      }
+    },
+    {
+      "id": "noir/--color-text",
+      "label": "token",
+      "props": {
+        "name": "--color-text",
+        "kind": "color",
+        "value": "#f4f4f5",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 6
+        }
+      }
+    },
+    {
+      "id": "noir/#f4f4f5",
+      "label": "color",
+      "props": {
+        "value": "#f4f4f5"
+      }
+    },
+    {
+      "id": "noir/--color-text-muted",
+      "label": "token",
+      "props": {
+        "name": "--color-text-muted",
+        "kind": "color",
+        "value": "#a1a1aa",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 7
+        }
+      }
+    },
+    {
+      "id": "noir/#a1a1aa",
+      "label": "color",
+      "props": {
+        "value": "#a1a1aa"
+      }
+    },
+    {
+      "id": "noir/--color-accent",
+      "label": "token",
+      "props": {
+        "name": "--color-accent",
+        "kind": "color",
+        "value": "#c4f042",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 8
+        }
+      }
+    },
+    {
+      "id": "noir/#c4f042",
+      "label": "color",
+      "props": {
+        "value": "#c4f042"
+      }
+    },
+    {
+      "id": "noir/--color-accent-hover",
+      "label": "token",
+      "props": {
+        "name": "--color-accent-hover",
+        "kind": "color",
+        "value": "#aee02f",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 9
+        }
+      }
+    },
+    {
+      "id": "noir/#aee02f",
+      "label": "color",
+      "props": {
+        "value": "#aee02f"
+      }
+    },
+    {
+      "id": "noir/--color-border",
+      "label": "token",
+      "props": {
+        "name": "--color-border",
+        "kind": "color",
+        "value": "#2a2a2e",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 10
+        }
+      }
+    },
+    {
+      "id": "noir/#2a2a2e",
+      "label": "color",
+      "props": {
+        "value": "#2a2a2e"
+      }
+    },
+    {
+      "id": "noir/--color-success",
+      "label": "token",
+      "props": {
+        "name": "--color-success",
+        "kind": "color",
+        "value": "#4ade80",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 11
+        }
+      }
+    },
+    {
+      "id": "noir/#4ade80",
+      "label": "color",
+      "props": {
+        "value": "#4ade80"
+      }
+    },
+    {
+      "id": "noir/--color-warn",
+      "label": "token",
+      "props": {
+        "name": "--color-warn",
+        "kind": "color",
+        "value": "#fbbf24",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 12
+        }
+      }
+    },
+    {
+      "id": "noir/#fbbf24",
+      "label": "color",
+      "props": {
+        "value": "#fbbf24"
+      }
+    },
+    {
+      "id": "noir/--color-danger",
+      "label": "token",
+      "props": {
+        "name": "--color-danger",
+        "kind": "color",
+        "value": "#f87171",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 13
+        }
+      }
+    },
+    {
+      "id": "noir/#f87171",
+      "label": "color",
+      "props": {
+        "value": "#f87171"
+      }
+    },
+    {
+      "id": "noir/--font-display",
+      "label": "token",
+      "props": {
+        "name": "--font-display",
+        "kind": "type",
+        "value": "\"Newsreader\", \"Georgia\", serif",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 16
+        }
+      }
+    },
+    {
+      "id": "noir/face/Newsreader",
+      "label": "typeface",
+      "props": {
+        "family": "Newsreader",
+        "role": "display"
+      }
+    },
+    {
+      "id": "noir/--font-sans",
+      "label": "token",
+      "props": {
+        "name": "--font-sans",
+        "kind": "type",
+        "value": "\"Inter\", system-ui, -apple-system, sans-serif",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 17
+        }
+      }
+    },
+    {
+      "id": "noir/face/Inter",
+      "label": "typeface",
+      "props": {
+        "family": "Inter",
+        "role": "sans"
+      }
+    },
+    {
+      "id": "noir/--font-mono",
+      "label": "token",
+      "props": {
+        "name": "--font-mono",
+        "kind": "type",
+        "value": "\"JetBrains Mono\", ui-monospace, monospace",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 18
+        }
+      }
+    },
+    {
+      "id": "noir/face/JetBrains Mono",
+      "label": "typeface",
+      "props": {
+        "family": "JetBrains Mono",
+        "role": "mono"
+      }
+    },
+    {
+      "id": "noir/--radius",
+      "label": "token",
+      "props": {
+        "name": "--radius",
+        "kind": "radius",
+        "value": "8px",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 21
+        }
+      }
+    },
+    {
+      "id": "noir/--radius-sm",
+      "label": "token",
+      "props": {
+        "name": "--radius-sm",
+        "kind": "radius",
+        "value": "5px",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 22
+        }
+      }
+    },
+    {
+      "id": "noir/--radius-pill",
+      "label": "token",
+      "props": {
+        "name": "--radius-pill",
+        "kind": "radius",
+        "value": "999px",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 23
+        }
+      }
+    },
+    {
+      "id": "noir/--space-unit",
+      "label": "token",
+      "props": {
+        "name": "--space-unit",
+        "kind": "spacing",
+        "value": "8px",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 24
+        }
+      }
+    },
+    {
+      "id": "noir/--shadow-raised",
+      "label": "token",
+      "props": {
+        "name": "--shadow-raised",
+        "kind": "shadow",
+        "value": "0 1px 2px rgba(26, 23, 20, 0.06), 0 8px 24px rgba(26, 23, 20, 0.05)",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 25
+        }
+      }
+    },
+    {
+      "id": "noir/--focus-ring",
+      "label": "token",
+      "props": {
+        "name": "--focus-ring",
+        "kind": "shadow",
+        "value": "0 0 0 3px rgba(180, 83, 42, 0.28)",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 26
+        }
+      }
+    },
+    {
+      "id": "noir/--motion-fast",
+      "label": "token",
+      "props": {
+        "name": "--motion-fast",
+        "kind": "motion",
+        "value": "120ms",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 29
+        }
+      }
+    },
+    {
+      "id": "noir/--motion-base",
+      "label": "token",
+      "props": {
+        "name": "--motion-base",
+        "kind": "motion",
+        "value": "220ms",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 30
+        }
+      }
+    },
+    {
+      "id": "noir/--ease-standard",
+      "label": "token",
+      "props": {
+        "name": "--ease-standard",
+        "kind": "motion",
+        "value": "cubic-bezier(0.2, 0, 0, 1)",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 31
+        }
+      }
+    },
+    {
+      "id": "noir/--container-max",
+      "label": "token",
+      "props": {
+        "name": "--container-max",
+        "kind": "layout",
+        "value": "1180px",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 34
+        }
+      }
+    },
+    {
+      "id": "noir/--section-y",
+      "label": "token",
+      "props": {
+        "name": "--section-y",
+        "kind": "layout",
+        "value": "96px",
+        "source": {
+          "file": "noir/tokens.css",
+          "line": 35
+        }
+      }
+    },
+    {
+      "id": "noir/§visual-theme-atmosphere",
+      "label": "section",
+      "props": {
+        "title": "Visual Theme & Atmosphere",
+        "index": 1,
+        "source": {
+          "file": "noir/DESIGN.md",
+          "line": 19
+        }
+      }
+    },
+    {
+      "id": "noir/§color",
+      "label": "section",
+      "props": {
+        "title": "Color",
+        "index": 2,
+        "source": {
+          "file": "noir/DESIGN.md",
+          "line": 23
+        }
+      }
+    },
+    {
+      "id": "noir/§typography",
+      "label": "section",
+      "props": {
+        "title": "Typography",
+        "index": 3,
+        "source": {
+          "file": "noir/DESIGN.md",
+          "line": 42
+        }
+      }
+    },
+    {
+      "id": "noir/§spacing",
+      "label": "section",
+      "props": {
+        "title": "Spacing",
+        "index": 4,
+        "source": {
+          "file": "noir/DESIGN.md",
+          "line": 61
+        }
+      }
+    },
+    {
+      "id": "noir/§layout-composition",
+      "label": "section",
+      "props": {
+        "title": "Layout & Composition",
+        "index": 5,
+        "source": {
+          "file": "noir/DESIGN.md",
+          "line": 65
+        }
+      }
+    },
+    {
+      "id": "noir/§components",
+      "label": "section",
+      "props": {
+        "title": "Components",
+        "index": 6,
+        "source": {
+          "file": "noir/DESIGN.md",
+          "line": 69
+        }
+      }
+    },
+    {
+      "id": "noir/§motion-interaction",
+      "label": "section",
+      "props": {
+        "title": "Motion & Interaction",
+        "index": 7,
+        "source": {
+          "file": "noir/DESIGN.md",
+          "line": 77
+        }
+      }
+    },
+    {
+      "id": "noir/§voice-brand",
+      "label": "section",
+      "props": {
+        "title": "Voice & Brand",
+        "index": 8,
+        "source": {
+          "file": "noir/DESIGN.md",
+          "line": 81
+        }
+      }
+    },
+    {
+      "id": "noir/§anti-patterns",
+      "label": "section",
+      "props": {
+        "title": "Anti-patterns",
+        "index": 9,
+        "source": {
+          "file": "noir/DESIGN.md",
+          "line": 85
+        }
+      }
+    },
+    {
+      "id": "noir/§tokens",
+      "label": "section",
+      "props": {
+        "title": "Tokens",
+        "index": 10,
+        "source": {
+          "file": "noir/DESIGN.md",
+          "line": 100
+        }
+      }
+    },
+    {
+      "id": "noir/Badge",
+      "label": "primitive",
+      "props": {
+        "name": "Badge",
+        "source": {
+          "file": "noir/code/Badge.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Badge#tone",
+      "label": "prop",
+      "props": {
+        "name": "tone",
+        "type": "Tone",
+        "source": {
+          "file": "noir/code/Badge.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Badge@neutral",
+      "label": "variant",
+      "props": {
+        "name": "neutral",
+        "source": {
+          "file": "noir/code/Badge.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Badge@accent",
+      "label": "variant",
+      "props": {
+        "name": "accent",
+        "source": {
+          "file": "noir/code/Badge.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Button",
+      "label": "primitive",
+      "props": {
+        "name": "Button",
+        "source": {
+          "file": "noir/code/Button.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Button#variant",
+      "label": "prop",
+      "props": {
+        "name": "variant",
+        "type": "Variant",
+        "source": {
+          "file": "noir/code/Button.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Button@primary",
+      "label": "variant",
+      "props": {
+        "name": "primary",
+        "source": {
+          "file": "noir/code/Button.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Button@secondary",
+      "label": "variant",
+      "props": {
+        "name": "secondary",
+        "source": {
+          "file": "noir/code/Button.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Button:hover",
+      "label": "state",
+      "props": {
+        "name": "hover"
+      }
+    },
+    {
+      "id": "noir/Button:focus",
+      "label": "state",
+      "props": {
+        "name": "focus"
+      }
+    },
+    {
+      "id": "noir/Button:disabled",
+      "label": "state",
+      "props": {
+        "name": "disabled"
+      }
+    },
+    {
+      "id": "noir/Card",
+      "label": "primitive",
+      "props": {
+        "name": "Card",
+        "source": {
+          "file": "noir/code/Card.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Heading",
+      "label": "primitive",
+      "props": {
+        "name": "Heading",
+        "source": {
+          "file": "noir/code/Heading.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Heading#level",
+      "label": "prop",
+      "props": {
+        "name": "level",
+        "type": "Level",
+        "source": {
+          "file": "noir/code/Heading.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Eyebrow",
+      "label": "primitive",
+      "props": {
+        "name": "Eyebrow",
+        "source": {
+          "file": "noir/code/Heading.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Input",
+      "label": "primitive",
+      "props": {
+        "name": "Input",
+        "source": {
+          "file": "noir/code/Input.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Input:focus",
+      "label": "state",
+      "props": {
+        "name": "focus"
+      }
+    },
+    {
+      "id": "noir/Stack",
+      "label": "primitive",
+      "props": {
+        "name": "Stack",
+        "source": {
+          "file": "noir/code/Stack.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Stack#gap",
+      "label": "prop",
+      "props": {
+        "name": "gap",
+        "type": "number",
+        "source": {
+          "file": "noir/code/Stack.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Stack#direction",
+      "label": "prop",
+      "props": {
+        "name": "direction",
+        "type": "\"row\" | \"col\"",
+        "source": {
+          "file": "noir/code/Stack.tsx"
+        }
+      }
+    },
+    {
+      "id": "noir/Showcase.stories#Gallery",
+      "label": "story",
+      "props": {
+        "title": "Design System/Atelier",
+        "exportName": "Gallery",
+        "source": {
+          "file": "noir/code/Showcase.stories.tsx"
+        }
+      }
+    },
+    {
+      "id": "rule/off-token-color",
+      "label": "rule",
+      "props": {
+        "ruleId": "off-token-color",
+        "severity": "P1",
+        "message": "Raw hex used where a token role exists.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Reference a token role (e.g. bg-accent / text-surface) instead of raw hex.",
+          "sectionHint": "Color"
+        }
+      }
+    },
+    {
+      "id": "rule/unresolved-token",
+      "label": "rule",
+      "props": {
+        "ruleId": "unresolved-token",
+        "severity": "P0",
+        "message": "var(--x) does not resolve to a declared token.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Use a declared role, or add the token to tokens.css.",
+          "sectionHint": "Tokens"
+        }
+      }
+    },
+    {
+      "id": "rule/ai-default-indigo",
+      "label": "rule",
+      "props": {
+        "ruleId": "ai-default-indigo",
+        "severity": "P0",
+        "message": "Solid AI-default indigo used outside token definitions.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Use the design-system accent token, not a raw indigo hex.",
+          "tokenRole": "color-accent",
+          "sectionHint": "Color"
+        }
+      }
+    },
+    {
+      "id": "rule/purple-gradient",
+      "label": "rule",
+      "props": {
+        "ruleId": "purple-gradient",
+        "severity": "P0",
+        "message": "Indigo/violet/purple gradient — the AI-default look.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Use the solid accent token; drop the gradient.",
+          "tokenRole": "color-accent",
+          "sectionHint": "Color"
+        }
+      }
+    },
+    {
+      "id": "rule/trust-gradient",
+      "label": "rule",
+      "props": {
+        "ruleId": "trust-gradient",
+        "severity": "P0",
+        "message": "Blue→cyan \"trust gradient\" hero cliché.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Use a flat surface + accent from the design system.",
+          "tokenRole": "color-surface",
+          "sectionHint": "Color"
+        }
+      }
+    },
+    {
+      "id": "rule/emoji-icon",
+      "label": "rule",
+      "props": {
+        "ruleId": "emoji-icon",
+        "severity": "P0",
+        "message": "Emoji used as an icon.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Use a real icon or omit it.",
+          "sectionHint": "Anti-patterns"
+        }
+      }
+    },
+    {
+      "id": "rule/left-accent-card",
+      "label": "rule",
+      "props": {
+        "ruleId": "left-accent-card",
+        "severity": "P0",
+        "message": "Rounded card with a colored left border.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Hairline border on all sides + the design-system shadow.",
+          "tokenRole": "shadow-raised",
+          "sectionHint": "Components"
+        }
+      }
+    },
+    {
+      "id": "rule/sans-display",
+      "label": "rule",
+      "props": {
+        "ruleId": "sans-display",
+        "severity": "P0",
+        "message": "Sans-serif family on a display heading.",
+        "appliesTo": "headings",
+        "remediation": {
+          "text": "Headings must use the display font.",
+          "tokenRole": "font-display",
+          "sectionHint": "Typography"
+        }
+      }
+    },
+    {
+      "id": "rule/invented-metric",
+      "label": "rule",
+      "props": {
+        "ruleId": "invented-metric",
+        "severity": "P0",
+        "message": "Invented marketing metric.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Remove fabricated metrics; use real copy or none.",
+          "sectionHint": "Voice & Brand"
+        }
+      }
+    },
+    {
+      "id": "rule/filler-copy",
+      "label": "rule",
+      "props": {
+        "ruleId": "filler-copy",
+        "severity": "P0",
+        "message": "Filler/placeholder copy.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Write real, specific copy.",
+          "sectionHint": "Voice & Brand"
+        }
+      }
+    },
+    {
+      "id": "rule/external-image",
+      "label": "rule",
+      "props": {
+        "ruleId": "external-image",
+        "severity": "P1",
+        "message": "External placeholder image host.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Use a local asset or a neutral solid block."
+        }
+      }
+    },
+    {
+      "id": "rule/accent-overuse",
+      "label": "rule",
+      "props": {
+        "ruleId": "accent-overuse",
+        "severity": "P1",
+        "message": "Accent used more than ~2 times per screen.",
+        "appliesTo": "all",
+        "remediation": {
+          "text": "Reserve the accent for the single most important element.",
+          "tokenRole": "color-accent",
+          "sectionHint": "Color"
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "noir|contains|noir/DESIGN.md",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/DESIGN.md",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/components.html",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/components.html",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/graph.json",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/graph.json",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/manifest.json",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/manifest.json",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/tokens.css",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/tokens.css",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/code/Badge.tsx",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/code/Badge.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/code/Button.tsx",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/code/Button.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/code/Card.tsx",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/code/Card.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/code/Heading.tsx",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/code/Heading.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/code/Input.tsx",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/code/Input.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/code/Showcase.stories.tsx",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/code/Showcase.stories.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/code/Stack.tsx",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/code/Stack.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/code/index.ts",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/code/index.ts",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--color-surface",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--color-surface",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-surface|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--color-surface",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 4
+      }
+    },
+    {
+      "id": "noir/--color-surface|tokenValue|noir/#0f0f10",
+      "label": "tokenValue",
+      "from": "noir/--color-surface",
+      "to": "noir/#0f0f10",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--color-surface-raised",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--color-surface-raised",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-surface-raised|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--color-surface-raised",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 5
+      }
+    },
+    {
+      "id": "noir/--color-surface-raised|tokenValue|noir/#18181b",
+      "label": "tokenValue",
+      "from": "noir/--color-surface-raised",
+      "to": "noir/#18181b",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--color-text",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--color-text",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-text|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--color-text",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 6
+      }
+    },
+    {
+      "id": "noir/--color-text|tokenValue|noir/#f4f4f5",
+      "label": "tokenValue",
+      "from": "noir/--color-text",
+      "to": "noir/#f4f4f5",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--color-text-muted",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--color-text-muted",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-text-muted|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--color-text-muted",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 7
+      }
+    },
+    {
+      "id": "noir/--color-text-muted|tokenValue|noir/#a1a1aa",
+      "label": "tokenValue",
+      "from": "noir/--color-text-muted",
+      "to": "noir/#a1a1aa",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--color-accent",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--color-accent",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-accent|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--color-accent",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 8
+      }
+    },
+    {
+      "id": "noir/--color-accent|tokenValue|noir/#c4f042",
+      "label": "tokenValue",
+      "from": "noir/--color-accent",
+      "to": "noir/#c4f042",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--color-accent-hover",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--color-accent-hover",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-accent-hover|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--color-accent-hover",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 9
+      }
+    },
+    {
+      "id": "noir/--color-accent-hover|tokenValue|noir/#aee02f",
+      "label": "tokenValue",
+      "from": "noir/--color-accent-hover",
+      "to": "noir/#aee02f",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--color-border",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--color-border",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-border|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--color-border",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 10
+      }
+    },
+    {
+      "id": "noir/--color-border|tokenValue|noir/#2a2a2e",
+      "label": "tokenValue",
+      "from": "noir/--color-border",
+      "to": "noir/#2a2a2e",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--color-success",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--color-success",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-success|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--color-success",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 11
+      }
+    },
+    {
+      "id": "noir/--color-success|tokenValue|noir/#4ade80",
+      "label": "tokenValue",
+      "from": "noir/--color-success",
+      "to": "noir/#4ade80",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--color-warn",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--color-warn",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-warn|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--color-warn",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 12
+      }
+    },
+    {
+      "id": "noir/--color-warn|tokenValue|noir/#fbbf24",
+      "label": "tokenValue",
+      "from": "noir/--color-warn",
+      "to": "noir/#fbbf24",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--color-danger",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--color-danger",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-danger|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--color-danger",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 13
+      }
+    },
+    {
+      "id": "noir/--color-danger|tokenValue|noir/#f87171",
+      "label": "tokenValue",
+      "from": "noir/--color-danger",
+      "to": "noir/#f87171",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--font-display",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--font-display",
+      "props": {}
+    },
+    {
+      "id": "noir/--font-display|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--font-display",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 16
+      }
+    },
+    {
+      "id": "noir/--font-display|usesFont|noir/face/Newsreader",
+      "label": "usesFont",
+      "from": "noir/--font-display",
+      "to": "noir/face/Newsreader",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--font-sans",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--font-sans",
+      "props": {}
+    },
+    {
+      "id": "noir/--font-sans|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--font-sans",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 17
+      }
+    },
+    {
+      "id": "noir/--font-sans|usesFont|noir/face/Inter",
+      "label": "usesFont",
+      "from": "noir/--font-sans",
+      "to": "noir/face/Inter",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--font-mono",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--font-mono",
+      "props": {}
+    },
+    {
+      "id": "noir/--font-mono|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--font-mono",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 18
+      }
+    },
+    {
+      "id": "noir/--font-mono|usesFont|noir/face/JetBrains Mono",
+      "label": "usesFont",
+      "from": "noir/--font-mono",
+      "to": "noir/face/JetBrains Mono",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/--radius",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--radius",
+      "props": {}
+    },
+    {
+      "id": "noir/--radius|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--radius",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 21
+      }
+    },
+    {
+      "id": "noir|contains|noir/--radius-sm",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--radius-sm",
+      "props": {}
+    },
+    {
+      "id": "noir/--radius-sm|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--radius-sm",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 22
+      }
+    },
+    {
+      "id": "noir|contains|noir/--radius-pill",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--radius-pill",
+      "props": {}
+    },
+    {
+      "id": "noir/--radius-pill|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--radius-pill",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 23
+      }
+    },
+    {
+      "id": "noir|contains|noir/--space-unit",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--space-unit",
+      "props": {}
+    },
+    {
+      "id": "noir/--space-unit|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--space-unit",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 24
+      }
+    },
+    {
+      "id": "noir|contains|noir/--shadow-raised",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--shadow-raised",
+      "props": {}
+    },
+    {
+      "id": "noir/--shadow-raised|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--shadow-raised",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 25
+      }
+    },
+    {
+      "id": "noir|contains|noir/--focus-ring",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--focus-ring",
+      "props": {}
+    },
+    {
+      "id": "noir/--focus-ring|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--focus-ring",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 26
+      }
+    },
+    {
+      "id": "noir|contains|noir/--motion-fast",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--motion-fast",
+      "props": {}
+    },
+    {
+      "id": "noir/--motion-fast|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--motion-fast",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 29
+      }
+    },
+    {
+      "id": "noir|contains|noir/--motion-base",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--motion-base",
+      "props": {}
+    },
+    {
+      "id": "noir/--motion-base|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--motion-base",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 30
+      }
+    },
+    {
+      "id": "noir|contains|noir/--ease-standard",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--ease-standard",
+      "props": {}
+    },
+    {
+      "id": "noir/--ease-standard|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--ease-standard",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 31
+      }
+    },
+    {
+      "id": "noir|contains|noir/--container-max",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--container-max",
+      "props": {}
+    },
+    {
+      "id": "noir/--container-max|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--container-max",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 34
+      }
+    },
+    {
+      "id": "noir|contains|noir/--section-y",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/--section-y",
+      "props": {}
+    },
+    {
+      "id": "noir/--section-y|declaredIn|noir/tokens.css",
+      "label": "declaredIn",
+      "from": "noir/--section-y",
+      "to": "noir/tokens.css",
+      "props": {
+        "line": 35
+      }
+    },
+    {
+      "id": "noir|contains|noir/§visual-theme-atmosphere",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/§visual-theme-atmosphere",
+      "props": {}
+    },
+    {
+      "id": "noir/§visual-theme-atmosphere|declaredIn|noir/DESIGN.md",
+      "label": "declaredIn",
+      "from": "noir/§visual-theme-atmosphere",
+      "to": "noir/DESIGN.md",
+      "props": {
+        "line": 19
+      }
+    },
+    {
+      "id": "noir|contains|noir/§color",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/§color",
+      "props": {}
+    },
+    {
+      "id": "noir/§color|declaredIn|noir/DESIGN.md",
+      "label": "declaredIn",
+      "from": "noir/§color",
+      "to": "noir/DESIGN.md",
+      "props": {
+        "line": 23
+      }
+    },
+    {
+      "id": "noir|contains|noir/§typography",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/§typography",
+      "props": {}
+    },
+    {
+      "id": "noir/§typography|declaredIn|noir/DESIGN.md",
+      "label": "declaredIn",
+      "from": "noir/§typography",
+      "to": "noir/DESIGN.md",
+      "props": {
+        "line": 42
+      }
+    },
+    {
+      "id": "noir|contains|noir/§spacing",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/§spacing",
+      "props": {}
+    },
+    {
+      "id": "noir/§spacing|declaredIn|noir/DESIGN.md",
+      "label": "declaredIn",
+      "from": "noir/§spacing",
+      "to": "noir/DESIGN.md",
+      "props": {
+        "line": 61
+      }
+    },
+    {
+      "id": "noir|contains|noir/§layout-composition",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/§layout-composition",
+      "props": {}
+    },
+    {
+      "id": "noir/§layout-composition|declaredIn|noir/DESIGN.md",
+      "label": "declaredIn",
+      "from": "noir/§layout-composition",
+      "to": "noir/DESIGN.md",
+      "props": {
+        "line": 65
+      }
+    },
+    {
+      "id": "noir|contains|noir/§components",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/§components|declaredIn|noir/DESIGN.md",
+      "label": "declaredIn",
+      "from": "noir/§components",
+      "to": "noir/DESIGN.md",
+      "props": {
+        "line": 69
+      }
+    },
+    {
+      "id": "noir|contains|noir/§motion-interaction",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/§motion-interaction",
+      "props": {}
+    },
+    {
+      "id": "noir/§motion-interaction|declaredIn|noir/DESIGN.md",
+      "label": "declaredIn",
+      "from": "noir/§motion-interaction",
+      "to": "noir/DESIGN.md",
+      "props": {
+        "line": 77
+      }
+    },
+    {
+      "id": "noir|contains|noir/§voice-brand",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/§voice-brand",
+      "props": {}
+    },
+    {
+      "id": "noir/§voice-brand|declaredIn|noir/DESIGN.md",
+      "label": "declaredIn",
+      "from": "noir/§voice-brand",
+      "to": "noir/DESIGN.md",
+      "props": {
+        "line": 81
+      }
+    },
+    {
+      "id": "noir|contains|noir/§anti-patterns",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/§anti-patterns",
+      "props": {}
+    },
+    {
+      "id": "noir/§anti-patterns|declaredIn|noir/DESIGN.md",
+      "label": "declaredIn",
+      "from": "noir/§anti-patterns",
+      "to": "noir/DESIGN.md",
+      "props": {
+        "line": 85
+      }
+    },
+    {
+      "id": "noir|contains|noir/§tokens",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/§tokens",
+      "props": {}
+    },
+    {
+      "id": "noir/§tokens|declaredIn|noir/DESIGN.md",
+      "label": "declaredIn",
+      "from": "noir/§tokens",
+      "to": "noir/DESIGN.md",
+      "props": {
+        "line": 100
+      }
+    },
+    {
+      "id": "noir/--color-surface|definedIn|noir/§components",
+      "label": "definedIn",
+      "from": "noir/--color-surface",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-surface-raised|definedIn|noir/§components",
+      "label": "definedIn",
+      "from": "noir/--color-surface-raised",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-text|definedIn|noir/§components",
+      "label": "definedIn",
+      "from": "noir/--color-text",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-text-muted|definedIn|noir/§components",
+      "label": "definedIn",
+      "from": "noir/--color-text-muted",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-accent|definedIn|noir/§components",
+      "label": "definedIn",
+      "from": "noir/--color-accent",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-accent-hover|definedIn|noir/§components",
+      "label": "definedIn",
+      "from": "noir/--color-accent-hover",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/--color-border|definedIn|noir/§layout-composition",
+      "label": "definedIn",
+      "from": "noir/--color-border",
+      "to": "noir/§layout-composition",
+      "props": {}
+    },
+    {
+      "id": "noir/--radius|definedIn|noir/§components",
+      "label": "definedIn",
+      "from": "noir/--radius",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/--radius-sm|definedIn|noir/§components",
+      "label": "definedIn",
+      "from": "noir/--radius-sm",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/--radius-pill|definedIn|noir/§components",
+      "label": "definedIn",
+      "from": "noir/--radius-pill",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/--shadow-raised|definedIn|noir/§components",
+      "label": "definedIn",
+      "from": "noir/--shadow-raised",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/--focus-ring|definedIn|noir/§components",
+      "label": "definedIn",
+      "from": "noir/--focus-ring",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/--motion-fast|definedIn|noir/§motion-interaction",
+      "label": "definedIn",
+      "from": "noir/--motion-fast",
+      "to": "noir/§motion-interaction",
+      "props": {}
+    },
+    {
+      "id": "noir/--motion-base|definedIn|noir/§motion-interaction",
+      "label": "definedIn",
+      "from": "noir/--motion-base",
+      "to": "noir/§motion-interaction",
+      "props": {}
+    },
+    {
+      "id": "noir/--ease-standard|definedIn|noir/§motion-interaction",
+      "label": "definedIn",
+      "from": "noir/--ease-standard",
+      "to": "noir/§motion-interaction",
+      "props": {}
+    },
+    {
+      "id": "noir/--section-y|definedIn|noir/§spacing",
+      "label": "definedIn",
+      "from": "noir/--section-y",
+      "to": "noir/§spacing",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/Badge",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/Badge",
+      "props": {}
+    },
+    {
+      "id": "noir/Badge|declaredIn|noir/code/Badge.tsx",
+      "label": "declaredIn",
+      "from": "noir/Badge",
+      "to": "noir/code/Badge.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir/Badge|hasProp|noir/Badge#tone",
+      "label": "hasProp",
+      "from": "noir/Badge",
+      "to": "noir/Badge#tone",
+      "props": {}
+    },
+    {
+      "id": "noir/Badge|hasVariant|noir/Badge@neutral",
+      "label": "hasVariant",
+      "from": "noir/Badge",
+      "to": "noir/Badge@neutral",
+      "props": {}
+    },
+    {
+      "id": "noir/Badge@neutral|uses|noir/--color-text-muted",
+      "label": "uses",
+      "from": "noir/Badge@neutral",
+      "to": "noir/--color-text-muted",
+      "props": {}
+    },
+    {
+      "id": "noir/Badge|hasVariant|noir/Badge@accent",
+      "label": "hasVariant",
+      "from": "noir/Badge",
+      "to": "noir/Badge@accent",
+      "props": {}
+    },
+    {
+      "id": "noir/Badge@accent|uses|noir/--color-accent",
+      "label": "uses",
+      "from": "noir/Badge@accent",
+      "to": "noir/--color-accent",
+      "props": {}
+    },
+    {
+      "id": "noir/Badge|uses|noir/--color-text-muted",
+      "label": "uses",
+      "from": "noir/Badge",
+      "to": "noir/--color-text-muted",
+      "props": {}
+    },
+    {
+      "id": "noir/Badge|uses|noir/--color-accent",
+      "label": "uses",
+      "from": "noir/Badge",
+      "to": "noir/--color-accent",
+      "props": {}
+    },
+    {
+      "id": "noir/Badge|uses|noir/--radius-pill",
+      "label": "uses",
+      "from": "noir/Badge",
+      "to": "noir/--radius-pill",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/Button",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/Button",
+      "props": {}
+    },
+    {
+      "id": "noir/Button|declaredIn|noir/code/Button.tsx",
+      "label": "declaredIn",
+      "from": "noir/Button",
+      "to": "noir/code/Button.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir/Button|hasProp|noir/Button#variant",
+      "label": "hasProp",
+      "from": "noir/Button",
+      "to": "noir/Button#variant",
+      "props": {}
+    },
+    {
+      "id": "noir/Button|hasVariant|noir/Button@primary",
+      "label": "hasVariant",
+      "from": "noir/Button",
+      "to": "noir/Button@primary",
+      "props": {}
+    },
+    {
+      "id": "noir/Button@primary|uses|noir/--color-accent",
+      "label": "uses",
+      "from": "noir/Button@primary",
+      "to": "noir/--color-accent",
+      "props": {}
+    },
+    {
+      "id": "noir/Button@primary|uses|noir/--color-accent-hover",
+      "label": "uses",
+      "from": "noir/Button@primary",
+      "to": "noir/--color-accent-hover",
+      "props": {}
+    },
+    {
+      "id": "noir/Button|hasVariant|noir/Button@secondary",
+      "label": "hasVariant",
+      "from": "noir/Button",
+      "to": "noir/Button@secondary",
+      "props": {}
+    },
+    {
+      "id": "noir/Button@secondary|uses|noir/--color-text",
+      "label": "uses",
+      "from": "noir/Button@secondary",
+      "to": "noir/--color-text",
+      "props": {}
+    },
+    {
+      "id": "noir/Button@secondary|uses|noir/--color-border",
+      "label": "uses",
+      "from": "noir/Button@secondary",
+      "to": "noir/--color-border",
+      "props": {}
+    },
+    {
+      "id": "noir/Button|hasState|noir/Button:hover",
+      "label": "hasState",
+      "from": "noir/Button",
+      "to": "noir/Button:hover",
+      "props": {}
+    },
+    {
+      "id": "noir/Button|hasState|noir/Button:focus",
+      "label": "hasState",
+      "from": "noir/Button",
+      "to": "noir/Button:focus",
+      "props": {}
+    },
+    {
+      "id": "noir/Button|hasState|noir/Button:disabled",
+      "label": "hasState",
+      "from": "noir/Button",
+      "to": "noir/Button:disabled",
+      "props": {}
+    },
+    {
+      "id": "noir/Button|uses|noir/--color-accent",
+      "label": "uses",
+      "from": "noir/Button",
+      "to": "noir/--color-accent",
+      "props": {}
+    },
+    {
+      "id": "noir/Button|uses|noir/--color-accent-hover",
+      "label": "uses",
+      "from": "noir/Button",
+      "to": "noir/--color-accent-hover",
+      "props": {}
+    },
+    {
+      "id": "noir/Button|uses|noir/--color-text",
+      "label": "uses",
+      "from": "noir/Button",
+      "to": "noir/--color-text",
+      "props": {}
+    },
+    {
+      "id": "noir/Button|uses|noir/--color-border",
+      "label": "uses",
+      "from": "noir/Button",
+      "to": "noir/--color-border",
+      "props": {}
+    },
+    {
+      "id": "noir/Button|uses|noir/--focus-ring",
+      "label": "uses",
+      "from": "noir/Button",
+      "to": "noir/--focus-ring",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/Card",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/Card",
+      "props": {}
+    },
+    {
+      "id": "noir/Card|declaredIn|noir/code/Card.tsx",
+      "label": "declaredIn",
+      "from": "noir/Card",
+      "to": "noir/code/Card.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir/Card|uses|noir/--color-surface-raised",
+      "label": "uses",
+      "from": "noir/Card",
+      "to": "noir/--color-surface-raised",
+      "props": {}
+    },
+    {
+      "id": "noir/Card|uses|noir/--color-border",
+      "label": "uses",
+      "from": "noir/Card",
+      "to": "noir/--color-border",
+      "props": {}
+    },
+    {
+      "id": "noir/Card|uses|noir/--shadow-raised",
+      "label": "uses",
+      "from": "noir/Card",
+      "to": "noir/--shadow-raised",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/Heading",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/Heading",
+      "props": {}
+    },
+    {
+      "id": "noir/Heading|declaredIn|noir/code/Heading.tsx",
+      "label": "declaredIn",
+      "from": "noir/Heading",
+      "to": "noir/code/Heading.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir/Heading|hasProp|noir/Heading#level",
+      "label": "hasProp",
+      "from": "noir/Heading",
+      "to": "noir/Heading#level",
+      "props": {}
+    },
+    {
+      "id": "noir/Heading|uses|noir/--color-text",
+      "label": "uses",
+      "from": "noir/Heading",
+      "to": "noir/--color-text",
+      "props": {}
+    },
+    {
+      "id": "noir/Heading|uses|noir/--color-text-muted",
+      "label": "uses",
+      "from": "noir/Heading",
+      "to": "noir/--color-text-muted",
+      "props": {}
+    },
+    {
+      "id": "noir/Heading|uses|noir/--font-display",
+      "label": "uses",
+      "from": "noir/Heading",
+      "to": "noir/--font-display",
+      "props": {}
+    },
+    {
+      "id": "noir/Heading|uses|noir/--font-sans",
+      "label": "uses",
+      "from": "noir/Heading",
+      "to": "noir/--font-sans",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/Eyebrow",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "noir/Eyebrow|declaredIn|noir/code/Heading.tsx",
+      "label": "declaredIn",
+      "from": "noir/Eyebrow",
+      "to": "noir/code/Heading.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir/Eyebrow|uses|noir/--color-text",
+      "label": "uses",
+      "from": "noir/Eyebrow",
+      "to": "noir/--color-text",
+      "props": {}
+    },
+    {
+      "id": "noir/Eyebrow|uses|noir/--color-text-muted",
+      "label": "uses",
+      "from": "noir/Eyebrow",
+      "to": "noir/--color-text-muted",
+      "props": {}
+    },
+    {
+      "id": "noir/Eyebrow|uses|noir/--font-display",
+      "label": "uses",
+      "from": "noir/Eyebrow",
+      "to": "noir/--font-display",
+      "props": {}
+    },
+    {
+      "id": "noir/Eyebrow|uses|noir/--font-sans",
+      "label": "uses",
+      "from": "noir/Eyebrow",
+      "to": "noir/--font-sans",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/Input",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/Input",
+      "props": {}
+    },
+    {
+      "id": "noir/Input|declaredIn|noir/code/Input.tsx",
+      "label": "declaredIn",
+      "from": "noir/Input",
+      "to": "noir/code/Input.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir/Input|hasState|noir/Input:focus",
+      "label": "hasState",
+      "from": "noir/Input",
+      "to": "noir/Input:focus",
+      "props": {}
+    },
+    {
+      "id": "noir/Input|uses|noir/--color-surface-raised",
+      "label": "uses",
+      "from": "noir/Input",
+      "to": "noir/--color-surface-raised",
+      "props": {}
+    },
+    {
+      "id": "noir/Input|uses|noir/--color-text",
+      "label": "uses",
+      "from": "noir/Input",
+      "to": "noir/--color-text",
+      "props": {}
+    },
+    {
+      "id": "noir/Input|uses|noir/--color-text-muted",
+      "label": "uses",
+      "from": "noir/Input",
+      "to": "noir/--color-text-muted",
+      "props": {}
+    },
+    {
+      "id": "noir/Input|uses|noir/--color-border",
+      "label": "uses",
+      "from": "noir/Input",
+      "to": "noir/--color-border",
+      "props": {}
+    },
+    {
+      "id": "noir/Input|uses|noir/--color-accent",
+      "label": "uses",
+      "from": "noir/Input",
+      "to": "noir/--color-accent",
+      "props": {}
+    },
+    {
+      "id": "noir/Input|uses|noir/--radius-sm",
+      "label": "uses",
+      "from": "noir/Input",
+      "to": "noir/--radius-sm",
+      "props": {}
+    },
+    {
+      "id": "noir/Input|uses|noir/--focus-ring",
+      "label": "uses",
+      "from": "noir/Input",
+      "to": "noir/--focus-ring",
+      "props": {}
+    },
+    {
+      "id": "noir|contains|noir/Stack",
+      "label": "contains",
+      "from": "noir",
+      "to": "noir/Stack",
+      "props": {}
+    },
+    {
+      "id": "noir/Stack|declaredIn|noir/code/Stack.tsx",
+      "label": "declaredIn",
+      "from": "noir/Stack",
+      "to": "noir/code/Stack.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir/Stack|hasProp|noir/Stack#gap",
+      "label": "hasProp",
+      "from": "noir/Stack",
+      "to": "noir/Stack#gap",
+      "props": {}
+    },
+    {
+      "id": "noir/Stack|hasProp|noir/Stack#direction",
+      "label": "hasProp",
+      "from": "noir/Stack",
+      "to": "noir/Stack#direction",
+      "props": {}
+    },
+    {
+      "id": "noir/Stack|uses|noir/--space-unit",
+      "label": "uses",
+      "from": "noir/Stack",
+      "to": "noir/--space-unit",
+      "props": {}
+    },
+    {
+      "id": "noir/Showcase.stories#Gallery|declaredIn|noir/code/Showcase.stories.tsx",
+      "label": "declaredIn",
+      "from": "noir/Showcase.stories#Gallery",
+      "to": "noir/code/Showcase.stories.tsx",
+      "props": {}
+    },
+    {
+      "id": "noir/Badge|documentedBy|noir/§components",
+      "label": "documentedBy",
+      "from": "noir/Badge",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/Button|documentedBy|noir/§components",
+      "label": "documentedBy",
+      "from": "noir/Button",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/Card|documentedBy|noir/§components",
+      "label": "documentedBy",
+      "from": "noir/Card",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/Heading|documentedBy|noir/§components",
+      "label": "documentedBy",
+      "from": "noir/Heading",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/Eyebrow|documentedBy|noir/§components",
+      "label": "documentedBy",
+      "from": "noir/Eyebrow",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/Input|documentedBy|noir/§components",
+      "label": "documentedBy",
+      "from": "noir/Input",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "noir/Stack|documentedBy|noir/§components",
+      "label": "documentedBy",
+      "from": "noir/Stack",
+      "to": "noir/§components",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|noir/Badge",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "noir/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|noir/Button",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "noir/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|noir/Card",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "noir/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|noir/Heading",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "noir/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|noir/Eyebrow",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "noir/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|noir/Input",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "noir/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/off-token-color|governs|noir/Stack",
+      "label": "governs",
+      "from": "rule/off-token-color",
+      "to": "noir/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|noir/Badge",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "noir/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|noir/Button",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "noir/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|noir/Card",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "noir/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|noir/Heading",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "noir/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|noir/Eyebrow",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "noir/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|noir/Input",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "noir/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/unresolved-token|governs|noir/Stack",
+      "label": "governs",
+      "from": "rule/unresolved-token",
+      "to": "noir/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|noir/Badge",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "noir/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|noir/Button",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "noir/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|noir/Card",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "noir/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|noir/Heading",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "noir/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|noir/Eyebrow",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "noir/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|noir/Input",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "noir/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/ai-default-indigo|governs|noir/Stack",
+      "label": "governs",
+      "from": "rule/ai-default-indigo",
+      "to": "noir/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|noir/Badge",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "noir/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|noir/Button",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "noir/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|noir/Card",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "noir/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|noir/Heading",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "noir/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|noir/Eyebrow",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "noir/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|noir/Input",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "noir/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/purple-gradient|governs|noir/Stack",
+      "label": "governs",
+      "from": "rule/purple-gradient",
+      "to": "noir/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|noir/Badge",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "noir/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|noir/Button",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "noir/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|noir/Card",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "noir/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|noir/Heading",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "noir/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|noir/Eyebrow",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "noir/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|noir/Input",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "noir/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/trust-gradient|governs|noir/Stack",
+      "label": "governs",
+      "from": "rule/trust-gradient",
+      "to": "noir/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|noir/Badge",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "noir/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|noir/Button",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "noir/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|noir/Card",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "noir/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|noir/Heading",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "noir/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|noir/Eyebrow",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "noir/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|noir/Input",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "noir/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/emoji-icon|governs|noir/Stack",
+      "label": "governs",
+      "from": "rule/emoji-icon",
+      "to": "noir/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|noir/Badge",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "noir/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|noir/Button",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "noir/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|noir/Card",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "noir/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|noir/Heading",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "noir/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|noir/Eyebrow",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "noir/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|noir/Input",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "noir/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/left-accent-card|governs|noir/Stack",
+      "label": "governs",
+      "from": "rule/left-accent-card",
+      "to": "noir/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/sans-display|governs|noir/Heading",
+      "label": "governs",
+      "from": "rule/sans-display",
+      "to": "noir/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|noir/Badge",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "noir/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|noir/Button",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "noir/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|noir/Card",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "noir/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|noir/Heading",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "noir/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|noir/Eyebrow",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "noir/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|noir/Input",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "noir/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/invented-metric|governs|noir/Stack",
+      "label": "governs",
+      "from": "rule/invented-metric",
+      "to": "noir/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|noir/Badge",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "noir/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|noir/Button",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "noir/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|noir/Card",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "noir/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|noir/Heading",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "noir/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|noir/Eyebrow",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "noir/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|noir/Input",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "noir/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/filler-copy|governs|noir/Stack",
+      "label": "governs",
+      "from": "rule/filler-copy",
+      "to": "noir/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|noir/Badge",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "noir/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|noir/Button",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "noir/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|noir/Card",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "noir/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|noir/Heading",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "noir/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|noir/Eyebrow",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "noir/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|noir/Input",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "noir/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/external-image|governs|noir/Stack",
+      "label": "governs",
+      "from": "rule/external-image",
+      "to": "noir/Stack",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|noir/Badge",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "noir/Badge",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|noir/Button",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "noir/Button",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|noir/Card",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "noir/Card",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|noir/Heading",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "noir/Heading",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|noir/Eyebrow",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "noir/Eyebrow",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|noir/Input",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "noir/Input",
+      "props": {}
+    },
+    {
+      "id": "rule/accent-overuse|governs|noir/Stack",
+      "label": "governs",
+      "from": "rule/accent-overuse",
+      "to": "noir/Stack",
+      "props": {}
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+import React from 'react';
+import { Button, Card, Badge, Heading, Eyebrow, Stack } from '@ds';
+
+interface Tier {
+  name: string;
+  price: string;
+  features: string[];
+  highlighted?: boolean;
+}
+
+const tiers: Tier[] = [
+  { name: 'Solo', price: '$0', features: ['1 project', 'Community support', 'Local only'] },
+  { name: 'Studio', price: '$24', features: ['Unlimited projects', 'Visual testing', 'Priority support'], highlighted: true },
+  { name: 'Atelier', price: '$80', features: ['Everything in Studio', 'Team design systems', 'SSO'] },
+];
+
+/** Pricing section — composes the active design system's primitives, token roles only. */
+export function PricingTiers() {
+  return (
+    <div className="bg-surface text-text" style={{ padding: 48 }}>
+      <Stack gap={4}>
+        <Stack gap={1}>
+          <Eyebrow>Pricing</Eyebrow>
+          <Heading level={2}>Pick a plan that fits the work</Heading>
+        </Stack>
+        <Stack direction="row" gap={3}>
+          {tiers.map((tier) => (
+            <Card key={tier.name} className={tier.highlighted ? 'border-accent' : ''} style={{ width: 240 }}>
+              <Stack gap={2}>
+                <Stack direction="row" gap={1} className="items-center">
+                  <Heading level={3}>{tier.name}</Heading>
+                  {tier.highlighted && <Badge tone="accent">Most popular</Badge>}
+                </Stack>
+                <p className="font-[var(--font-display)] text-[34px] leading-none">{tier.price}</p>
+                <ul className="font-[var(--font-sans)] text-text-muted" style={{ lineHeight: 1.8 }}>
+                  {tier.features.map((f) => (
+                    <li key={f}>{f}</li>
+                  ))}
+                </ul>
+                <Button variant={tier.highlighted ? 'primary' : 'secondary'}>Choose {tier.name}</Button>
+              </Stack>
+            </Card>
+          ))}
+        </Stack>
+      </Stack>
+    </div>
+  );
+}

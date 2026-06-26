@@ -1,0 +1,28 @@
+{
+  "name": "@medesign/cli",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "medesign CLI — the client the AI (and workspace commands/gates) invoke. Proxies to a running server over HTTP, or embeds the @medesign/backend engine for one-shot ops. Also provides init/attach.",
+  "bin": {
+    "medesign": "dist/cli.js",
+    "medesign-backend": "dist/cli.js"
+  },
+  "main": "dist/cli.js",
+  "scripts": {
+    "dev": "tsx src/cli.ts serve",
+    "serve": "tsx src/cli.ts serve",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/cli.js serve"
+  },
+  "dependencies": {
+    "@medesign/backend": "*",
+    "@medesign/mcp-server": "*",
+    "@medesign/workspace": "*",
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "tsx": "^4.16.0",
+    "typescript": "^5.5.0"
+  }
+}

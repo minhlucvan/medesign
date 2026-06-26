@@ -1,0 +1,46 @@
+/* Deck — Swiss International — token contract. Captured/generated components reference these roles only. */
+:root {
+  /* ---- color ---- (default theme: Klein Blue / IKB) */
+  --color-surface: #fafaf8;                 /* near-white paper */
+  --color-surface-raised: #ffffff;          /* card / cell face */
+  --color-text: #0a0a0a;                    /* ink */
+  --color-text-muted: rgba(10,10,10,0.58);  /* 58% ink — labels, captions, axis text */
+  --color-accent: #002fa7;                  /* International Klein Blue (IKB) — the single saturated accent */
+  --color-accent-hover: #002485;            /* deeper IKB */
+  --color-border: #0a0a0a;                  /* 1px ink hairline — the structural rule */
+
+  /* status */
+  --color-success: #15803d;
+  --color-warn: #b45309;
+  --color-danger: #b91c1c;
+
+  /* ---- type ---- */
+  --font-display: "Inter Tight", "Inter", "Helvetica Neue", system-ui, sans-serif;
+  --font-sans: "Inter", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* ---- shape / depth ---- */
+  --radius: 0px;                            /* zero-radius law — any rounding is a violation */
+  --radius-sm: 0px;
+  --radius-pill: 0px;                        /* no rounding anywhere, badges included */
+  --space-unit: 8px;
+  --shadow-raised: none;                     /* shadows / blur / gradient are forbidden */
+  --focus-ring: 0 0 0 2px rgba(0,47,167,0.45); /* IKB focus hairline-halo */
+
+  /* ---- motion ---- */
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---- layout ---- */
+  --container-max: 1280px;                   /* 16:9 slide stage */
+  --section-y: 48px;
+}
+
+/* Locked alternate themes — pick exactly ONE, never mix, never edit the hex. */
+/* Lemon Yellow — text on accent MUST be black. */
+[data-theme="lemon"]  { --color-surface: #f7f5ee; --color-accent: #ffd500; --color-accent-hover: #e6c000; }
+/* Lemon Green / Neon — text on accent MUST be black. */
+[data-theme="green"]  { --color-surface: #f7f5ee; --color-accent: #c5e803; --color-accent-hover: #a9c903; }
+/* Safety Orange — text on accent MUST be white, weight >= 600. */
+[data-theme="orange"] { --color-surface: #f7f5ee; --color-accent: #ff6b35; --color-accent-hover: #e85a28; }

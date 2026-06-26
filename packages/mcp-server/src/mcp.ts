@@ -13,6 +13,7 @@ import {
   countMustFix,
   effectiveAdapter,
   captureComponent,
+  captureWithBaseline,
   runVisualTest,
   toStoryId,
   buildAndSave,
@@ -162,7 +163,7 @@ export async function createMcpServer(store: Store, paths: RepoPaths, _orch?: an
 
   // ── 5. Evaluate quality ──────────────────────────────────────
   server.registerTool('evaluate_component', {
-    description: 'Run the full quality gate on a component. Combines lint, visual, vision, and LLM scores into a composite with a ship/continue decision. The component ships only when composite >= threshold AND mustFix === 0. Use BEFORE capture_reusable_component.',
+    description: 'Run the full quality gate on a component. Combines all feedback scores into a composite with a ship/revise decision. Ships only when composite >= threshold AND mustFix === 0 AND every source score >= its floor. Returns unsatisfiedConditions listing what failed for targeted fixing.',
     inputSchema: {
       component: z.string().optional().describe('Component name (for per-component ratchet tracking)'),
       scores: z.object({
@@ -174,10 +175,17 @@ export async function createMcpServer(store: Store, paths: RepoPaths, _orch?: an
       }).optional().describe('Feedback scores (0–1). Omitted dimensions are excluded from weighting.'),
       mustFix: z.number().int().nonnegative().describe('Number of blocking (P0) issues'),
       threshold: z.number().optional().describe('Minimum composite to ship. Default: 0.8'),
+      sourceFloors: z.object({
+        visual: z.number().optional(),
+        tokens: z.number().optional(),
+        vision: z.number().optional(),
+        llm: z.number().optional(),
+        a11y: z.number().optional(),
+      }).optional().describe('Per-source minimum floors. Default: vision 0.7, llm 0.7, tokens 0.8, visual 0.85, a11y 0.8'),
       evidenceSlug: z.string().optional().describe('If set, also persist this round as evidence under design/changes/<slug>/'),
     },
-  }, async ({ component, scores, mustFix, threshold, evidenceSlug }) => {
-    const res = scoreComponent(paths, { scores: scores ?? {}, mustFix, threshold, component });
+  }, async ({ component, scores, mustFix, threshold, sourceFloors, evidenceSlug }) => {
+    const res = scoreComponent(paths, { scores: scores ?? {}, mustFix, threshold, sourceFloors, component });
     store.update({ lastCritique: { scores: scores ?? {}, composite: res.composite, decision: res.decision, mustFix } });
     let evidence = '';
     if (evidenceSlug) {
@@ -450,6 +458,69 @@ export async function createMcpServer(store: Store, paths: RepoPaths, _orch?: an
   }, async ({ name }) => {
     const out = await captureComponent(paths, name);
     return text(`Captured ${name} → ${out}`);
+  });
+
+  // ── 14. Capture component with baseline ──────────────────────
+  server.registerTool('capture_component_with_baseline', {
+    description: 'Atomic capture + visual baseline seeding. Promotes a generated component into a reusable, documented component AND takes a Playwright screenshot of its story as the visual baseline for future regression tests. Use instead of capture_component for production pipelines.',
+    inputSchema: { name: z.string().describe('Component name (PascalCase)') },
+  }, async ({ name }) => {
+    const out = await captureWithBaseline(paths, name);
+    return text(`Captured ${name} → ${out.componentDir}\nBaseline: ${out.baselinePath || '(no story — baseline skipped)'}`);
+  });
+
+  // ── 15. Capture baseline ─────────────────────────────────────
+  server.registerTool('capture_baseline', {
+    description: 'Seed a visual baseline for an already-captured component. Takes a Playwright screenshot of the component story and saves it as the baseline for future visual diffs. Useful when a component was captured before baseline support existed.',
+    inputSchema: { name: z.string().describe('Component name (PascalCase)') },
+  }, async ({ name }) => {
+    const a = effectiveAdapter(paths);
+    const safe = name.replace(/[^A-Za-z0-9]/g, '');
+    const pascal = safe[0].toUpperCase() + safe.slice(1);
+    const storyFile = path.join(paths.componentsDir, pascal, `${pascal}${a.storyExt}`);
+    const fallbackStory = path.join(paths.generatedDir, `${pascal}${a.storyExt}`);
+
+    if (!fs.existsSync(storyFile) && !fs.existsSync(fallbackStory)) {
+      return text(`No story file found for ${name}. Cannot seed baseline.`);
+    }
+
+    const storyId = toStoryId(pascal, 'default', 'components');
+    const url = `${STORYBOOK_URL}/iframe.html?id=${storyId}&viewMode=story`;
+
+    ensureDir(paths.screenshotsDir);
+    const baselinePath = path.join(paths.screenshotsDir, `${pascal}.baseline.png`);
+
+    const { chromium } = await import('playwright');
+    const browser = await chromium.launch();
+    try {
+      const page = await browser.newPage({ deviceScaleFactor: 2 });
+      await page.goto(url, { waitUntil: 'networkidle' });
+      await page.waitForSelector('#storybook-root', { timeout: 10_000 });
+      await page.locator('#storybook-root').screenshot({ path: baselinePath });
+    } finally {
+      await browser.close();
+    }
+    return text(`Baseline seeded for ${name} → ${baselinePath}`);
+  });
+
+  // ── 16. Generate Tailwind config ─────────────────────────────
+  server.registerTool('generate_tailwind_config', {
+    description: 'Generate tailwind.config.js from the active design system\'s token contract. Parses ALL --color-* roles from tokens.css (not just a hardcoded subset) and emits dark: variant support when [data-theme="dark"] is present. Call after applying a design system.',
+    inputSchema: {
+      id: z.string().optional().describe('Design system ID (defaults to active)'),
+    },
+  }, async ({ id }) => {
+    const dsId = id ?? activeDsId(store);
+    const ds = resolveDesignSystem(paths, dsId);
+    const adapter = effectiveAdapter(paths);
+    const [file] = adapter.emitConfig(ds, paths);
+    if (file) {
+      fs.writeFileSync(path.join(paths.root, file.path), file.content);
+      const hasDark = /\[data-theme\s*=\s*"dark"\]/.test(ds.tokensCss);
+      const colorCount = ds.declaredTokens.filter((t) => t.startsWith('color-')).length;
+      return text(`Wrote ${file.path} (${colorCount} color roles${hasDark ? ', dark mode enabled' : ''}).`);
+    }
+    return text('No config to generate.');
   });
 
   // Register session management tools if orchestrator is provided

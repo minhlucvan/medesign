@@ -66,6 +66,12 @@ export function componentLint(source: string, opts: ComponentLintOptions = {}): 
   const accentUses = (body.match(/\b(bg|text|border)-accent\b/g) ?? []).length + (body.match(/var\(--color-accent\)/g) ?? []).length;
   if (accentUses > 2) push({ ruleId: 'accent-overuse', severity: 'P1', message: `Accent used ${accentUses} times; cap is ~2 per screen.`, fix: 'Reserve the accent for the single most important element.' });
 
+  // Non-deterministic code: breaks SSR, test reproducibility, and workflow determinism.
+  const ndMatch = body.match(/\bnew\s+Date\s*\(\s*\)|\bDate\.now\s*\(\s*\)|\bMath\.random\s*\(\s*\)|\bcrypto\.randomUUID\s*\(\s*\)|\bcrypto\.getRandomValues/g);
+  if (ndMatch) {
+    push({ ruleId: 'non-deterministic-code', severity: 'P0', message: `Non-deterministic code: "${ndMatch[0]}". Breaks SSR/hydration, test reproducibility, and workflow determinism.`, fix: 'Pass dynamic values via props instead (e.g., year={props.year ?? 2026} instead of new Date().getFullYear()).', snippet: ndMatch[0] });
+  }
+
   const rawHexes = body.match(/#[0-9a-fA-F]{3,8}\b/g) ?? [];
   if (rawHexes.length > 0 && (opts.declaredTokens?.length ?? 0) > 0) {
     push({ ruleId: 'off-token-color', severity: 'P1', message: `Raw hex in component (${rawHexes.slice(0, 3).join(', ')}${rawHexes.length > 3 ? '…' : ''}); a token contract exists.`, fix: 'Reference a token role instead of raw hex.', snippet: rawHexes[0] });

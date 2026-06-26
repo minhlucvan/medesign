@@ -1,0 +1,68 @@
+{
+  "runId": "baseline-2026-06-27",
+  "config": {
+    "description": "Baseline benchmark for core-loop v1 with default configuration",
+    "threshold": 0.8,
+    "sourceFloors": { "vision": 0.7, "llm": 0.7, "tokens": 0.8, "visual": 0.85, "a11y": 0.8 },
+    "plateauLimit": 3,
+    "modelConfig": {
+      "build": "sonnet",
+      "vision-critic": "sonnet",
+      "design-reviewer": "sonnet",
+      "consistency-auditor": "sonnet",
+      "visual-test": "haiku",
+      "a11y": "haiku"
+    }
+  },
+  "tests": [
+    {
+      "name": "Button",
+      "instruction": "A primary action button with hover, focus, and disabled states. Uses accent token for background, white text. Sharp corners, no shadow. Reference the active design system's Button primitive if available.",
+      "complexity": "simple",
+      "expectedMinComposite": 0.85,
+      "expectedMaxRounds": 5
+    },
+    {
+      "name": "MetricCard",
+      "instruction": "A metric stat card with a large figure (42px mono weight 900), label (10px tag uppercase tracked), and optional hero/highlight variant with lime background. Hairline border all sides, no shadow, sharp corners.",
+      "complexity": "simple",
+      "expectedMinComposite": 0.85,
+      "expectedMaxRounds": 5
+    },
+    {
+      "name": "NavigationBar",
+      "instruction": "A top navigation bar with brand wordmark on the left, primary CTA button isolated on the right. 48px height, hairline bottom border, px-4 padding. Ink accent CTA with white text. One accent budget for the whole page.",
+      "complexity": "simple",
+      "expectedMinComposite": 0.85,
+      "expectedMaxRounds": 4
+    },
+    {
+      "name": "DataTable",
+      "instruction": "A data table with sortable columns (click header to sort), zebra striping on alternating rows (surface-raised background for even rows), header row with accent bottom border (2px), pagination controls at the bottom, and an empty state with a centered message. Each column has a header cell with sort indicator.",
+      "complexity": "medium",
+      "expectedMinComposite": 0.80,
+      "expectedMaxRounds": 8
+    },
+    {
+      "name": "FeatureShowcase",
+      "instruction": "A 3-column feature grid with numbered step cards. Each card has a Badge primitive (01 . TODAY), display subtitle (26px weight 700 uppercase), body description (16px), and optional footer tag (10px tag). One hero card with lime highlight background and ink type. Uses Card primitive from @ds. Stack gap 3 between cards.",
+      "complexity": "medium",
+      "expectedMinComposite": 0.80,
+      "expectedMaxRounds": 6
+    },
+    {
+      "name": "PricingTable",
+      "instruction": "A 3-tier pricing table with monthly/annual toggle at the top, feature comparison rows below, and a highlighted 'Popular' middle tier with accent border (2px). Each tier has a title, price, feature list, and CTA button. The popular tier uses surface-raised background and the accent border to stand out.",
+      "complexity": "complex",
+      "expectedMinComposite": 0.78,
+      "expectedMaxRounds": 10
+    },
+    {
+      "name": "DashboardView",
+      "instruction": "A full dashboard view composing MetricCards, a DataTable, and a chart area placeholder. 12-column grid layout, 1400px container max, 64px section rhythm. KPI rail on the left (160px fixed width) with delta figures, content area on the right. Features a page-level lime highlight field with the primary KPI figure. One accent budget for the whole page.",
+      "complexity": "complex",
+      "expectedMinComposite": 0.78,
+      "expectedMaxRounds": 10
+    }
+  ]
+}

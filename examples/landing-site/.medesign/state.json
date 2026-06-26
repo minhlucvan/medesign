@@ -1,0 +1,179 @@
+{
+  "activeDesignSystem": "noir",
+  "currentComponent": null,
+  "changeRequests": [
+    {
+      "id": "cr_1782403977689_0",
+      "type": "comment",
+      "instruction": "make this bigger",
+      "status": "done",
+      "createdAt": "2026-06-25T16:12:57.689Z",
+      "target": {
+        "selector": "div > h1",
+        "tag": "h1",
+        "text": "Design engineering",
+        "component": "Hero"
+      },
+      "note": "Hero h1 bumped one rung up the type scale (added display size to noir Heading primitive; 44px->60px). Lint PASS, visual snapshot captured. Awaiting human ship."
+    },
+    {
+      "id": "cr_1782423454617_0",
+      "type": "comment",
+      "instruction": "change primary to green",
+      "status": "done",
+      "createdAt": "2026-06-25T21:37:34.617Z",
+      "target": {
+        "selector": "div:nth-of-type(1) > div > div:nth-of-type(2) > button:nth-of-type(1)",
+        "box": {
+          "x": 267.65625,
+          "y": 259.0078125,
+          "width": 147.34375,
+          "height": 50
+        },
+        "text": "Primary action",
+        "tag": "button",
+        "classes": "inline-flex items-center justify-center rounded font-medium px-5 py-3 transition-[background-color,box-shadow] duration-[120ms] focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)] disabled:opacity-45 disabled:pointer-events-none bg-accent text-white hover:bg-accent-hover ",
+        "storyId": "design-system-atelier--gallery",
+        "component": "Atelier"
+      },
+      "note": "Atelier accent changed terracotta->moss green (#4a7d33, hover #3c6628). tokens.css + DESIGN.md contract + focus-ring updated; validate OK; graph rebuilt. Verified green under atelier tokens. Awaiting human ship. (System-wide on atelier DS, approved.)"
+    },
+    {
+      "id": "cr_1782423488023_1",
+      "type": "comment",
+      "instruction": "chnage color to green",
+      "status": "done",
+      "createdAt": "2026-06-25T21:38:08.023Z",
+      "target": {
+        "selector": "div:nth-of-type(1) > div > div:nth-of-type(2) > button:nth-of-type(1)",
+        "box": {
+          "x": 267.65625,
+          "y": 259.0078125,
+          "width": 147.34375,
+          "height": 50
+        },
+        "text": "Primary action",
+        "tag": "button",
+        "classes": "inline-flex items-center justify-center rounded font-medium px-5 py-3 transition-[background-color,box-shadow] duration-[120ms] focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)] disabled:opacity-45 disabled:pointer-events-none bg-accent text-white hover:bg-accent-hover ",
+        "storyId": "design-system-atelier--gallery",
+        "component": "Atelier"
+      },
+      "note": "Duplicate of cr_1782423454617_0 (same atelier 'Primary action' button → green). Resolved by that change."
+    },
+    {
+      "id": "cr_1782423567928_2",
+      "type": "comment",
+      "instruction": "change bg color to green",
+      "status": "done",
+      "createdAt": "2026-06-25T21:39:27.928Z",
+      "target": {
+        "selector": "div:nth-of-type(1) > div > div:nth-of-type(2) > button:nth-of-type(1)",
+        "box": {
+          "x": 267.65625,
+          "y": 223.515625,
+          "width": 147.34375,
+          "height": 50
+        },
+        "text": "Primary action",
+        "tag": "button",
+        "classes": "inline-flex items-center justify-center rounded font-medium px-5 py-3 transition-[background-color,box-shadow] duration-[120ms] focus-visible:outline-none focus-visible:shadow-[var(--focus-ring)] disabled:opacity-45 disabled:pointer-events-none bg-accent text-white hover:bg-accent-hover ",
+        "storyId": "design-system-atelier--gallery",
+        "component": "Atelier"
+      },
+      "note": "Duplicate of cr_1782423454617_0 (same atelier 'Primary action' button → green). Resolved by that change."
+    },
+    {
+      "id": "cr_1782423604207_3",
+      "type": "comment",
+      "instruction": "change bg color to green",
+      "status": "done",
+      "createdAt": "2026-06-25T21:40:04.207Z",
+      "target": {
+        "selector": "div > button",
+        "box": {
+          "x": 267,
+          "y": 223,
+          "width": 147,
+          "height": 50
+        },
+        "text": "Primary action",
+        "tag": "button",
+        "storyId": "design-system-atelier--gallery",
+        "component": "Atelier"
+      },
+      "note": "Duplicate of cr_1782423454617_0 (same atelier 'Primary action' button → green). Resolved by that change."
+    },
+    {
+      "id": "cr_1782424943063_0",
+      "type": "comment",
+      "instruction": "change to vietnames",
+      "status": "done",
+      "createdAt": "2026-06-25T22:02:23.063Z",
+      "target": {
+        "selector": "div:nth-of-type(1)",
+        "box": {
+          "x": 151.5,
+          "y": 17.3046875,
+          "width": 837,
+          "height": 512.390625
+        },
+        "text": "medesignDesign engineering, on-system by construction.Pick a design system, then craft components that stay consistent, ",
+        "tag": "div",
+        "classes": "bg-surface text-text",
+        "storyId": "generated-hero--default",
+        "component": "Hero"
+      },
+      "note": "Hero copy translated to Vietnamese (eyebrow 'medesign' kept as brand). Diacritics render correctly in noir display+sans. Lint PASS, visual confirmed. Awaiting human ship."
+    },
+    {
+      "id": "cr_1782428902543_0",
+      "type": "comment",
+      "instruction": "dont use the double dash symbol",
+      "status": "queued",
+      "createdAt": "2026-06-25T23:08:22.543Z",
+      "target": {
+        "selector": "div:nth-of-type(1)",
+        "box": {
+          "x": 151.5,
+          "y": 20.203125,
+          "width": 837,
+          "height": 603.5859375
+        },
+        "text": "medesignKỹ thuật thiết kế — đúng hệ thống ngay từ trong cấu trúc.Chọn một hệ thống thiết kế, rồi tạo nên các thành phần ",
+        "tag": "div",
+        "classes": "bg-surface text-text",
+        "storyId": "generated-hero--default",
+        "component": "Hero"
+      }
+    },
+    {
+      "id": "cr_1782429141734_1",
+      "type": "comment",
+      "instruction": "change to english",
+      "status": "queued",
+      "createdAt": "2026-06-25T23:12:21.734Z",
+      "target": {
+        "selector": "div:nth-of-type(1)",
+        "box": {
+          "x": 151.5,
+          "y": 20.203125,
+          "width": 837,
+          "height": 603.5859375
+        },
+        "text": "medesignKỹ thuật thiết kế — đúng hệ thống ngay từ trong cấu trúc.Chọn một hệ thống thiết kế, rồi tạo nên các thành phần ",
+        "tag": "div",
+        "classes": "bg-surface text-text",
+        "storyId": "generated-hero--default",
+        "component": "Hero"
+      }
+    }
+  ],
+  "lastDiff": {
+    "status": "changed",
+    "baselinePng": "http://localhost:4321/screenshots/Hero.baseline.png",
+    "actualPng": "http://localhost:4321/screenshots/Hero.actual.png",
+    "changedPixels": -1
+  },
+  "lintPassing": null,
+  "lastCritique": null
+}

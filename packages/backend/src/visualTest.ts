@@ -75,9 +75,9 @@ export async function runVisualTest(paths: RepoPaths, component: string): Promis
 }
 
 /** Storybook slugifies "Generated/PricingTiers" → "generated-pricingtiers--default". */
-export function toStoryId(component: string, story = 'default'): string {
+export function toStoryId(component: string, story = 'default', prefix = 'generated'): string {
   const kebab = component
     .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
     .toLowerCase();
-  return `generated-${kebab}--${story}`;
+  return `${prefix}-${kebab}--${story}`;
 }

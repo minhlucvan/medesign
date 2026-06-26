@@ -46,10 +46,14 @@ export interface DecideConfig {
   scoreThreshold: number; // 0..1
 }
 
-/** The ship gate. */
-export function decideRound(composite: number, mustFix: number, cfg: DecideConfig): 'ship' | 'continue' {
-  if (composite >= cfg.scoreThreshold - 1e-9 && mustFix === 0) return 'ship';
-  return 'continue';
+export type Verdict = 'ship' | 'revise';
+
+/** The ship gate. Returns 'ship' only when BOTH composite >= threshold AND mustFix === 0.
+ *  'revise' is unambiguous — blocking issues or below-threshold quality. */
+export function decideRound(composite: number, mustFix: number, cfg: DecideConfig): Verdict {
+  if (mustFix > 0) return 'revise';                           // blocking issues → hard stop, must fix
+  if (composite < cfg.scoreThreshold - 1e-9) return 'revise'; // below threshold → must improve
+  return 'ship';                                               // both pass → ready to ship
 }
 
 export type FallbackPolicy = 'fail' | 'ship_last' | 'ship_best';

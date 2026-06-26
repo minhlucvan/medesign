@@ -81,7 +81,9 @@ while (round < MAX_ROUNDS && !shipped) {
             INSTRUCTION,
           )}.\n`
         : '') +
-      `Compose primitives from "@ds", reference token roles only, obey the Anti-patterns.${COMPOSE_NOTE}\n\n` +
+      `Compose primitives from "@ds", reference token roles only, obey the Anti-patterns.${COMPOSE_NOTE}\n` +
+      `DARK MODE: If the design system has a dark theme (tokens.css has [data-theme="dark"]), generate \`dark:\` variants for every color utility.\n` +
+      `NON-DETERMINISTIC CODE: NEVER use \`new Date()\`, \`Date.now()\`, \`Math.random()\`, or \`crypto.randomUUID()\` in component source. Pass dynamic values via props.\n\n` +
       `DESIGN CONTEXT:\n${brief}\n\n` +
       (feedback ? `FIX THESE (P0 first), from the previous round:\n${feedback}\n` : ''),
     { label: `build:r${round}`, phase: 'Build' },

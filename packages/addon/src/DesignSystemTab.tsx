@@ -56,7 +56,6 @@ export function DesignSystemTab() {
 
   return (
     <Page>
-      <Wrap>
         <PageTitle>Design System</PageTitle>
         <Sub>browse · inspect · switch · request changes</Sub>
 
@@ -154,7 +153,6 @@ export function DesignSystemTab() {
             </Section>
           </Stack>
         ) : <Section><Muted>select a system above</Muted></Section>}
-      </Wrap>
     </Page>
   );
 }

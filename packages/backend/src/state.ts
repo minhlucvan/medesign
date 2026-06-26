@@ -42,6 +42,18 @@ export interface ChangeRequest {
   note?: string;
 }
 
+/** A persisted comment pin with its chat session reference. */
+export interface CommentStored {
+  n: number;
+  selector: string;
+  text: string;
+  tag?: string;
+  component?: string;
+  storyId: string;
+  sessionId: string;
+  createdAt: string;
+}
+
 export interface DiffResult {
   status: 'pass' | 'changed' | 'new' | 'error';
   baselinePng?: string;
@@ -70,6 +82,8 @@ export interface StudioState {
   lintPassing: boolean | null;
   /** Latest combined critique (the four feedback scores + gate decision) for the panel. */
   lastCritique: Critique | null;
+  /** Persisted comment pins keyed by storyId (survives page reloads). */
+  comments: Record<string, CommentStored[]>;
 }
 
 const EMPTY: StudioState = {
@@ -79,6 +93,7 @@ const EMPTY: StudioState = {
   lastDiff: null,
   lintPassing: null,
   lastCritique: null,
+  comments: {},
 };
 
 export class Store {

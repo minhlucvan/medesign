@@ -8,7 +8,7 @@ export const EVT_TOOL_MODE = 'emdesign/tool-mode'; // manager → preview: { mod
 export const EVT_COMMENT_SUBMIT = 'emdesign/comment-submit'; // preview → manager: { target, instruction }
 export const EVT_TEXT_SUBMIT = 'emdesign/text-submit'; // preview → manager: { target, from, to } (the pen)
 export const EVT_COPIED = 'emdesign/copied'; // preview → manager: { ok, selector } (toolbar copy confirmation)
-export const EVT_CHAT_MODE = 'emdesign/chat-mode'; // toolbar → manager: { enabled: boolean }
+export const EVT_CHAT_MODE = 'emdesign/chat-mode'; // toolbar → manager: { enabled: boolean; sessionId?: string }
 
 /** A pointed-at element captured by the preview overlay. */
 export interface CommentTarget {

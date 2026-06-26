@@ -1,14 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { IconButton, Separator } from '@storybook/components';
-import { useChannel, useStorybookApi } from '@storybook/manager-api';
+import { useChannel } from '@storybook/manager-api';
 import { styled } from '@storybook/theming';
 import { api } from './api';
 import { EVT_TOOL_MODE, EVT_COMMENT_SUBMIT, EVT_TEXT_SUBMIT, EVT_CHAT_MODE, type ToolMode, type CommentTarget } from './channel';
-import { VIEW_MODE_CREATE } from './constants';
 import { useStudioState } from './ui';
+import { ChatModeController } from './ChatModeController';
 
 const Chip = styled.span(({ theme }) => ({ font: `11px ${theme.typography.fonts.base}`, color: theme.textMutedColor, padding: '0 6px' }));
-const Label = styled.span({ marginLeft: 6, fontSize: 12 });
 
 const TOOLS: Array<{ mode: Exclude<ToolMode, 'off'>; title: string; label: string; icon: React.ReactNode }> = [
   {
@@ -31,20 +30,32 @@ const TOOLS: Array<{ mode: Exclude<ToolMode, 'off'>; title: string; label: strin
   },
 ];
 
-/** Toolbar: comment / copy / pen mode group + Chat toggle + "+ Create" jump + the active design-system chip. */
+/** Toolbar: comment / copy / pen mode group + the active design-system chip. */
 export function Tool() {
   const [mode, setMode] = useState<ToolMode>('off');
-  const [chatMode, setChatMode] = useState(false);
   const modeRef = useRef<ToolMode>('off');
   const { state } = useStudioState(3000);
-  const sbApi = useStorybookApi();
 
   // The canvas→backend bridge lives here (always mounted in story view): a comment or an inline pen
   // edit from the preview overlay becomes a typed intent. Also stay in sync when the preview turns off.
   const emit = useChannel({
     [EVT_TOOL_MODE]: (p: { mode: ToolMode }) => { modeRef.current = p?.mode ?? 'off'; setMode(modeRef.current); },
     [EVT_COMMENT_SUBMIT]: async (p: { target: CommentTarget; instruction: string }) => {
-      try { await api.submitIntent({ type: 'comment', instruction: p.instruction, target: p.target }); } catch { /* backend down */ }
+      try {
+        // Build a structured prompt with element context
+        const prompt = `Update component "${p.target.component || 'unknown'}": ${p.instruction}\n\nTarget element: <${p.target.tag}${p.target.selector ? ' ' + p.target.selector : ''}>\n- Text: "${p.target.text || ''}"\n- Story: ${p.target.storyId || ''}`;
+        const session = await api.createSession({ type: 'change-request', instruction: prompt });
+        // Persist the comment pin with session reference
+        await api.storeComment({
+          storyId: p.target.storyId || '',
+          selector: p.target.selector || '',
+          text: p.instruction,
+          tag: p.target.tag,
+          component: p.target.component,
+          sessionId: session.id,
+        }).catch(() => {});
+        emit(EVT_CHAT_MODE, { enabled: true, sessionId: session.id });
+      } catch { /* backend down */ }
     },
     [EVT_TEXT_SUBMIT]: async (p: { target: CommentTarget; from: string; to: string }) => {
       try {
@@ -65,17 +76,6 @@ export function Tool() {
     emit(EVT_TOOL_MODE, { mode: next });
   };
 
-  const openCreate = () => {
-    const storyId = (sbApi as any)?.getUrlState?.().storyId ?? '*';
-    try { (sbApi as any)?.navigateUrl?.(`/${VIEW_MODE_CREATE}/${storyId}`, { plain: false }); } catch { /* fall back to the top-bar tab */ }
-  };
-
-  const toggleChat = () => {
-    const next = !chatMode;
-    setChatMode(next);
-    emit(EVT_CHAT_MODE, { enabled: next });
-  };
-
   return (
     <>
       <Separator />
@@ -84,18 +84,8 @@ export function Tool() {
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>{t.icon}</svg>
         </IconButton>
       ))}
-      <IconButton key="emdesign-chat" active={chatMode} title={chatMode ? 'Switch to story tree' : 'Chat mode: browse Claude sessions in sidebar'} onClick={toggleChat}>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill={chatMode ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        </svg>
-      </IconButton>
-      <IconButton key="emdesign-create" title="emdesign: create a component, story, view, or design system" onClick={openCreate}>
-        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden>
-          <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-        </svg>
-        <Label>Create</Label>
-      </IconButton>
       {state?.activeDesignSystem && <Chip>◆ {state.activeDesignSystem}</Chip>}
+      <ChatModeController />
     </>
   );
 }

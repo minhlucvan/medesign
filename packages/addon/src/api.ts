@@ -76,6 +76,12 @@ export const api = {
   restartService: (type: ServiceType) =>
     post(`/api/services/${type}/restart`, {}) as Promise<ServiceInfo>,
 
+  // ── Comment pins ────────────────────────────────────────────────────
+  storeComment: (data: { storyId: string; selector: string; text?: string; tag?: string; component?: string; sessionId: string }) =>
+    post('/api/comments', data) as Promise<{ ok: boolean; pin: unknown }>,
+  getComments: (storyId: string) =>
+    json<{ pins: Array<{ n: number; selector: string; text: string; tag?: string; component?: string; storyId: string; sessionId: string; createdAt: string }> }>(`/api/comments?storyId=${encodeURIComponent(storyId)}`),
+
   // ── Platform status ─────────────────────────────────────────────────
   getPlatformStatus: () => json<PlatformState>('/api/platform/status'),
 };

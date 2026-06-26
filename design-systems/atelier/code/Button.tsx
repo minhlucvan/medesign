@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Variant = 'primary' | 'secondary';
+type Variant = 'primary' | 'secondary' | 'danger';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: Variant;
@@ -16,6 +16,7 @@ const variants: Record<Variant, string> = {
   // Accent is precious — primary is the screen's one decisive action.
   primary: 'bg-accent text-white hover:bg-accent-hover',
   secondary: 'bg-transparent text-text border border-border hover:bg-[#f3efe8]',
+  danger: 'bg-[var(--color-danger)] text-white hover:bg-[#7a281f]',
 };
 
 /** Atelier primary/secondary button. References token roles only. */

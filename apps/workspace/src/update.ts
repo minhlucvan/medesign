@@ -7,6 +7,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 
 /** Canonical template paths (same as install.ts). */
 const CLAUDE_TEMPLATE = path.resolve(HERE, '../templates/claude');
+const CLAUDE_MD_TEMPLATE = path.resolve(HERE, '../templates/CLAUDE.md');
 const CONFIG_TEMPLATE = path.resolve(HERE, '../templates/emdesign.config.template.json');
 const STARTER_DS = path.resolve(HERE, '../../../design-systems/atelier');
 const STORYBOOK_TEMPLATE_PKG = path.resolve(HERE, '../templates/storybook-package.json');
@@ -304,6 +305,24 @@ export function update(opts: UpdateOptions = {}): UpdateResult {
 
   // Phase 1 — .claude/
   syncClaude(targetDir, opts, result);
+
+  // Phase 1b — root CLAUDE.md (separate from .claude/ dir)
+  if (fs.existsSync(CLAUDE_MD_TEMPLATE)) {
+    const wsClaudeMd = path.join(targetDir, 'CLAUDE.md');
+    const tplContent = tryRead(CLAUDE_MD_TEMPLATE);
+    if (tplContent !== null) {
+      if (!fs.existsSync(wsClaudeMd)) {
+        result.added.push('CLAUDE.md');
+        if (!opts.dryRun) fs.copyFileSync(CLAUDE_MD_TEMPLATE, wsClaudeMd);
+      } else if (opts.force) {
+        const wsContent = tryRead(wsClaudeMd);
+        if (wsContent !== null && wsContent !== tplContent) {
+          result.updated.push('CLAUDE.md');
+          if (!opts.dryRun) fs.copyFileSync(CLAUDE_MD_TEMPLATE, wsClaudeMd);
+        }
+      }
+    }
+  }
 
   // Phase 2 — emdesign.config.json
   mergeConfig(targetDir, opts, result);

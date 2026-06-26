@@ -17,7 +17,7 @@ import { applyDesignSystem, listBases } from './scaffold.js';
 import { loadOrBuild } from './graph.js';
 import { evidenceDir } from './evidence.js';
 import { normalizeDsRef } from './paths.js';
-import type { IntentType, CommentTarget } from './state.js';
+import type { IntentType, CommentTarget, CommentStored } from './state.js';
 
 /**
  * HTTP bridge consumed by the Storybook addon panel. It reads/writes the same Store the
@@ -316,6 +316,25 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
     } catch (e) {
       res.status(500).json({ error: (e as Error).message });
     }
+  });
+
+  // ---- comment pins (persist across story reloads) ----
+  app.post('/api/comments', (req, res) => {
+    const { storyId, selector, text, tag, component, sessionId } = req.body;
+    if (!storyId || !sessionId) return res.status(400).json({ error: 'storyId and sessionId required' });
+    const state = store.get();
+    const pins = state.comments[storyId] || [];
+    const pin: CommentStored = { n: pins.length + 1, selector, text: text || '', tag, component, storyId, sessionId, createdAt: new Date().toISOString() };
+    pins.push(pin);
+    store.update({ comments: { ...state.comments, [storyId]: pins } });
+    res.json({ ok: true, pin });
+  });
+
+  app.get('/api/comments', (req, res) => {
+    const storyId = req.query.storyId as string;
+    if (!storyId) return res.status(400).json({ error: 'storyId query param required' });
+    const state = store.get();
+    res.json({ pins: state.comments[storyId] || [] });
   });
 
   // ---- chat stream (SSE) ----

@@ -50,7 +50,7 @@ export function PricingTiers() {
                     <li key={f}>{f}</li>
                   ))}
                 </ul>
-                <Button variant={tier.highlighted ? 'primary' : 'secondary'}>Choose {tier.name}</Button>
+                <Button variant={tier.name === 'Studio' ? 'danger' : 'secondary'}>Choose {tier.name}</Button>
               </Stack>
             </Card>
           ))}

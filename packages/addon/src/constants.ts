@@ -33,6 +33,31 @@ export type IntentType =
   | 'create-design-system'
   | 'update-design-system';
 
+// ── Chat mode definitions for the New Conversation picker ──────────────
+
+export type ChatStartMode =
+  | 'chat'
+  | 'update-story'
+  | 'new-story'
+  | 'new-component'
+  | 'change-request';
+
+export interface ChatModeOption {
+  id: ChatStartMode;
+  label: string;
+  description: string;
+  intentType: IntentType | null;
+  icon: string;
+}
+
+export const CHAT_MODES: ChatModeOption[] = [
+  { id: 'chat',           label: 'Chat',            description: 'Free-form conversation',               intentType: null,                  icon: '💬' },
+  { id: 'change-request', label: 'Change Request',  description: 'Request a design change',             intentType: 'change-request',      icon: '✏️' },
+  { id: 'new-component',  label: 'New Component',   description: 'Scaffold a new React component',      intentType: 'create-component',    icon: '🧩' },
+  { id: 'new-story',      label: 'New Story',       description: 'Create a new story for a component',  intentType: 'create-story',        icon: '📖' },
+  { id: 'update-story',   label: 'Update Story',    description: 'Request changes to an existing story',intentType: 'change-request',      icon: '🔄' },
+];
+
 export type ChangeRequest = {
   id: string;
   type?: IntentType;

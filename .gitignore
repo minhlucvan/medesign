@@ -3,7 +3,8 @@ dist/
 storybook-static/
 *.log
 .DS_Store
-.emdesign/state.json
+.emdesign/
+.mcp.json
 test-results/
 playwright-report/
 **/__screenshots__/*.actual.png

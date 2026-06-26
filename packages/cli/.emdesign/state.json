@@ -26,5 +26,79 @@
   ],
   "lastDiff": null,
   "lintPassing": null,
-  "lastCritique": null
+  "lastCritique": null,
+  "comments": {
+    "generated-pricingtiers--default": [
+      {
+        "n": 1,
+        "selector": "div:nth-of-type(1) > div > div:nth-of-type(2) > div:nth-of-type(2) > div > button",
+        "text": "change to read",
+        "tag": "button",
+        "component": "PricingTiers",
+        "storyId": "generated-pricingtiers--default",
+        "sessionId": "em_ses_1782469714369_0",
+        "createdAt": "2026-06-26T10:28:34.665Z"
+      },
+      {
+        "n": 2,
+        "selector": "div:nth-of-type(1) > div > div:nth-of-type(2) > div:nth-of-type(2) > div > button",
+        "text": "turrn to red btn",
+        "tag": "button",
+        "component": "PricingTiers",
+        "storyId": "generated-pricingtiers--default",
+        "sessionId": "em_ses_1782469768463_1",
+        "createdAt": "2026-06-26T10:29:28.772Z"
+      },
+      {
+        "n": 3,
+        "selector": "div:nth-of-type(1) > div > div:nth-of-type(2) > div:nth-of-type(2) > div > button",
+        "text": "turn to red",
+        "tag": "button",
+        "component": "PricingTiers",
+        "storyId": "generated-pricingtiers--default",
+        "sessionId": "em_ses_1782469795950_2",
+        "createdAt": "2026-06-26T10:29:56.257Z"
+      },
+      {
+        "n": 4,
+        "selector": "div:nth-of-type(1) > div > div:nth-of-type(2) > div:nth-of-type(2) > div > button",
+        "text": "turn buttn to red",
+        "tag": "button",
+        "component": "PricingTiers",
+        "storyId": "generated-pricingtiers--default",
+        "sessionId": "em_ses_1782470087571_3",
+        "createdAt": "2026-06-26T10:34:47.865Z"
+      },
+      {
+        "n": 5,
+        "selector": "div:nth-of-type(1) > div > div:nth-of-type(2) > div:nth-of-type(2) > div > button",
+        "text": "turn to red",
+        "tag": "button",
+        "component": "PricingTiers",
+        "storyId": "generated-pricingtiers--default",
+        "sessionId": "em_ses_1782471660946_0",
+        "createdAt": "2026-06-26T11:01:01.265Z"
+      },
+      {
+        "n": 6,
+        "selector": "div:nth-of-type(1) > div > div:nth-of-type(2) > div:nth-of-type(2) > div > button",
+        "text": "turn to red",
+        "tag": "button",
+        "component": "PricingTiers",
+        "storyId": "generated-pricingtiers--default",
+        "sessionId": "em_ses_1782471891790_0",
+        "createdAt": "2026-06-26T11:04:52.094Z"
+      }
+    ],
+    "test-story": [
+      {
+        "n": 1,
+        "selector": "div > button",
+        "text": "Make this blue",
+        "storyId": "test-story",
+        "sessionId": "sess-001",
+        "createdAt": "2026-06-26T10:28:41.503Z"
+      }
+    ]
+  }
 }

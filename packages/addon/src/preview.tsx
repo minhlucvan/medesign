@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { addons } from '@storybook/preview-api';
-import { EVT_TOOL_MODE, EVT_COMMENT_SUBMIT, EVT_TEXT_SUBMIT, EVT_COPIED, type ToolMode, type CommentTarget } from './channel';
+import { EVT_TOOL_MODE, EVT_COMMENT_SUBMIT, EVT_TEXT_SUBMIT, EVT_COPIED, EVT_CHAT_MODE, type ToolMode, type CommentTarget } from './channel';
 
 function cssPath(el: Element, root: Element): string {
   const parts: string[] = [];
@@ -19,7 +19,7 @@ function cssPath(el: Element, root: Element): string {
 }
 
 type Box = { x: number; y: number; width: number; height: number };
-type Pin = { n: number; box: Box; text: string };
+type Pin = { n: number; box?: Box; text: string; sessionId?: string };
 
 const ACCENT = '#2563eb';
 
@@ -108,8 +108,22 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
     return () => { channel.off(EVT_TOOL_MODE, onMode); document.body.style.cursor = ''; };
   }, []);
 
-  // reset transient state when the story changes
-  useEffect(() => { setPins([]); setComposing(null); editingRef.current = null; }, [storyId]);
+  // Load stored comment pins and reset transient state when the story changes
+  useEffect(() => {
+    setPins([]);
+    setComposing(null);
+    editingRef.current = null;
+    if (storyId) {
+      fetch(`http://localhost:4321/api/comments?storyId=${encodeURIComponent(storyId)}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.pins?.length) {
+            setPins(data.pins.map((p: any) => ({ n: p.n, box: undefined, text: p.text, sessionId: p.sessionId })));
+          }
+        })
+        .catch(() => {});
+    }
+  }, [storyId]);
 
   useEffect(() => {
     const root = document.getElementById('storybook-root') ?? document.body;
@@ -184,7 +198,11 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
   return (
     <>
       {pins.map((p) => (
-        <div key={p.n} title={p.text} style={{ position: 'fixed', top: p.box.y - 10, left: p.box.x - 10, width: 20, height: 20, borderRadius: 999, background: ACCENT, color: '#fff', font: '11px/20px sans-serif', textAlign: 'center', zIndex: 99997, boxShadow: '0 1px 4px rgba(0,0,0,.4)' }}>{p.n}</div>
+        <div key={`pin-${p.n}`} onClick={p.sessionId ? () => { addons.getChannel().emit(EVT_CHAT_MODE, { enabled: true, sessionId: p.sessionId }); } : undefined}
+          title={p.text}
+          style={{ position: 'fixed', top: p.box ? p.box.y - 10 : 10 + (p.n - 1) * 28, left: p.box ? p.box.x - 10 : 10, width: 20, height: 20, borderRadius: 999,
+            background: p.sessionId ? '#7c3aed' : ACCENT, color: '#fff', font: '11px/20px sans-serif', textAlign: 'center', zIndex: 99997,
+            boxShadow: '0 1px 4px rgba(0,0,0,.4)', cursor: p.sessionId ? 'pointer' : 'default' }}>{p.n}</div>
       ))}
 
       {(active || toast) && (

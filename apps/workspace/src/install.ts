@@ -5,6 +5,7 @@ import { FRAMEWORKS, detectFramework, listFrameworks } from './registry.js';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const CLAUDE_TEMPLATE = path.resolve(HERE, '../templates/claude');
+const CLAUDE_MD_TEMPLATE = path.resolve(HERE, '../templates/CLAUDE.md');
 const CONFIG_TEMPLATE = path.resolve(HERE, '../templates/emdesign.config.template.json');
 const STARTER_DS = path.resolve(HERE, '../../../design-systems/atelier');
 
@@ -90,6 +91,12 @@ export function attach(targetDir = process.cwd()): InstallResult {
     notes.push(`Could not auto-edit ${mainPath} — add '@emdesign/addon' to its addons array manually.`);
 
   copyDir(CLAUDE_TEMPLATE, path.join(targetDir, '.claude'), false, wrote);
+  // Copy workspace CLAUDE.md if not already present
+  const targetClaudeMd = path.join(targetDir, 'CLAUDE.md');
+  if (fs.existsSync(CLAUDE_MD_TEMPLATE) && !fs.existsSync(targetClaudeMd)) {
+    fs.copyFileSync(CLAUDE_MD_TEMPLATE, targetClaudeMd);
+    wrote.push(targetClaudeMd);
+  }
   writeConfig(targetDir, framework, wrote, notes);
 
   const dsDir = path.join(targetDir, 'design-systems');
@@ -118,6 +125,12 @@ export function init(framework: string, targetDir: string): InstallResult {
   else notes.push(`Provider templates not found for ${framework} (${entry.providerPackage}); .storybook not scaffolded.`);
 
   copyDir(CLAUDE_TEMPLATE, path.join(targetDir, '.claude'), false, wrote);
+  // Copy workspace CLAUDE.md if not already present
+  const targetClaudeMd = path.join(targetDir, 'CLAUDE.md');
+  if (fs.existsSync(CLAUDE_MD_TEMPLATE) && !fs.existsSync(targetClaudeMd)) {
+    fs.copyFileSync(CLAUDE_MD_TEMPLATE, targetClaudeMd);
+    wrote.push(targetClaudeMd);
+  }
   copyDir(STARTER_DS, path.join(targetDir, 'design-systems', 'atelier'), false, wrote);
   writeConfig(targetDir, framework, wrote, notes);
 

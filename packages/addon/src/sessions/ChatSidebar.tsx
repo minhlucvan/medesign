@@ -5,8 +5,8 @@ import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react'
 import { injectShadcnVars, css, MessageList, useAutoScroll } from '@emdesign/chat-ui';
 import type { Message } from '@emdesign/chat-ui';
 import { api } from '../api';
-import { BACKEND_URL } from '../constants';
-import type { SessionSummary } from '../constants';
+import { BACKEND_URL, CHAT_MODES } from '../constants';
+import type { SessionSummary, ChatStartMode } from '../constants';
 
 let varsInjected = false;
 
@@ -180,7 +180,7 @@ function processMessages(rawMessages: any[]): Message[] {
 
 // ── Styles ─────────────────────────────────────────────────────────
 
-const rootStyle: React.CSSProperties = { display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden', color: css('--foreground'), background: css('--background') };
+const rootStyle: React.CSSProperties = { display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden', color: css('--foreground') };
 const S = {
   border: { borderBottom: `1px solid ${css('--border')}` },
   muted: { color: css('--muted-foreground') },
@@ -196,7 +196,7 @@ const S = {
   },
 };
 
-export function ChatSidebar() {
+export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => void; defaultSessionId?: string | null }) {
   if (!varsInjected) { injectShadcnVars(); varsInjected = true; }
 
   const [sessions, setSessions] = useState<SessionSummary[]>([]);
@@ -208,8 +208,13 @@ export function ChatSidebar() {
   const [msgLoading, setMsgLoading] = useState(false);
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
+  const [streaming, setStreaming] = useState(false);
   const [files, setFiles] = useState<File[] | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showNewPicker, setShowNewPicker] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [createError, setCreateError] = useState<string | null>(null);
+  const autoSendRef = useRef<string | null>(null);
 
   useEffect(() => {
     Promise.all([
@@ -226,22 +231,75 @@ export function ChatSidebar() {
     }).catch(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
-    if (!activeSessionId) { setMessages([]); return; }
-    setMsgLoading(true);
-    api.getSessionConversation(activeSessionId).then((raw: any) => {
-      const converted = processMessages(raw as any[]);
-      setMessages(converted);
-      setMsgLoading(false);
-    }).catch(() => setMsgLoading(false));
-  }, [activeSessionId]);
-
   const allSessions = useMemo(() => {
     const map = new Map<string, SessionSummary>();
     for (const s of sessions) map.set(s.id, s);
     for (const s of emSessions) map.set(s.id, s);
     return Array.from(map.values()).sort((a, b) => b.timestamp - a.timestamp);
   }, [sessions, emSessions]);
+
+  // Navigate to a session from an external event (e.g. comment submit → chat session)
+  useEffect(() => {
+    if (defaultSessionId && defaultSessionId !== activeSessionId) {
+      const session = allSessions.find(s => s.id === defaultSessionId);
+      if (session?.display && session.display.length > 0) {
+        autoSendRef.current = session.display;
+      }
+      setActiveSessionId(defaultSessionId);
+    }
+  }, [defaultSessionId, activeSessionId]);
+
+  useEffect(() => {
+    if (!activeSessionId) { setMessages([]); return; }
+    setMsgLoading(true);
+    api.getSessionConversation(activeSessionId).then((raw: any) => {
+      let converted = processMessages(raw as any[]);
+      let autoText = autoSendRef.current;
+      autoSendRef.current = null;
+      // If no messages but session has display text, show it as the first user message
+      if (converted.length === 0) {
+        const session = allSessions.find(s => s.id === activeSessionId);
+        if (session?.display && session.display.length > 0 && session.display.length < 500) {
+          converted = [{ id: `init-${activeSessionId}`, role: 'user' as const, content: session.display, createdAt: new Date(session.timestamp) }];
+          if (!autoText) autoText = session.display;
+        }
+      }
+      setMessages(converted);
+      setMsgLoading(false);
+      // Auto-send the instruction if this session was created from a comment
+      if (autoText && !sending) {
+        setSending(true);
+        setStreaming(true);
+        const asstId = `a-${Date.now()}`;
+        setMessages(prev => [...prev, { id: asstId, role: 'assistant', content: '', createdAt: new Date() }]);
+        fetch(`${BACKEND_URL}/api/chat/stream`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: autoText }),
+        }).then(async (res) => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const reader = res.body?.getReader();
+          if (!reader) throw new Error('No response body');
+          const decoder = new TextDecoder();
+          let buffer = '', assistantText = '';
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+            for (const line of lines) {
+              if (!line.startsWith('data: ')) continue;
+              try {
+                const data = JSON.parse(line.slice(6));
+                if (data.type === 'text') { assistantText += data.text; setMessages(prev => prev.map(m => m.id === asstId ? { ...m, content: assistantText } : m)); }
+              } catch { /* skip */ }
+            }
+          }
+          if (!assistantText) setMessages(prev => prev.map(m => m.id === asstId ? { ...m, content: '(no response)' } : m));
+        }).catch(() => {}).finally(() => { setStreaming(false); setSending(false); });
+      }
+    }).catch(() => setMsgLoading(false));
+  }, [activeSessionId, allSessions]);
 
   const filtered = useMemo(() => {
     if (!search.trim()) return allSessions;
@@ -267,13 +325,37 @@ export function ChatSidebar() {
     return paths;
   }, []);
 
+  // Create a new session from a mode pill click
+  const handleCreateSession = useCallback(async (startMode: ChatStartMode) => {
+    const mode = CHAT_MODES.find(m => m.id === startMode)!;
+    setCreateError(null);
+    setCreating(true);
+    try {
+      const session = await api.createSession({
+        type: mode.intentType ?? 'chat',
+      });
+      // Add to local sessions list (prepend, dedupe)
+      setSessions(prev => {
+        const exists = prev.find(s => s.id === session.id);
+        return exists ? prev : [session, ...prev];
+      });
+      setActiveSessionId(session.id);
+      setShowNewPicker(false);
+    } catch (e) {
+      setCreateError(`Failed to create session: ${(e as Error).message}`);
+    }
+    setCreating(false);
+  }, []);
+
   // Send message → stream response from Claude via SSE
   const handleSend = useCallback(async () => {
     if ((!input.trim() && !files?.length) || sending) return;
     const text = input.trim();
     const currentFiles = files;
     setInput('');
+    console.log('[chat] sending...');
     setSending(true);
+    setStreaming(true);
 
     // Add user message
     const userMsg: Message = { id: `u-${Date.now()}`, role: 'user', content: text || '(file upload)', createdAt: new Date() };
@@ -304,10 +386,26 @@ export function ChatSidebar() {
       const decoder = new TextDecoder();
       let buffer = '';
       let assistantText = '';
+      let streamDone = false;
+      let idleTimer: ReturnType<typeof setTimeout> | null = null;
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+      while (!streamDone) {
+        // Race reader.read() against a 15s idle timeout
+        const result = await Promise.race([
+          reader.read().then(r => ({ ...r, timedOut: false })),
+          new Promise<{ done: false; value: undefined; timedOut: true }>(resolve => {
+            idleTimer = setTimeout(() => resolve({ done: false, value: undefined, timedOut: true }), 15000);
+          }),
+        ]);
+        if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+        if (result.timedOut) {
+          console.log('[chat] idle timeout — forcing stream end');
+          streamDone = true;
+          setStreaming(false);
+          break;
+        }
+        if (result.done) break;
+        const value = result.value!;
         buffer += decoder.decode(value, { stream: true });
         const lines = buffer.split('\n');
         buffer = lines.pop() || '';
@@ -315,15 +413,22 @@ export function ChatSidebar() {
           if (!line.startsWith('data: ')) continue;
           try {
             const data = JSON.parse(line.slice(6));
+            console.log('[chat] SSE event:', data.type, data.text?.slice(0,30));
             if (data.type === 'text') {
               assistantText += data.text;
               setMessages(prev => prev.map(m => m.id === asstId ? { ...m, content: assistantText } : m));
+            } else if (data.type === 'done') {
+              console.log('[chat] DONE received — hiding typing');
+              streamDone = true;
+              setStreaming(false);
+              break;
             } else if (data.type === 'error') {
               setMessages(prev => prev.map(m => m.id === asstId ? { ...m, content: `Error: ${data.error}` } : m));
             }
           } catch { /* skip */ }
         }
       }
+      console.log('[chat] while loop exited, streamDone:', streamDone);
 
       if (!assistantText) {
         setMessages(prev => prev.map(m => m.id === asstId ? { ...m, content: '(no response)' } : m));
@@ -333,6 +438,7 @@ export function ChatSidebar() {
         m.id === asstId ? { ...m, content: `Error: ${(e as Error).message}` } : m
       ));
     }
+    setStreaming(false);
     setSending(false);
   }, [input, files, sending, uploadFiles]);
 
@@ -340,6 +446,9 @@ export function ChatSidebar() {
 
   // Auto-scroll for message area
   const { containerRef: msgRef, handleScroll: msgScroll } = useAutoScroll([messages, msgLoading, activeSessionId]);
+
+  // Show typing during streaming, hide when stream ends (regardless of sending state)
+  const showTyping = streaming;
   const { containerRef: listRef, handleScroll: listScroll } = useAutoScroll([filtered]);
 
   if (loading) return <div className="emdesign-chat-root" style={{ ...rootStyle, padding: 20, textAlign: 'center', fontSize: 12, ...S.muted }}>Loading...</div>;
@@ -355,7 +464,10 @@ export function ChatSidebar() {
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, textTransform: 'none', fontWeight: 400 }}>{activeSession.display}</span>
           </>
         ) : (
-          <>Sessions</>
+          <span style={{ flex: 1 }}>Sessions</span>
+        )}
+        {onClose && (
+          <button onClick={onClose} title="Close chat" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 14, ...S.muted, marginLeft: 'auto' }}>✕</button>
         )}
       </div>
 
@@ -365,6 +477,40 @@ export function ChatSidebar() {
           <div style={{ padding: '4px 8px', ...S.border }}>
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Filter sessions..." style={S.input} />
           </div>
+
+          {/* ── New Conversation button ── */}
+          <div style={{ padding: '2px 8px 6px', ...S.border }}>
+            <button onClick={() => setShowNewPicker(p => !p)}
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4,
+                width: '100%', padding: '5px 10px', borderRadius: 'var(--radius)',
+                fontSize: 11, fontWeight: 600, cursor: 'pointer', border: `1px solid ${css('--primary')}`,
+                background: css('--primary'), color: css('--primary-foreground'),
+              }}>
+              <span style={{ fontSize: 13, lineHeight: 1 }}>+</span> New Conversation
+            </button>
+
+            {/* ── Mode picker — click a mode to start immediately ── */}
+            {showNewPicker && (
+              <div style={{ marginTop: 6, padding: 6, borderRadius: 'var(--radius)', border: `1px solid ${css('--border')}`, background: css('--background') }}>
+                {createError && <div style={{ marginBottom: 6, fontSize: 9, color: css('--destructive'), lineHeight: 1.3 }}>{createError}</div>}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                  {CHAT_MODES.map(m => (
+                    <button key={m.id} onClick={() => handleCreateSession(m.id)} disabled={creating}
+                      style={{
+                        padding: '5px 10px', borderRadius: 999, fontSize: 10, fontWeight: 500,
+                        cursor: creating ? 'default' : 'pointer', border: `1px solid ${css('--border')}`,
+                        background: css('--muted'), color: css('--foreground'),
+                        opacity: creating ? 0.5 : 1, transition: 'all 0.12s',
+                      }}>
+                      {m.icon} {m.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
           <div ref={listRef} onScroll={listScroll} className="emdesign-scroll" style={{ flex: 1, overflow: 'auto' }}>
             {filtered.length === 0 ? (
               <div style={{ padding: 20, textAlign: 'center', fontSize: 12, ...S.muted }}>{search ? 'No matches' : 'No sessions'}</div>
@@ -390,7 +536,7 @@ export function ChatSidebar() {
             ) : messages.length === 0 ? (
               <div style={{ padding: 20, textAlign: 'center', fontSize: 12, ...S.muted }}>No messages in this session</div>
             ) : (
-              <MessageList messages={messages} isTyping={sending} />
+              <MessageList messages={messages} isTyping={showTyping} />
             )}
           </div>
 

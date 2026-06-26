@@ -10,3 +10,5 @@ playwright-report/
 **/__screenshots__/*.diff.png
 .env
 .claude/settings.local.json
+.claude/worktrees/
+uploads/

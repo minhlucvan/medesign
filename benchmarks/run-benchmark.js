@@ -152,28 +152,31 @@ for (const test of tests) {
   // ── Phase 3: Evaluate (in parallel per test) ─────────────────────────────
   phase('Evaluate');
 
-  // White-box: deterministic code metrics
+  // White-box: deterministic code metrics (all scores MUST be 0-1)
   const whiteBox = await agent(
     `Run white-box metrics on "${test.name}". Read the source file at ${sourcePath}. ` +
     `Analyze it for:\n` +
-    `1. Token compliance: count raw hex values (#xxx), unresolved var(--x) references, inline style={} with colors.\n` +
-    `2. TypeScript health: count 'as any', '@ts-ignore', untyped props (missing type annotation).\n` +
-    `3. Complexity: lines of code, interface prop count, conditional depth, JSX nesting depth.\n` +
-    `4. Pattern adherence: hooks rules, .map() keys, inline event handlers vs named, inline styles vs classes, raw <button> vs Button primitive.\n` +
-    `Return the JSON with all metrics.`,
+    `1. Token compliance: start at 1.0, subtract 0.2 per raw hex, 0.2 per unresolved var(), 0.1 per off-token style.\n` +
+    `2. TypeScript health: start at 1.0, subtract 0.15 per 'as any', 0.1 per '@ts-ignore', 0.05 per untyped prop.\n` +
+    `3. Complexity: score 0-1 based on LOC (≤200 = 1.0), prop count (3-8 ideal), conditional depth (≤3 = 1.0).\n` +
+    `4. Pattern adherence: start at 1.0, subtract 0.1 per violation (hooks, keys, inline handlers, inline styles, raw elements).\n` +
+    `IMPORTANT: ALL scores MUST be in 0-1 range. Clamp to [0,1] if needed.\n` +
+    `composite = 0.35*tokenCompliance + 0.25*typescript + 0.20*complexity + 0.20*patterns.\n` +
+    `Return JSON with ALL scores as 0-1 values.`,
     { label: `whitebox:${test.name}`, phase: 'Evaluate', schema: METRICS_SCHEMA },
   );
 
   // Black-box B1: General code review (independent agent, no emdesign context)
   const codeReview = await agent(
     `Read the component source at ${sourcePath}. Review it as a general software engineer — ` +
-    `you have NO knowledge of emdesign, its design systems, or its critics. Score across 5 axes:\n` +
+    `you have NO knowledge of emdesign, its design systems, or its critics. Score across 5 axes (EACH 0-1):\n` +
     `1. Structure: well-organized, single responsibility, clear separation?\n` +
     `2. TypeScript: clear interfaces, no any, proper types?\n` +
     `3. State handling: edge cases, empty/loading/error states, null safety?\n` +
     `4. JSX quality: readability, keys, aria attributes, fragments, named handlers?\n` +
     `5. Best practices: hooks rules, useEffect deps, memoization, Tailwind clarity?\n` +
-    `Return JSON with "general" (average of 5 axes 0-1) and "findings" (array of strings).`,
+    `Return JSON with "general" (average of 5 axes, clamped to 0-1) and "findings" (array of strings). ` +
+    `general MUST be between 0 and 1.`,
     { agentType: 'benchmark-critic', schema: CRITIQUE_SCHEMA, label: `codereview:${test.name}`, phase: 'Evaluate' },
   );
 

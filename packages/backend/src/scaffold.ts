@@ -358,3 +358,93 @@ export function listDesignSystems(paths: RepoPaths): Array<{ id: string; name: s
     return [];
   }
 }
+
+/** Get distinct base categories with counts. */
+export function listBaseCategories(paths: RepoPaths): Array<{ name: string; count: number }> {
+  const bases = listBases(paths);
+  const map = new Map<string, number>();
+  for (const b of bases) {
+    const cat = b.category ?? 'Uncategorized';
+    map.set(cat, (map.get(cat) ?? 0) + 1);
+  }
+  return Array.from(map.entries()).map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count);
+}
+
+export interface BaseDetail extends DesignSystemBase {
+  hasPreview: boolean;
+  tokens: Array<{ role: string; kind: string; value: string }>;
+  fonts: { display?: string; body?: string; mono?: string };
+  accentColor: string;
+}
+
+/** Get full detail for a base (tokens, fonts, accent color, preview availability). */
+export function baseDetail(paths: RepoPaths, id: string): BaseDetail | null {
+  const basesDir = path.join(paths.designSystemsDir, VENDOR_BASES_DIR, id);
+  if (!fs.existsSync(path.join(basesDir, 'DESIGN.md'))) return null;
+
+  const base = baseFromDir(path.join(paths.designSystemsDir, VENDOR_BASES_DIR), id);
+  const tokensCss = (() => { try { return fs.readFileSync(path.join(basesDir, 'tokens.css'), 'utf8'); } catch { return ''; } })();
+
+  const tokens: BaseDetail['tokens'] = [];
+  const fontRoles: { display?: string; body?: string; mono?: string } = {};
+  let accentColor = '';
+
+  for (const line of tokensCss.split('\n')) {
+    const m = line.match(/^\s*--([\w-]+):\s*(.+?);/);
+    if (!m) continue;
+    const role = m[1]!;
+    const value = m[2]!.trim();
+    if (role.startsWith('color-')) {
+      tokens.push({ role, kind: 'color', value });
+      if (role === 'color-accent') accentColor = value;
+    } else if (role.startsWith('font-')) {
+      tokens.push({ role, kind: 'typography', value });
+      if (role === 'font-display') fontRoles.display = value;
+      else if (role === 'font-sans') fontRoles.body = value;
+      else if (role === 'font-mono') fontRoles.mono = value;
+    } else if (role.startsWith('radius') || role.startsWith('space-') || role.startsWith('shadow-')) {
+      tokens.push({ role, kind: 'shape', value });
+    } else if (role.startsWith('motion-') || role.startsWith('ease-')) {
+      tokens.push({ role, kind: 'motion', value });
+    } else if (role.startsWith('container-') || role.startsWith('section-')) {
+      tokens.push({ role, kind: 'layout', value });
+    }
+  }
+
+  return { ...base, hasPreview: fs.existsSync(path.join(basesDir, 'reference-example.html')), tokens, fonts: fontRoles, accentColor };
+}
+
+/** Read the reference-example.html for a base, optionally injecting CSS overrides. */
+export function basePreviewHtml(
+  paths: RepoPaths, id: string,
+  cssOverrides?: Record<string, string>,
+): string | null {
+  const htmlFile = path.join(paths.designSystemsDir, VENDOR_BASES_DIR, id, 'reference-example.html');
+  if (!fs.existsSync(htmlFile)) return null;
+  let html = fs.readFileSync(htmlFile, 'utf8');
+  if (cssOverrides && Object.keys(cssOverrides).length > 0) {
+    const css = Object.entries(cssOverrides).map(([k, v]) => `  --${k}: ${v};`).join('\n');
+    html = html.replace('</head>', `\n<style id="emdesign-overrides">\n:root {\n${css}\n}\n</style>\n</head>`);
+  }
+  return html;
+}
+
+/** Customize a base: clone + modify tokens. */
+export function customizeDesignSystem(
+  paths: RepoPaths,
+  opts: { baseRef: string; id: string; name: string; customizations: { accentColor?: string; headlineFont?: string; bodyFont?: string; roundness?: string; spacing?: number } },
+) {
+  const createResult = createDesignSystem(paths, { id: opts.id, name: opts.name, mode: 'import', from: opts.baseRef });
+  const tokensFile = path.join(dsDir(paths, opts.id), 'tokens.css');
+  if (fs.existsSync(tokensFile)) {
+    let css = fs.readFileSync(tokensFile, 'utf8');
+    const c = opts.customizations;
+    if (c.accentColor) { css = css.replace(/(--color-accent-hover:\s*).+?;/g, '$1#1d4ed8;'); css = css.replace(/(--color-accent:\s*).+?;/g, `$1${c.accentColor};`); }
+    if (c.headlineFont) css = css.replace(/(--font-display:\s*).+?;/g, `$1"${c.headlineFont}", system-ui, sans-serif;`);
+    if (c.bodyFont) css = css.replace(/(--font-sans:\s*).+?;/g, `$1"${c.bodyFont}", system-ui, sans-serif;`);
+    if (c.roundness) css = css.replace(/(--radius:\s*).+?;/g, `$1${c.roundness};`);
+    if (c.spacing) css = css.replace(/(--space-unit:\s*).+?;/g, `$1${c.spacing}px;`);
+    fs.writeFileSync(tokensFile, css);
+  }
+  return createResult;
+}

@@ -13,7 +13,7 @@ import { resolveDesignSystem } from './designContext.js';
 import { countMustFix } from './lint/index.js';
 import { effectiveAdapter } from './adapters/index.js';
 import { runtimeFor } from './runtime.js';
-import { applyDesignSystem, listBases } from './scaffold.js';
+import { applyDesignSystem, listBases, listBaseCategories, baseDetail, basePreviewHtml, customizeDesignSystem } from './scaffold.js';
 import { loadOrBuild } from './graph.js';
 import { evidenceDir } from './evidence.js';
 import { normalizeDsRef } from './paths.js';
@@ -60,6 +60,54 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
     } catch (e) {
       res.status(500).json({ error: (e as Error).message });
     }
+  });
+
+  // Base categories with counts (for the catalog filter pills).
+  app.get('/api/bases/categories', (_req, res) => {
+    try { res.json({ categories: listBaseCategories(paths) }); }
+    catch (e) { res.status(500).json({ error: (e as Error).message }); }
+  });
+
+  // Full base detail (tokens, fonts, accent color, preview availability).
+  app.get('/api/bases/:id/detail', (req, res) => {
+    try {
+      const detail = baseDetail(paths, req.params.id);
+      if (!detail) return res.status(404).json({ error: `Base '${req.params.id}' not found.` });
+      res.json(detail);
+    } catch (e) { res.status(500).json({ error: (e as Error).message }); }
+  });
+
+  // Token palette only (lighter weight than full detail).
+  app.get('/api/bases/:id/tokens', (req, res) => {
+    try {
+      const detail = baseDetail(paths, req.params.id);
+      if (!detail) return res.status(404).json({ error: `Base '${req.params.id}' not found.` });
+      res.json({ id: detail.id, tokens: detail.tokens });
+    } catch (e) { res.status(500).json({ error: (e as Error).message }); }
+  });
+
+  // Serve reference-example.html with optional CSS override query params.
+  app.get('/api/bases/:id/preview', (req, res) => {
+    try {
+      const overrides: Record<string, string> = {};
+      for (const [key, val] of Object.entries(req.query)) {
+        if (key !== 'id' && typeof val === 'string') overrides[key] = val;
+      }
+      const html = basePreviewHtml(paths, req.params.id, overrides);
+      if (!html) return res.status(404).json({ error: `No preview available for '${req.params.id}'.` });
+      res.type('html').send(html);
+    } catch (e) { res.status(500).json({ error: (e as Error).message }); }
+  });
+
+  // Customize a base and create a new design system.
+  app.post('/api/design-systems/customize', (req, res) => {
+    try {
+      const { baseRef, id, name, customizations } = req.body;
+      if (!baseRef || !id) return res.status(400).json({ error: 'baseRef and id are required.' });
+      const result = customizeDesignSystem(paths, { baseRef, id, name: name ?? id, customizations: customizations ?? {} });
+      const apply = applyDesignSystem(paths, id);
+      res.json({ ...result, apply });
+    } catch (e) { res.status(500).json({ error: (e as Error).message }); }
   });
 
   // Programmatic/rule feedback for a generated component (used by the CLI + lint gate).

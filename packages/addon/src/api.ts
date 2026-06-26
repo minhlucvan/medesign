@@ -6,6 +6,8 @@ import {
   type DesignSystemDetail,
   type DesignSystemFull,
   type DesignSystemBase,
+  type BaseDetail,
+  type CategoryCount,
   type LogsResponse,
   type HealthInfo,
   type GraphStats,
@@ -50,6 +52,15 @@ export const api = {
 
   // create-wizard + system tab data
   listBases: () => json<{ bases: DesignSystemBase[] }>('/api/bases'),
+  getBaseCategories: () => json<{ categories: CategoryCount[] }>('/api/bases/categories'),
+  getBaseDetail: (id: string) => json<BaseDetail>(`/api/bases/${id}/detail`),
+  getBaseTokens: (id: string) => json<{ id: string; tokens: BaseDetail['tokens'] }>(`/api/bases/${id}/tokens`),
+  getBasePreviewUrl: (id: string, overrides?: Record<string, string>) => {
+    const params = overrides ? `?${new URLSearchParams(overrides).toString()}` : '';
+    return `${BACKEND_URL}/api/bases/${id}/preview${params}`;
+  },
+  customizeDesignSystem: (body: { baseRef: string; id: string; name?: string; customizations?: Record<string, string | number | undefined } }) =>
+    post('/api/design-systems/customize', body) as Promise<{ id: string; apply: unknown; note?: string }>,
   getLogs: () => json<LogsResponse>('/api/logs'),
   getHealth: () => json<HealthInfo>('/api/health'),
   getGraphStats: (id: string) => json<GraphStats>(`/api/graph/${id}/stats`),

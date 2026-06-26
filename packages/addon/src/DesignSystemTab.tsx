@@ -7,6 +7,7 @@ import {
 } from './ui';
 import { VIEW_MODE_CREATE } from './constants';
 import type { DesignSystemSummary, DesignSystemFull } from './constants';
+import { CatalogView } from './ds-browser/CatalogView';
 
 const TokenGrid = styled.div({ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(190px, 1fr))', gap: 8 });
 const TokenCard = styled.div(({ theme }) => ({
@@ -18,11 +19,15 @@ const BigSwatch = styled(Swatch)({ width: 26, height: 26, borderRadius: 5 });
 const Role = styled.div(({ theme }) => ({ font: `600 11px ${theme.typography.fonts.mono}`, color: theme.color.defaultText, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }));
 const Val = styled.div(({ theme }) => ({ font: `11px ${theme.typography.fonts.mono}`, color: theme.textMutedColor, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }));
 
+type TabView = 'my-systems' | 'catalog';
+
 /** The "System" tab: pick a design system, inspect it deeply (tokens · diagnostics · conflicts ·
- *  manifest · raw source), switch it, or request a change. Vertical, single-column layout. */
+ *  manifest · raw source), switch it, or request a change. Now also features a catalog of vendored
+ *  bases for browsing and cloning. */
 export function DesignSystemTab() {
   const { error, refresh } = useStudioState(3000);
   const sbApi = useStorybookApi();
+  const [view, setView] = useState<TabView>('my-systems');
   const [systems, setSystems] = useState<DesignSystemSummary[]>([]);
   const [active, setActive] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
@@ -59,6 +64,15 @@ export function DesignSystemTab() {
         <PageTitle>Design System</PageTitle>
         <Sub>browse · inspect · switch · request changes</Sub>
 
+        {/* Tab toggle: My Systems | Catalog */}
+        <Row gap={6} style={{ marginBottom: 16 }}>
+          <Btn primary={view === 'my-systems'} onClick={() => setView('my-systems')}>My Systems</Btn>
+          <Btn primary={view === 'catalog'} onClick={() => setView('catalog')}>Catalog</Btn>
+        </Row>
+
+        {view === 'catalog' && <CatalogView />}
+
+        {view === 'my-systems' && (<>
         {/* Picker — horizontal chips (active system marked with a dot) */}
         <Row gap={8} wrap style={{ marginBottom: 16 }}>
           {systems.map((s) => (
@@ -153,6 +167,7 @@ export function DesignSystemTab() {
             </Section>
           </Stack>
         ) : <Section><Muted>select a system above</Muted></Section>}
+        </>}
     </Page>
   );
 }

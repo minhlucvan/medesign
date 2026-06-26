@@ -129,21 +129,19 @@ export async function runVisualTest(paths: RepoPaths, component: string): Promis
 }
 
 /**
- * Storybook slugifies "Generated/PricingTiers" → "generated-pricing-tiers--default".
+ * Storybook slugifies a PascalCase component title to a kebab-case story ID.
  *
- * Properly handles:
- * - PascalCase: "PricingTiers" → "pricing-tiers"
- * - Acronyms: "CTAAction" → "cta-action"
- * - Multi-word: "HeroBanner" → "hero-banner"
+ * Storybook 8 does NOT insert hyphens between capitalized words; it lowercases
+ * the whole literal string. So "PricingTable" → "pricingtable" (not "pricing-table").
+ *
+ * This matches what Storybook's `storyIdFromExport` produces from the CSF title
+ * "Generated/PricingTable" → `generated-pricingtable--default`.
+ *
+ * Handles:
+ * - PascalCase: "PricingTable" → "pricingtable"
+ * - Acronyms: "CTAAction" → "ctaaction"
  * - Single word: "Button" → "button"
  */
 export function toStoryId(component: string, story = 'default', prefix = 'generated'): string {
-  // Insert dash between lowercase/digit and uppercase: "PricingTiers" → "Pricing-Tiers"
-  // Insert dash between consecutive uppercase and a lowercase that follows: "CTAAction" → "CTA-Action"
-  // Then lowercase everything.
-  const kebab = component
-    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
-    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
-    .toLowerCase();
-  return `${prefix}-${kebab}--${story}`;
+  return `${prefix}-${component.toLowerCase()}--${story}`;
 }

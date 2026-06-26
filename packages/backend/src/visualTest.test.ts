@@ -6,31 +6,30 @@ describe('toStoryId', () => {
     expect(toStoryId('Button')).toBe('generated-button--default');
   });
 
-  it('converts multi-word PascalCase with dash insertion', () => {
-    expect(toStoryId('PricingTiers')).toBe('generated-pricing-tiers--default');
-    expect(toStoryId('UserAvatar')).toBe('generated-user-avatar--default');
-    expect(toStoryId('HeroBanner')).toBe('generated-hero-banner--default');
+  it('converts multi-word PascalCase by lowercasing only (matches Storybook 8 behavior)', () => {
+    expect(toStoryId('PricingTiers')).toBe('generated-pricingtiers--default');
+    expect(toStoryId('UserAvatar')).toBe('generated-useravatar--default');
+    expect(toStoryId('HeroBanner')).toBe('generated-herobanner--default');
   });
 
-  it('handles acronyms at the start', () => {
-    expect(toStoryId('CTAAction')).toBe('generated-cta-action--default');
-    expect(toStoryId('URLInput')).toBe('generated-url-input--default');
+  it('handles acronyms by lowercasing only', () => {
+    expect(toStoryId('CTAAction')).toBe('generated-ctaaction--default');
+    expect(toStoryId('URLInput')).toBe('generated-urlinput--default');
   });
 
   it('handles consecutive uppercase letters', () => {
-    expect(toStoryId('ParseJSON')).toBe('generated-parse-json--default');
-    expect(toStoryId('SVGRenderer')).toBe('generated-svg-renderer--default');
+    expect(toStoryId('ParseJSON')).toBe('generated-parsejson--default');
+    expect(toStoryId('SVGRenderer')).toBe('generated-svgrenderer--default');
   });
 
   it('handles numbers in names', () => {
-    // "Card3D": digit 3 → uppercase D, so "card-3-d". PlanV2: no uppercase→lowercase boundary after V, so "plan-v2".
-    expect(toStoryId('Card3D')).toBe('generated-card3-d--default');
-    expect(toStoryId('PlanV2')).toBe('generated-plan-v2--default');
+    expect(toStoryId('Card3D')).toBe('generated-card3d--default');
+    expect(toStoryId('PlanV2')).toBe('generated-planv2--default');
   });
 
   it('uses custom story name and prefix', () => {
     expect(toStoryId('Button', 'primary', 'components')).toBe('components-button--primary');
-    expect(toStoryId('PricingTiers', 'dark', 'generated')).toBe('generated-pricing-tiers--dark');
+    expect(toStoryId('PricingTiers', 'dark', 'generated')).toBe('generated-pricingtiers--dark');
   });
 
   it('normalizes to lowercase', () => {

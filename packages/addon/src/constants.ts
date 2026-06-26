@@ -148,6 +148,16 @@ export type DesignSystemBase = {
   source?: { type: string; skill?: string; upstream?: string; license?: string };
 };
 
+/** Full base detail from /api/bases/:id/detail. */
+export type BaseDetail = DesignSystemBase & {
+  hasPreview: boolean;
+  tokens: Array<{ role: string; kind: string; value: string }>;
+  fonts: { display?: string; body?: string; mono?: string };
+  accentColor: string;
+};
+
+export type CategoryCount = { name: string; count: number };
+
 export type EvidenceRound = {
   slug: string;
   round: number;

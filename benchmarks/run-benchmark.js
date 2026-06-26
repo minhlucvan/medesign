@@ -1,10 +1,6 @@
 export const meta = {
   name: 'run-benchmark',
-  description:
-    'Run the benchmark suite against core-loop and produce an independent two-axis evaluation. ' +
-    'Each test builds a component through core-loop, then evaluates it with black-box (general code review, ' +
-    'visual comparison, functional check, accessibility) and white-box (token compliance, TypeScript health, ' +
-    'complexity, patterns) metrics. All evaluators are independent of emdesign\'s internal critics.',
+  description: 'Run the benchmark suite against core-loop and produce an independent two-axis evaluation. Each test builds a component through core-loop, then evaluates it with black-box (general code review, visual comparison, functional check, accessibility) and white-box (token compliance, TypeScript health, complexity, patterns) metrics. All evaluators are independent of emdesign internal critics.',
   phases: [
     { title: 'Setup' },
     { title: 'Execute' },

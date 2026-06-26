@@ -51,3 +51,36 @@ end**, turning ideas into reusable, visually-tested React components through an 
 | Document | What it covers |
 |---|---|
 | [CONTRIBUTING.md](CONTRIBUTING.md) | How to contribute a design system, skill, or agent adapter |
+
+## User stories
+
+Independent user stories — "who, what, why" without implementation details.
+These define the product vision; test scenarios derive from them.
+
+| Story | Role | Goal |
+|---|---|---|
+| [01-first-contact](userstories/01-first-contact.md) | Developer evaluating emdesign | Go from zero to running Studio in 2 min |
+| [02-pick-customize-ds](userstories/02-pick-customize-ds.md) | Product designer | Browse, preview, customize a design system |
+| [03-chat-to-component](userstories/03-chat-to-component.md) | Designer (non-coding) | Describe a component in English, see it render |
+| [04-quality-gate](userstories/04-quality-gate.md) | Frontend developer | Ship with confidence via 4-source critique |
+| [05-compose-deliver](userstories/05-compose-deliver.md) | Product team | Compose components into production pages |
+| [06-evolve-system](userstories/06-evolve-system.md) | Design system operator | Rebrand without rewriting components |
+| [07-brownfield-project](userstories/07-brownfield-project.md) | Team with existing UI | Wire into running codebase, no restructuring |
+
+## Test scenarios
+
+Each journey starts from a user story and walks through concrete
+Given/When/Then scenarios that exercise the full product experience —
+filesystem, CLI, browser, chat, addon panels, critique gate, capture.
+
+| Journey | Based on | Scenarios |
+|---|---|---|
+| [01-first-contact](testscenarios/01-first-contact.feature.md) | User story 01 | 3 |
+| [02-pick-customize-ds](testscenarios/02-pick-customize-ds.feature.md) | User story 02 | 5 |
+| [03-chat-to-component](testscenarios/03-chat-to-component.feature.md) | User story 03 | 6 |
+| [04-quality-gate](testscenarios/04-quality-gate.feature.md) | User story 04 | 7 |
+| [05-compose-deliver](testscenarios/05-compose-deliver.feature.md) | User story 05 | 6 |
+| [06-evolve-system](testscenarios/06-evolve-system.feature.md) | User story 06 | 4 |
+| [07-brownfield-project](testscenarios/07-brownfield-project.feature.md) | User story 07 | 6 |
+
+**Total: 7 user stories → 37 test scenarios.**

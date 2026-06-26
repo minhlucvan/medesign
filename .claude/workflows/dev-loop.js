@@ -22,23 +22,24 @@ const ROUND_TOLERANCE = 2;
 const FULL_SUITE_INTERVAL = 5;
 const PRODUCTION_THRESHOLD = 0.80;
 const MAX_AVG_ROUNDS = 5;
+const REPO_ROOT = '/Users/minh/Documents/medesign';
 
 // ── Engine file registry ───────────────────────────────────────────────────
 const ENGINE_FILES = [
   {
-    path: 'apps/workspace/templates/claude/workflows/core-loop.js',
+    path: REPO_ROOT + '/apps/workspace/templates/claude/workflows/core-loop.js',
     type: 'workflow', area: 'build-prompt',
     description: 'The core build/critique loop. Contains the CREATE/EDIT prompt, critique prompts, and gate call.',
     impactAxes: ['general', 'visual', 'functional', 'accessibility', 'tokenCompliance', 'typescript', 'complexity', 'patterns', 'rounds'],
   },
   {
-    path: 'apps/workspace/templates/claude/agents/consistency-auditor.md',
+    path: REPO_ROOT + '/apps/workspace/templates/claude/agents/consistency-auditor.md',
     type: 'agent', area: 'token-audit',
     description: 'Runs lint, scores token compliance, returns file:line fix list.',
     impactAxes: ['tokenCompliance', 'patterns'],
   },
   {
-    path: 'apps/workspace/templates/claude/agents/design-reviewer.md',
+    path: REPO_ROOT + '/apps/workspace/templates/claude/agents/design-reviewer.md',
     type: 'agent', area: 'design-review',
     description: 'LLM critique of code quality, API design, semantics, intent-fit, and voice.',
     impactAxes: ['general', 'functional'],
@@ -50,25 +51,25 @@ const ENGINE_FILES = [
     impactAxes: ['visual'],
   },
   {
-    path: 'packages/backend/src/critique/scoreboard.ts',
+    path: REPO_ROOT + '/packages/backend/src/critique/scoreboard.ts',
     type: 'backend', area: 'gate-logic',
     description: 'Weighted composite computation, decideRound dual gate.',
     impactAxes: ['rounds'],
   },
   {
-    path: 'packages/backend/src/critique/score.ts',
+    path: REPO_ROOT + '/packages/backend/src/critique/score.ts',
     type: 'backend', area: 'gate-config',
     description: 'scoreComponent with per-source floors, threshold, ratchet.',
     impactAxes: ['visual', 'tokens', 'rounds'],
   },
   {
-    path: 'packages/plugin-tailwindcss/src/index.ts',
+    path: REPO_ROOT + '/packages/plugin-tailwindcss/src/index.ts',
     type: 'plugin', area: 'codegen',
     description: 'Tailwind codegen instructions and token→class mapping.',
     impactAxes: ['tokenCompliance', 'patterns'],
   },
   {
-    path: 'packages/dsr/src/rules/lint.ts',
+    path: REPO_ROOT + '/packages/dsr/src/rules/lint.ts',
     type: 'dsr', area: 'lint-rules',
     description: 'P0/P1 lint rules for anti-pattern detection.',
     impactAxes: ['tokenCompliance', 'patterns'],
@@ -76,15 +77,15 @@ const ENGINE_FILES = [
 ];
 
 const AXIS_TO_ENGINE = {
-  general: { label: 'Code structure (B1)', primaryFile: 'apps/workspace/templates/claude/workflows/core-loop.js', area: 'build-prompt structure section', typicalFix: 'Add specific structure requirements to the build prompt — extract logic, define interfaces, separate concerns' },
-  visual: { label: 'Visual appearance (B2)', primaryFile: 'apps/workspace/templates/claude/agents/vision-critic.md', area: 'vision-critic criteria', typicalFix: 'Add specific visual guidance to the build prompt or tighten vision-critic instructions for alignment/spacing' },
-  functional: { label: 'Functional correctness (B3)', primaryFile: 'apps/workspace/templates/claude/workflows/core-loop.js', area: 'build prompt state handling', typicalFix: 'Add state coverage requirements: default, hover, active, disabled, loading, empty, error' },
-  accessibility: { label: 'Accessibility (B4)', primaryFile: 'apps/workspace/templates/claude/workflows/core-loop.js', area: 'build prompt a11y', typicalFix: 'Add a11y requirements: aria-labels, heading hierarchy, keyboard nav' },
-  tokenCompliance: { label: 'Token compliance (W1)', primaryFile: 'packages/dsr/src/rules/lint.ts', area: 'lint rules', typicalFix: 'Add a new lint rule for an off-token pattern or strengthen the token prompt in core-loop' },
-  typescript: { label: 'TypeScript quality (W2)', primaryFile: 'apps/workspace/templates/claude/workflows/core-loop.js', area: 'build prompt TypeScript', typicalFix: 'Add TS requirements: explicit Props interface, no any, no @ts-ignore' },
-  complexity: { label: 'Code complexity (W3)', primaryFile: 'apps/workspace/templates/claude/workflows/core-loop.js', area: 'build prompt complexity', typicalFix: 'Add complexity budget: max LOC, max conditionals, max nesting' },
-  patterns: { label: 'Pattern adherence (W4)', primaryFile: 'apps/workspace/templates/claude/workflows/core-loop.js', area: 'build prompt patterns', typicalFix: 'Add pattern rules: named handlers, stable keys, sub-components for repeated JSX' },
-  rounds: { label: 'Iteration speed', primaryFile: 'apps/workspace/templates/claude/workflows/core-loop.js', area: 'build prompt or gate params', typicalFix: 'Improve first-attempt quality via more specific build prompt, or adjust plateau/floor params' },
+  general: { label: 'Code structure (B1)', primaryFile: REPO_ROOT + '/apps/workspace/templates/claude/workflows/core-loop.js', area: 'build-prompt structure section', typicalFix: 'Add specific structure requirements to the build prompt — extract logic, define interfaces, separate concerns' },
+  visual: { label: 'Visual appearance (B2)', primaryFile: REPO_ROOT + '/apps/workspace/templates/claude/agents/vision-critic.md', area: 'vision-critic criteria', typicalFix: 'Add specific visual guidance to the build prompt or tighten vision-critic instructions for alignment/spacing' },
+  functional: { label: 'Functional correctness (B3)', primaryFile: REPO_ROOT + '/apps/workspace/templates/claude/workflows/core-loop.js', area: 'build prompt state handling', typicalFix: 'Add state coverage requirements: default, hover, active, disabled, loading, empty, error' },
+  accessibility: { label: 'Accessibility (B4)', primaryFile: REPO_ROOT + '/apps/workspace/templates/claude/workflows/core-loop.js', area: 'build prompt a11y', typicalFix: 'Add a11y requirements: aria-labels, heading hierarchy, keyboard nav' },
+  tokenCompliance: { label: 'Token compliance (W1)', primaryFile: REPO_ROOT + '/packages/dsr/src/rules/lint.ts', area: 'lint rules', typicalFix: 'Add a new lint rule for an off-token pattern or strengthen the token prompt in core-loop' },
+  typescript: { label: 'TypeScript quality (W2)', primaryFile: REPO_ROOT + '/apps/workspace/templates/claude/workflows/core-loop.js', area: 'build prompt TypeScript', typicalFix: 'Add TS requirements: explicit Props interface, no any, no @ts-ignore' },
+  complexity: { label: 'Code complexity (W3)', primaryFile: REPO_ROOT + '/apps/workspace/templates/claude/workflows/core-loop.js', area: 'build prompt complexity', typicalFix: 'Add complexity budget: max LOC, max conditionals, max nesting' },
+  patterns: { label: 'Pattern adherence (W4)', primaryFile: REPO_ROOT + '/apps/workspace/templates/claude/workflows/core-loop.js', area: 'build prompt patterns', typicalFix: 'Add pattern rules: named handlers, stable keys, sub-components for repeated JSX' },
+  rounds: { label: 'Iteration speed', primaryFile: REPO_ROOT + '/apps/workspace/templates/claude/workflows/core-loop.js', area: 'build prompt or gate params', typicalFix: 'Improve first-attempt quality via more specific build prompt, or adjust plateau/floor params' },
 };
 
 // ── Schemas ────────────────────────────────────────────────────────────────
@@ -204,7 +205,7 @@ const hadBaseline = history.cycles.length > 0;
 
 if (!hadBaseline) {
   log('No baseline found. Running initial benchmark...');
-  const baseline = await workflow({ scriptPath: 'benchmarks/run-benchmark.js' }, { runId: `baseline-${cycleNumber}`, filter: '', threshold: 0.8 });
+  const baseline = await workflow({ scriptPath: '/Users/minh/Documents/medesign/benchmarks/run-benchmark.js' }, { runId: `baseline-${cycleNumber}`, filter: '', threshold: 0.8 });
   history.initialBaseline = baseline && baseline.runId;
   currentResults = baseline;
   history.bestOverallAvg = baseline && baseline.results
@@ -336,7 +337,7 @@ while (!done && !stalled && cycleNumber <= MAX_CYCLES) {
   const filter = determineFilter(cycleNumber, diagnosis);
   log(`Running benchmark (filter: ${filter || 'full'})...`);
 
-  const afterResults = await workflow({ scriptPath: 'benchmarks/run-benchmark.js' }, {
+  const afterResults = await workflow({ scriptPath: '/Users/minh/Documents/medesign/benchmarks/run-benchmark.js' }, {
     runId: `cycle-${cycleNumber}-v1`,
     filter,
     threshold: 0.8,

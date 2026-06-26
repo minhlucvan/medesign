@@ -14,7 +14,8 @@ export const meta = {
 };
 
 // ── Config ─────────────────────────────────────────────────────────────────
-const RUN_ID = (args && args.runId) || `benchmark-${new Date().toISOString().slice(0, 10)}`;
+const REPO_ROOT = '/Users/minh/Documents/medesign';
+const RUN_ID = (args && args.runId) || 'benchmark-run';
 const FILTER = (args && args.filter) || ''; // 'simple' | 'medium' | 'complex' | '' (all)
 const THRESHOLD = (args && args.threshold) || 0.8;
 
@@ -95,7 +96,7 @@ log(`Benchmark run: ${RUN_ID}${FILTER ? ` (filter: ${FILTER})` : ''}`);
 
 // Read the suite definition
 const suite = await agent(
-  `Read the benchmark suite from benchmarks/suite.json. Parse it and return the JSON content.` +
+  `Read the benchmark suite from /Users/minh/Documents/medesign/benchmarks/suite.json. Parse it and return the JSON content.` +
   `Filter to complexity "${FILTER}" if FILTER is set and non-empty.`,
   { label: 'read-suite', phase: 'Setup', schema: SUITE_SCHEMA },
 );
@@ -126,10 +127,10 @@ for (const test of tests) {
     threshold: THRESHOLD,
   });
 
-  const t0 = Date.now();
+  const t0 = 0; // timing not available in workflow context
 
   // Read the generated source
-  const sourcePath = `src/generated/${test.name}.tsx`;
+  const sourcePath = `${REPO_ROOT}/examples/ledger-console/src/generated/${test.name}.tsx`;
   const sourceRead = await agent(
     `Read the generated source file at ${sourcePath}. If it doesn't exist, return "NOT FOUND". Otherwise return the FULL file content.`,
     { label: `read-source:${test.name}`, phase: 'Execute' },
@@ -242,12 +243,12 @@ const passRate = results.length > 0 ? (passed.length / results.length * 100).toF
 
 // Write summary
 await agent(
-  `Write the benchmark summary to bench-results/${RUN_ID}/.` +
+  `Write the benchmark summary to ${REPO_ROOT}/bench-results/${RUN_ID}/.` +
   `Create the directory if needed, write summary.json with the full results.` +
   `The summary:\n` +
   JSON.stringify({
     runId: RUN_ID,
-    timestamp: new Date().toISOString(),
+    timestamp: (args && args.runId) || 'unknown',
     tests: results.map((r) => ({
       name: r.name,
       complexity: r.complexity,
@@ -276,7 +277,7 @@ await agent(
 
 // Check for previous run to compare
 const comparison = await agent(
-  `Check if there's a previous benchmark run in bench-results/ (list the directories, pick the most recent one before ${RUN_ID}). ` +
+  `Check if there's a previous benchmark run in ${REPO_ROOT}/bench-results/ (list the directories, pick the most recent one before ${RUN_ID}). ` +
   `If found, read its summary.json and compare results. Report what changed. ` +
   `If no previous run found, return "No previous run to compare."`,
   { label: 'compare', phase: 'Report' },

@@ -53,7 +53,7 @@ const chatCss = `
   .emdesign-chat-active .sidebar-header {
     position: static !important;
     flex-shrink: 0;
-    padding-top: 4px !important;
+    padding-top: 8px !important;
   }
   /* Chat theme: AI bubbles subtle (near bg), user bubbles distinct accent */
   .emdesign-chat-active .emdesign-chat-root {
@@ -169,7 +169,7 @@ export function ChatModeController() {
       )}
       {/* Chat panel portaled into the sidebar content area (below header, natural flow) */}
       {visible && contentEl && createPortal(
-        <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column', paddingTop: 12 }}>
+        <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column', paddingTop: 24 }}>
           <ChatSidebar onClose={toggleChat} defaultSessionId={pendingSessionId} />
         </div>,
         contentEl

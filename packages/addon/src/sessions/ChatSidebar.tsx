@@ -666,6 +666,24 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
       {/* ── Session list ── */}
       {!activeSession && !pendingNewScope ? (
         <>
+          {/* ── Search + New button row ── */}
+          <div style={{ display: 'flex', gap: 4, padding: '4px 8px', alignItems: 'center' }}>
+            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Find conversation..." style={{ ...S.input, flex: 1 }} />
+            <button onClick={() => {
+              const scope = filterTab === 'story' && viewContext ? `story:${viewContext.storyId}` : 'global';
+              setPendingNewScope({ scope, origin: 'chat' });
+            }}
+              style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2,
+                padding: '5px 10px', borderRadius: 'var(--radius)',
+                fontSize: 11, fontWeight: 600, cursor: 'pointer', border: `1px solid ${css('--primary')}`,
+                background: css('--primary'), color: css('--primary-foreground'),
+                whiteSpace: 'nowrap', flexShrink: 0,
+              }}>
+              <span style={{ fontSize: 13, lineHeight: 1 }}>+</span> New
+            </button>
+          </div>
+
           {/* ── Tab filters ── */}
           <div style={{ display: 'flex', gap: 0 }}>
             {(['story', 'project', 'design-system'] as const).map(tab => (
@@ -683,22 +701,6 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
                  : '🎨 Design System'}
               </button>
             ))}
-          </div>
-
-          {/* ── New Conversation button ── */}
-          <div style={{ padding: '2px 8px 6px' }}>
-            <button onClick={() => {
-              const scope = filterTab === 'story' && viewContext ? `story:${viewContext.storyId}` : 'global';
-              setPendingNewScope({ scope, origin: 'chat' });
-            }}
-              style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4,
-                width: '100%', padding: '5px 10px', borderRadius: 'var(--radius)',
-                fontSize: 11, fontWeight: 600, cursor: 'pointer', border: `1px solid ${css('--primary')}`,
-                background: css('--primary'), color: css('--primary-foreground'),
-              }}>
-              <span style={{ fontSize: 13, lineHeight: 1 }}>+</span> New Conversation
-            </button>
           </div>
 
           <div ref={listRef} onScroll={listScroll} className="emdesign-scroll" style={{ flex: 1, overflow: 'auto' }}>

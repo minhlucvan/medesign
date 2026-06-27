@@ -61,8 +61,8 @@ export interface RenderSnapshot {
   url: string;
   theme: 'light' | 'dark';
   viewport: { width: number; height: number; deviceScaleFactor: number };
-  /** #storybook-root dimensions. */
-  root: { width: number; height: number };
+  /** #storybook-root dimensions and position (viewport-relative x,y). */
+  root: { x: number; y: number; width: number; height: number };
   /** Visible elements only (display:none and zero-area elements filtered out). */
   nodes: RenderNode[];
 }

@@ -2,14 +2,15 @@
  * Framework Charter: geometry/no-viewport-overflow
  *
  * "As a rendered component, I want none of my children to extend beyond the
- *  viewport bounds so the layout does not cause horizontal scrolling or clipping."
+ *  root container bounds so the layout does not cause horizontal scrolling or clipping."
  *
  * Layer: dom
  * Category: geometry
  *
  * Flags elements whose bounding box extends beyond the root container
- * (#storybook-root) width or height. This catches horizontal scroll bugs,
- * elements escaping their containers, and content that's wider than the canvas.
+ * (#storybook-root) bounds. Elements are measured RELATIVE to the root's
+ * viewport position (root.x / root.y), so Storybook's `centered` layout
+ * doesn't produce false positives.
  *
  * Ported from the `core-viewport-overflow` RenderedReviewRule, adapted to the
  * ElementCharter format with structured findings (coordinates, pixel measurements,
@@ -30,14 +31,20 @@ interface OverflowMetric {
 
 function measureViewportOverflow(
   elementBox: { x: number; y: number; width: number; height: number },
-  root: { width: number; height: number },
+  root: { x: number; y: number; width: number; height: number },
 ): OverflowMetric[] {
   const result: OverflowMetric[] = [];
 
-  const right = elementBox.x + elementBox.width - root.width;
+  // Measure element overflow relative to the ROOT's bounding box, not the viewport.
+  // root.x/root.y give the root's position in the viewport (typically 0, but can
+  // be offset when Storybook uses `layout: centered` or other layouts).
+  const rootRight = root.x + root.width;
+  const rootBottom = root.y + root.height;
+
+  const right = elementBox.x + elementBox.width - rootRight;
   if (right > TOLERANCE) result.push({ edge: 'right', px: Math.round(right) });
 
-  const bottom = elementBox.y + elementBox.height - root.height;
+  const bottom = elementBox.y + elementBox.height - rootBottom;
   if (bottom > TOLERANCE) result.push({ edge: 'bottom', px: Math.round(bottom) });
 
   return result;

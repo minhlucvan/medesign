@@ -30,14 +30,26 @@ export const alignment: ElementCharter = {
   matcher: { type: 'dom-selector', selector: '*' },
   run(ctx: EcDomContext): EcFinding[] {
     const findings: EcFinding[] = [];
+    const reportedParents = new Set<string>();
 
     for (const el of ctx.matchedElements) {
       if (findings.length >= MAX_FINDINGS) break;
       if (!el.parent) continue;
       if (el.siblings.length < 2) continue;
 
+      // Deduplicate: report once per parent
+      if (reportedParents.has(el.parent.node.selector)) continue;
+      reportedParents.add(el.parent.node.selector);
+
       const siblings = [el, ...el.siblings];
-      const parentDisplay = el.parent.node.styles.display;
+      const parentStyles = el.parent.node.styles;
+      const parentDisplay = parentStyles.display;
+
+      // Skip parents with explicit centering — misalignment is expected by design
+      if (parentDisplay === 'flex' || parentDisplay === 'inline-flex') {
+        const parentClasses = el.parent.node.classes ?? '';
+        if (/\bitems-center\b/.test(parentClasses)) continue;
+      }
 
       if (parentDisplay === 'flex' || parentDisplay === 'inline-flex') {
         // Check horizontal alignment (row direction) — all should share similar y

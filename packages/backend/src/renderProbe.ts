@@ -42,7 +42,7 @@ const PROBE_FN_SRC = `function probe() {
     return parts.join(' > ');
   };
   var root = document.getElementById('storybook-root');
-  if (!root) return { root: { width: 0, height: 0 }, nodes: [] };
+  if (!root) return { root: { x: 0, y: 0, width: 0, height: 0 }, nodes: [] };
   var rootRect = root.getBoundingClientRect();
   var nodes = [];
   var all = root.querySelectorAll('*');
@@ -83,7 +83,7 @@ const PROBE_FN_SRC = `function probe() {
       parentSelector: el.parentElement && el.parentElement !== root ? cssPath(el.parentElement, root) : undefined
     });
   }
-  return { root: { width: rootRect.width, height: rootRect.height }, nodes: nodes };
+  return { root: { x: rootRect.x, y: rootRect.y, width: rootRect.width, height: rootRect.height }, nodes: nodes };
 }`;
 
 /**
@@ -107,7 +107,7 @@ export interface RenderSnapshotOutput {
   url: string;
   theme: 'light' | 'dark';
   viewport: { width: number; height: number; deviceScaleFactor: number };
-  root: { width: number; height: number };
+  root: { x: number; y: number; width: number; height: number };
   nodes: RenderNode[];
 }
 
@@ -155,8 +155,8 @@ export async function renderSnapshot(
         await page.waitForTimeout(100);
       }
 
-      const probeFn = new Function(PROBE_FN_SRC + '; return probe();') as () => { root: { width: number; height: number }; nodes: RenderNode[] };
-      const result = await page.evaluate(probeFn) as { root: { width: number; height: number }; nodes: RenderNode[] };
+      const probeFn = new Function(PROBE_FN_SRC + '; return probe();') as () => { root: { x: number; y: number; width: number; height: number }; nodes: RenderNode[] };
+      const result = await page.evaluate(probeFn) as { root: { x: number; y: number; width: number; height: number }; nodes: RenderNode[] };
 
       snapshots.push({
         component,

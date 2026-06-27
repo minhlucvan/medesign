@@ -673,14 +673,14 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
               setPendingNewScope({ scope, origin: 'chat' });
             }}
               style={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 3,
-                padding: '0 12px', borderRadius: 4, height: 28, minHeight: 28,
-                fontSize: 14, fontWeight: 600, cursor: 'pointer',
-                border: `1px solid ${css('--primary')}`,
-                background: css('--primary'), color: css('--primary-foreground'),
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                padding: '0 7px', borderRadius: 6, height: 32, minHeight: 32,
+                fontSize: 12, fontWeight: 700, cursor: 'pointer', lineHeight: '12px',
+                border: 'none', background: css('--muted'), color: css('--muted-foreground'),
+                boxShadow: `0 0 0 1px ${css('--border')} inset`,
                 whiteSpace: 'nowrap', flexShrink: 0,
               }}>
-              <span style={{ fontSize: 16, lineHeight: 1 }}>+</span> New
+              <span style={{ fontSize: 14, lineHeight: 1, fontWeight: 400 }}>+</span> New
             </button>
           </div>
 

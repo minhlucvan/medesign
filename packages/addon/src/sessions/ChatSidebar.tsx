@@ -367,6 +367,10 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
     return allSessions.filter(s => s.display.toLowerCase().includes(q) || s.projectName.toLowerCase().includes(q));
   }, [allSessions, search]);
 
+  // Split sessions into project (global) and story-scoped
+  const projectSessions = useMemo(() => filtered.filter((s: any) => !s.scope || s.scope === 'global'), [filtered]);
+  const storySessions = useMemo(() => filtered.filter((s: any) => s.scope && s.scope !== 'global'), [filtered]);
+
   const activeSession = activeSessionId ? allSessions.find(s => s.id === activeSessionId) : null;
 
   const uploadFiles = useCallback(async (fileList: File[]): Promise<string[]> => {

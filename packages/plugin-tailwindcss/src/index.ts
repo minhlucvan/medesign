@@ -1,4 +1,6 @@
 import type { MedesignPlugin, PluginDesignSystem, ParseCtx, TokenInput, ThemeInput, FileEmit, DesignReviewRule, PluginPaths } from '@emdesign/plugin-api';
+import type { Rule } from '@emdesign/dsr';
+import { ALL_TAILWIND_DOCTOR_RULES, ALL_TAILWIND_RENDERED_RULES, ALL_TAILWIND_SOURCE_RULES } from './rules/index.js';
 
 /** Tailwind review rule: generated/primitive code should bind to token roles (graph `uses` edges). */
 const tokenBinding: DesignReviewRule = {
@@ -106,7 +108,9 @@ ${colorEntries}
     return [{ path: 'tailwind.config.js', content }];
   },
 
-  doctorRules: () => [tokenBinding],
+  doctorRules: () => [...ALL_TAILWIND_DOCTOR_RULES, tokenBinding],
+  renderedDoctorRules: () => ALL_TAILWIND_RENDERED_RULES,
+  lintRules: () => ALL_TAILWIND_SOURCE_RULES,
 };
 
 export default tailwindPlugin;

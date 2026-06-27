@@ -69,9 +69,8 @@ function buildChatCSS(isDark: boolean): string {
     flex-direction: column;
     overflow: hidden;
   }
-  /* Keep sidebar-header in its natural flow */
+  /* Keep sidebar-header exactly as-is — no position changes */
   .emdesign-chat-active .sidebar-header {
-    position: static !important;
     flex-shrink: 0;
   }
   /* Chat theme: follows Storybook sidebar theme */

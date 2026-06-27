@@ -3,7 +3,7 @@ export const meta = {
   description:
     'Plan the execution of an APPROVED OpenSpec change as a reviewable handoff under .handoff/<change>/. Groups the change into a FEW test-first work-units (aim 1-4; collapse a small change to one) split along natural seams — package, capability, or spec requirement — NOT one unit per tasks.md line. Each unit is TDD and single-toolchain (py|go|ts): testDeliverables (the failing tests to write first — tests/test_*.py | *_test.go | *.test.ts(x) — asserting the delta-spec scenarios) then codeDeliverables (the production change), and covers one or more tasks.md items. Writes plan.json (the index of units), one tasks/<NN>-<slug>.md per unit (combined test+code plan), and a README.md of shared context. Honors args.local — when true, the plan.json carries localOnly=true so ship-code picks up the local merge path. Writes NO production code and creates NO branch. Idempotent: re-planning preserves any unit already marked done. The handoff is meant to be reviewed (and optionally hand-edited) before /opsx:ship-code executes it.',
   phases: [
-    { title: 'Preflight', detail: 'openspec status + validate; read change artifacts' },
+    { title: 'Preflight', detail: 'node .claude/workflows/lib/openspec.js status + validate; read change artifacts' },
     { title: 'Plan', detail: 'group change into a few TDD units, write .handoff/<change>/' },
   ],
 }
@@ -28,7 +28,7 @@ const PREFLIGHT = {
   type: 'object', additionalProperties: false,
   required: ['ok', 'reason', 'changeRoot', 'proposalPath', 'designPath', 'tasksPath', 'specPaths', 'changeTasks'],
   properties: {
-    ok: { type: 'boolean', description: 'true only if openspec status + validate succeeded' },
+    ok: { type: 'boolean', description: 'true only if node .claude/workflows/lib/openspec.js status + validate succeeded' },
     reason: { type: 'string' },
     changeRoot: { type: 'string' },
     proposalPath: { type: ['string', 'null'] },
@@ -114,15 +114,15 @@ const HANDOFF_FORMAT = [
   `the rest. Keep plan.json units[*] and the tasks/*.md frontmatter in sync.`,
 ].join('\n')
 
-const SKILL = (name) => `the \`${name}\` skill (.claude/skills/${name}/SKILL.md)`
+// Skills are injected dynamically via prompt hooks — extensions/agent-skills/Hooks/on-plan.prompt.md
 
 // ---------------------------------------------------------------- Phase 1: Preflight
 phase('Preflight')
 const pre = await agent(
   [
     `Preflight planning for OpenSpec change "${change}". Use Bash. Steps:`,
-    `1. openspec status --change "${change}" --json — parse changeRoot, proposal/design/tasks artifact paths, and the delta-spec paths. Read proposal.md for a one-line title.`,
-    `2. openspec validate "${change}" --strict (fall back to non-strict) — MUST pass; if not, ok=false + reason and STOP.`,
+    `1. node .claude/workflows/lib/openspec.js status --change "${change}" --json — parse changeRoot, proposal/design/tasks artifact paths, and the delta-spec paths. Read proposal.md for a one-line title.`,
+    `2. node .claude/workflows/lib/openspec.js validate "${change}" --strict (fall back to non-strict) — MUST pass; if not, ok=false + reason and STOP.`,
     `3. Read the change's tasks.md and return its checklist items in order as changeTasks (n = two-digit ordinal by position, text = the line, done = whether it is [x]).`,
     `Do NOT create a branch and do NOT edit files. Return the structured result.`,
   ].join('\n'),
@@ -150,7 +150,7 @@ const CONTEXT = [
 
 const plan = await agent(
   [
-    `Write the execution handoff for OpenSpec change "${change}" into "${handoffDir}/". Apply ${SKILL('planning-and-task-breakdown')} and ${SKILL('test-driven-development')} (each unit's tests are its Red plan).`,
+    `Write the execution handoff for OpenSpec change "${change}" into "${handoffDir}/". Apply ${await getPromptHooks('on-plan', { change }).then(h => h.join(' '))} (each unit's tests are its Red plan).`,
     CONTEXT,
     `GROUP these OPEN tasks.md items into a FEW test-first units (aim 1-4; collapse a small change to ONE unit). Open tasks: ${openTasks.map((t) => t.n + '. ' + t.text).join(' | ')}.`,
     `- Cluster the tasks by natural seam (package / capability / spec requirement) AND by toolchain (don't mix py/go/ts in one unit). Each cluster becomes ONE unit covering several tasks.md ordinals (coversTasks); set its "toolchain".`,

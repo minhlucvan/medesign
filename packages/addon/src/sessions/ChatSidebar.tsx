@@ -183,7 +183,7 @@ function processMessages(rawMessages: any[]): Message[] {
 
 // ── Styles ─────────────────────────────────────────────────────────
 
-const rootStyle: React.CSSProperties = { display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden', color: css('--foreground') };
+const rootStyle: React.CSSProperties = { display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden', color: css('--foreground'), padding: '0 8px' };
 const S = {
   border: { borderBottom: `1px solid ${css('--border')}` },
   muted: { color: css('--muted-foreground') },

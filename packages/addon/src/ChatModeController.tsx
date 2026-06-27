@@ -49,11 +49,10 @@ const chatCss = `
     padding-bottom: 0 !important;
     overflow: hidden;
   }
-  /* Pin the sidebar header to the top so the close button is always accessible */
+  /* Keep sidebar-header in its natural flow (already fixed in sidebar-column) */
   .emdesign-chat-active .sidebar-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
+    position: static !important;
+    flex-shrink: 0;
   }
   /* Chat theme: AI bubbles subtle (near bg), user bubbles distinct accent */
   .emdesign-chat-active .emdesign-chat-root {

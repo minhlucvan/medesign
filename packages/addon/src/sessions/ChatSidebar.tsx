@@ -685,10 +685,6 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
             ))}
           </div>
 
-          <div style={{ padding: '4px 8px' }}>
-            <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Filter sessions..." style={S.input} />
-          </div>
-
           {/* ── New Conversation button ── */}
           <div style={{ padding: '2px 8px 6px' }}>
             <button onClick={() => {

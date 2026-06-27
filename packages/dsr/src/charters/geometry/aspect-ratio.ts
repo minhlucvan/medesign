@@ -14,9 +14,6 @@
  */
 import type { ElementCharter, EcDomContext, EcFinding } from '../charter.js';
 
-/** Media tag names to check. */
-const MEDIA_TAGS = new Set(['img', 'video', 'iframe', 'canvas']);
-
 /** Common aspect ratios as [w, h] tuples with labels. */
 const COMMON_ASPECT_RATIOS: Array<{ w: number; h: number; label: string }> = [
   { w: 16, h: 9, label: '16:9' },

@@ -148,13 +148,21 @@ function splitSelector(selector: string): string[] {
 
 /**
  * Match a full CSS selector against a RenderNode in its DOM context.
+ * Supports comma-separated selectors (e.g. "button, [role=button], .btn").
  */
 export function matchSelector(selector: string, node: EcDomNode): boolean {
-  // Simple selectors only (no combinators like >, +, space)
-  // For now, split by the first combinator we find, but only use the last segment
-  const simpleSelector = selector.split(/\s*[>+]\s*/).pop()?.trim() ?? selector;
-  const parts = splitSelector(simpleSelector);
-  return parts.every((part) => matchSelectorPart(part, node.node, node.siblings));
+  // First, split by comma for comma-separated selectors
+  const commaParts = selector.split(/\s*,\s*/).filter(Boolean);
+  for (const part of commaParts) {
+    // Simple selectors only (no combinators like >, +, space)
+    // Split by the first combinator we find, but only use the last segment
+    const simpleSelector = part.split(/\s*[>+]\s*/).pop()?.trim() ?? part;
+    const parts = splitSelector(simpleSelector);
+    if (parts.every((p) => matchSelectorPart(p, node.node, node.siblings))) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**

@@ -77,8 +77,8 @@ export async function runVisualTest(paths: RepoPaths, component: string): Promis
     return { status: 'error' };
   }
 
-  const storyId = toStoryId(component);
   const baseUrl = paths.storybookUrl || STORYBOOK_URL;
+  const storyId = (await resolveStoryId(component, 'default', baseUrl)) ?? toStoryId(component);
   const url = `${baseUrl}/iframe.html?id=${storyId}&viewMode=story`;
 
   ensureDir(paths.screenshotsDir);
@@ -144,4 +144,54 @@ export async function runVisualTest(paths: RepoPaths, component: string): Promis
  */
 export function toStoryId(component: string, story = 'default', prefix = 'generated'): string {
   return `${prefix}-${component.toLowerCase()}--${story}`;
+}
+
+/**
+ * Resolve the actual Storybook story ID for a component by querying the live index.json.
+ *
+ * This is more reliable than `toStoryId()` because it handles any prefix convention
+ * (`generated-`, `components-`, etc.) that a project may use.
+ *
+ * @returns The full story ID (e.g. "components-dashboard--default"), or `null` if
+ *          Storybook is unreachable or no matching story is found.
+ */
+export async function resolveStoryId(
+  component: string,
+  story = 'default',
+  storybookUrl = STORYBOOK_URL,
+): Promise<string | null> {
+  try {
+    const res = await fetch(`${storybookUrl.replace(/\/+$/, '')}/index.json`);
+    if (!res.ok) return null;
+    const data = await res.json() as { entries?: Record<string, { id: string }>; stories?: Array<{ id: string }> };
+    const entries: Array<{ id: string }> = data.entries
+      ? Object.values(data.entries)
+      : (data.stories ?? []);
+
+    const lower = component.toLowerCase();
+    const firstVariant = story === 'default' ? undefined : `--${story}`;
+
+    // 1) Exact match: story ID ends with `/component--story` or `-component--story`
+    for (const e of entries) {
+      const parts = e.id.split('--');
+      if (parts.length < 2) continue;
+      const storyPart = parts[0]; // e.g. "components-dashboard"
+      const variantPart = parts[1]; // e.g. "default"
+      const name = storyPart.split('-').pop(); // e.g. "dashboard"
+      if (name === lower && (firstVariant ? variantPart === story : variantPart === 'default')) {
+        return e.id;
+      }
+    }
+
+    // 2) Fuzzy match: component name appears anywhere in the story ID
+    for (const e of entries) {
+      if (e.id.toLowerCase().includes(lower)) {
+        return e.id;
+      }
+    }
+
+    return null;
+  } catch {
+    return null; // Storybook not reachable — caller should fall back
+  }
 }

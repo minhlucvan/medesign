@@ -12,7 +12,7 @@ export { computeComposite, decideRound, selectFallbackRound, DEFAULT_WEIGHTS } f
 export { scoreComponent, DEFAULT_SOURCE_FLOORS } from './critique/score.js';
 export { collectScores } from './critique/collector.js';
 export type { CollectOptions, CollectResult } from './critique/collector.js';
-export { runVisualTest, toStoryId, toVisualScore, checkStorybookHealth } from './visualTest.js';
+export { runVisualTest, toStoryId, resolveStoryId, toVisualScore, checkStorybookHealth } from './visualTest.js';
 export { renderSnapshot } from './renderProbe.js';
 export type { RenderSnapshotOutput, RenderSnapshotOptions } from './renderProbe.js';
 export { captureComponent, captureWithBaseline } from './capture.js';

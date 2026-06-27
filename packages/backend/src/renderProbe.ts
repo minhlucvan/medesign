@@ -13,7 +13,7 @@ import path from 'node:path';
 import { chromium } from 'playwright';
 import type { RepoPaths } from './paths.js';
 import { ensureDir } from './paths.js';
-import { toStoryId } from './visualTest.js';
+import { toStoryId, resolveStoryId } from './visualTest.js';
 import type { RenderNode } from '@emdesign/dsr';
 
 const STORYBOOK_URL = process.env.EMDESIGN_STORYBOOK_URL ?? 'http://localhost:6006';
@@ -126,8 +126,8 @@ export async function renderSnapshot(
 ): Promise<RenderSnapshotOutput[]> {
   if (!component) return [];
   const { themes = ['light'], story = 'default', viewportWidth = 1280, viewportHeight = 720 } = opts;
-  const storyId = toStoryId(component, story);
   const baseUrl = paths.storybookUrl || STORYBOOK_URL;
+  const storyId = (await resolveStoryId(component, story, baseUrl)) ?? toStoryId(component, story);
   const url = `${baseUrl}/iframe.html?id=${storyId}&viewMode=story`;
 
   ensureDir(paths.screenshotsDir);

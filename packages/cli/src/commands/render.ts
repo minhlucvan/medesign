@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import type { RepoPaths } from '@emdesign/backend';
-import { effectiveAdapter, toStoryId, ensureDir } from '@emdesign/backend';
+import { effectiveAdapter, toStoryId, resolveStoryId, ensureDir } from '@emdesign/backend';
 import { formatJson, formatError } from '../lib/format.js';
 import { chromium } from 'playwright';
 
@@ -24,8 +24,8 @@ export async function cmdRenderAnalyze(args: RenderAnalyzeArgs, paths: RepoPaths
     process.exit(1);
   }
 
-  const storyId = toStoryId(component, story);
   const baseUrl = paths.storybookUrl || process.env.EMDESIGN_STORYBOOK_URL || 'http://localhost:6006';
+  const storyId = (await resolveStoryId(component, story, baseUrl)) ?? toStoryId(component, story);
   const url = `${baseUrl}/iframe.html?id=${storyId}&viewMode=story`;
 
   const browser = await chromium.launch({ headless: true });

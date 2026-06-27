@@ -24,6 +24,8 @@ export { runtimeFor } from './runtime.js';
 export { gradeDesignSystem, renderGrade } from './doctor.js';
 export type { GradeReport } from './doctor.js';
 export { recordEvidence } from './evidence.js';
+export { spatialAudit } from './spatial.js';
+export type { SpatialAuditResult, SpatialFinding } from './spatial.js';
 export type { DoctorReport, DoctorFinding } from '@emdesign/doctor';
 export { lintRendered, mergeReports } from '@emdesign/doctor';
 export { getAdapter, effectiveAdapter, availableFrameworks, availablePlugins } from './adapters/index.js';

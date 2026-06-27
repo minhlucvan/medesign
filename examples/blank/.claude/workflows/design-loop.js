@@ -82,6 +82,7 @@ while (round < MAX_ROUNDS && !shipped) {
           )}.\n`
         : '') +
       `Compose primitives from "@ds", reference token roles only, obey the Anti-patterns.${COMPOSE_NOTE}\n` +
+      ` TAILWIND CONFIG: tailwind.config.js maps ALL --color-* tokens to semantic classes (bg-surface, text-highlight, etc.). Use these classes INSTEAD of inline var() or arbitrary values. Use bg-highlight NOT bg-[var(--color-highlight)]. Only var(--x) for non-color tokens (--motion-fast, --focus-ring, --shadow-raised, --radius).\n` +
       `DARK MODE: If the design system has a dark theme (tokens.css has [data-theme="dark"]), generate \`dark:\` variants for every color utility.\n` +
       `NON-DETERMINISTIC CODE: NEVER use \`new Date()\`, \`Date.now()\`, \`Math.random()\`, or \`crypto.randomUUID()\` in component source. Pass dynamic values via props.\n\n` +
       `DESIGN CONTEXT:\n${brief}\n\n` +

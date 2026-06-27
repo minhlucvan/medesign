@@ -32,6 +32,7 @@ import {
   runtimeFor,
   gradeDesignSystem,
   renderSnapshot,
+  spatialAudit,
 } from '@emdesign/backend';
 import type { Store } from '@emdesign/backend';
 import { findAffected, whereToFix, consistencyBrief, getContext, query } from '@emdesign/graph';
@@ -530,7 +531,27 @@ export async function createMcpServer(store: Store, paths: RepoPaths, _orch?: an
     return text(`Baseline seeded for ${name} → ${baselinePath}`);
   });
 
-  // ── 16. Evaluate story charters ────────────────────────────
+  // ── 16. Spatial audit (geometry charters) ──────────────────
+  server.registerTool('spatial_audit', {
+    description: 'Run framework-level geometry charters against a component\'s rendered DOM snapshot. Checks for element overlap (siblings intersecting) and child-overflows-parent. Returns structured findings with bounding-box coordinates, pixel measurements, and fix guidance — deterministic spatial feedback for the design loop, no screenshot needed.',
+    inputSchema: {
+      component: z.string().describe('Component name (PascalCase)'),
+      story: z.string().optional().describe('Story name (default: "default")'),
+      theme: z.enum(['light', 'dark']).optional().describe('Theme to render (default: light)'),
+    },
+  }, async ({ component, story, theme }) => {
+    try {
+      const result = await spatialAudit(paths, component, {
+        story: story ?? undefined,
+        themes: theme ? [theme] : ['light'],
+      });
+      return text(JSON.stringify(result, null, 2));
+    } catch (err) {
+      return text(`spatial_audit failed for "${component}": ${err instanceof Error ? err.message : String(err)}`);
+    }
+  });
+
+  // ── 17. Evaluate story charters ────────────────────────────
   server.registerTool('evaluate_story_charters', {
     description: 'Evaluate all story-level charters defined on a component\'s CSF stories. Returns pass/fail for each charter, suitable for agent self-check before capture. Chartiers are assertions defined inline in CSF with `charters: [...]`.',
     inputSchema: {

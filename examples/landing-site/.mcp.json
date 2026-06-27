@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "emdesign": {
-      "command": "npx",
-      "args": ["tsx", "../../packages/cli/src/cli.ts", "mcp"]
-    }
-  }
-}

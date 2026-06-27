@@ -45,7 +45,7 @@ export { DesignSystemRuntime, createRuntime } from './runtime.js';
 export type { RuntimeConfig, ValidationResult } from './runtime.js';
 
 // element charters
-export { loadElementCharters } from './charters/loader.js';
+export { loadElementCharters, loadFrameworkCharters } from './charters/loader.js';
 export { buildDomTree, querySelectorAll, queryByRelation } from './charters/matcher.js';
 export type {
   ElementCharter,
@@ -56,6 +56,13 @@ export type {
   EcDomNode,
   EcFinding,
 } from './charters/charter.js';
+
+// framework-level geometry charters (always-on, engine-shipped)
+export {
+  FRAMEWORK_GEOMETRY_CHARTERS,
+  noOverlap,
+  noChildOverflow,
+} from './charters/geometry/index.js';
 
 // story charters
 export {

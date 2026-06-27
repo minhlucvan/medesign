@@ -1,5 +1,5 @@
 import { detectConflicts } from '@emdesign/dsr';
-import { lintDesignSystem, lintRendered, lintCharters, mergeReports, renderReport, type DoctorReport } from '@emdesign/doctor';
+import { lintDesignSystem, lintRendered, lintCharters, lintFrameworkCharters, mergeReports, renderReport, type DoctorReport } from '@emdesign/doctor';
 import { normalizeDsRef, type RepoPaths } from './paths.js';
 import { runtimeFor } from './runtime.js';
 import { buildAndSave } from './graph.js';
@@ -145,6 +145,16 @@ export async function gradeDesignSystem(paths: RepoPaths, ref: string, opts: Gra
           const renderCtx: RenderedReviewContext = { ds, renders };
           const renderedRules: RenderedReviewRule[] = adapter.renderedDoctorRules();
           renderReportResult = lintRendered(id, renderCtx, renderedRules);
+
+          // ---- framework-level geometry charters (always-on, engine-shipped) ----
+          try {
+            const fwCharterReport = lintFrameworkCharters(id, renders);
+            if (renderReportResult && fwCharterReport.findings.length + fwCharterReport.passes.length > 0) {
+              renderReportResult = mergeReports(renderReportResult, fwCharterReport);
+            }
+          } catch {
+            // non-fatal — framework charters are advisory
+          }
         } else {
           renderLintSkipped = true;
           renderLintNote = 'no render snapshots captured (render-lint skipped)';

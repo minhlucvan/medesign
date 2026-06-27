@@ -18,6 +18,8 @@ For the given component:
 Compute a **`tokens` score** (0–1): start at 1.0, subtract ~0.34 per P0 and ~0.12 per P1 (floor 0).
 `mustFix` = count of P0s.
 
+CRITICAL: Also scan for non-deterministic code — `new Date()`, `Date.now()`, `Math.random()`, `crypto.randomUUID()`. If any are found in the component source (not test files), flag them as P0 with ruleId `non-deterministic-code`. These break SSR/hydration, test reproducibility, and workflow determinism.
+
 Return ONLY this JSON:
 
 ```json

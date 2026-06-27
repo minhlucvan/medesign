@@ -3,13 +3,33 @@
  *
  * Discovers and loads Element Charters from a design system's charters/ directory.
  * Supports dynamic import of pre-compiled .js files, with fallback to directory scan.
+ *
+ * Also provides loadFrameworkCharters() — the always-on, engine-shipped charters
+ * (geometry rules, spacing validation, etc.) that apply regardless of design system.
  */
 
 import { type ElementCharter } from './charter.js';
+import { FRAMEWORK_GEOMETRY_CHARTERS } from './geometry/index.js';
 
 export interface EcLoaderOptions {
   /** Absolute path to the charters/ directory, e.g. "/repo/design-systems/atelier/charters" */
   chartersDir: string;
+}
+
+/**
+ * Load the framework-level, always-on charters.
+ *
+ * These ship with the engine and validate spatial/geometry invariants across ALL
+ * design systems and components. They complement DS-level charters
+ * (loaded via loadElementCharters) by providing universal guarantees:
+ *
+ *  - geometry/no-overlap:         No sibling elements overlap
+ *  - geometry/no-child-overflow:  No child element overflows its parent
+ *
+ * Returns a fresh array each call (immutable list of charter instances).
+ */
+export function loadFrameworkCharters(): ElementCharter[] {
+  return [...FRAMEWORK_GEOMETRY_CHARTERS];
 }
 
 /**

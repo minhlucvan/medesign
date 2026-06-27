@@ -104,7 +104,9 @@ while (!done) {
   await agent(
     `${op === 'create' ? 'CREATE' : 'EDIT'} the React+Tailwind component "${NAME}" via ` +
     `\`${op === 'create' ? 'create_component' : 'edit_component'}\` (write a CSF story, title "Generated/${NAME}").` +
-    ` Compose primitives from "@ds", reference token roles only, obey the Anti-patterns.\n${darkNote}` +
+    ` Compose primitives from "@ds", reference token roles only, obey the Anti-patterns.\n` +
+    ` TAILWIND CONFIG: The active design system's tailwind.config.js maps ALL --color-* tokens to semantic classes (bg-surface, text-highlight, border-accent, etc.). Use these classes INSTEAD of inline var() or arbitrary values. For example, use bg-highlight not bg-[var(--color-highlight)], text-text-muted not text-[var(--color-text-muted)], border-border not border-[var(--color-border)], hover:bg-surface not hover:bg-[var(--color-surface)]. Only use var(--x) for non-color tokens like --motion-fast, --focus-ring, --shadow-raised, --radius, --space-unit.\n` +
+    ` CRITICAL: Never write \`text-[var(--color-X)]\` — always strip the \`--color-\` prefix and use the name directly: \`text-[var(--color-success)]\` => \`text-success\`, \`text-[var(--color-danger)]\` => \`text-danger\`, \`text-[var(--color-text)]\` => \`text-text\`. Same rule applies for \`bg-[var(--color-X)]\` => \`bg-X\` and \`border-[var(--color-X)]\` => \`border-X\`.\n${darkNote}` +
     ` NON-DETERMINISTIC CODE: NEVER use \`new Date()\`, \`Date.now()\`, \`Math.random()\`, or \`crypto.randomUUID()\` in component source.\n\n` +
     `DESIGN CONTEXT:\n${designContext}\n\n` +
     (prevFeedback ? `FIX THESE from the previous round:\n${prevFeedback}\n\n` : ''),

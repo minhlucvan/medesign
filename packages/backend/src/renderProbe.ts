@@ -3,7 +3,8 @@
  *
  * Captures a Storybook story's live DOM + computed styles + element geometry via Playwright's
  * `page.evaluate`, producing a `RenderSnapshot` (to be consumed by `plugin-core`'s rendered
- * doctor rules for overlap/contrast/spacing/tap-target analysis).
+ * doctor rules for overlap/contrast/spacing/tap-target analysis, and by framework-level
+ * geometry charters for overlap/overflow detection).
  *
  * Reuses the same Playwright harness + `toStoryId` + screenshot path conventions as `visualTest.ts`.
  */
@@ -18,47 +19,39 @@ import type { RenderNode } from '@emdesign/dsr';
 const STORYBOOK_URL = process.env.EMDESIGN_STORYBOOK_URL ?? 'http://localhost:6006';
 
 /**
- * The CSS-selector-path logic (nth-of-type under root) — mirrored from `addon/src/preview.tsx:5-19`
- * and adapted for in-browser evaluate. This string is sent as a page.evaluate() function body.
+ * Build a self-contained page.evaluate function for DOM probing.
+ *
+ * Uses a string-based approach (new Function) to avoid TypeScript compilation
+ * artifacts (like __name helpers) that break when Playwright serializes the
+ * function to the browser context.
  */
-const CSS_PATH_FN = `
-function cssPath(el, root) {
-  const parts = [];
-  let cur = el;
-  while (cur && cur !== root && cur.nodeType === 1) {
-    let sel = cur.tagName.toLowerCase();
-    const parent = cur.parentElement;
-    if (parent) {
-      const sibs = Array.from(parent.children).filter(function(c) { return c.tagName === cur.tagName; });
-      if (sibs.length > 1) sel += ':nth-of-type(' + (sibs.indexOf(cur) + 1) + ')';
+const PROBE_FN_SRC = `function probe() {
+  var cssPath = function(el, root) {
+    var parts = [];
+    var cur = el;
+    while (cur && cur !== root && cur.nodeType === 1) {
+      var sel = cur.tagName.toLowerCase();
+      var parent = cur.parentElement;
+      if (parent) {
+        var sibs = Array.from(parent.children).filter(function(c) { return c.tagName === cur.tagName; });
+        if (sibs.length > 1) sel += ':nth-of-type(' + (sibs.indexOf(cur) + 1) + ')';
+      }
+      parts.unshift(sel);
+      cur = cur.parentElement;
     }
-    parts.unshift(sel);
-    cur = cur.parentElement;
-  }
-  return parts.join(' > ');
-}
-`;
-
-/**
- * page.evaluate script that walks #storybook-root extracting RenderNode data.
- * Uses an IIFE pattern to avoid closure issues across evaluate boundaries.
- */
-const PROBE_SCRIPT = `
-${CSS_PATH_FN}
-(function() {
-  const root = document.getElementById('storybook-root');
+    return parts.join(' > ');
+  };
+  var root = document.getElementById('storybook-root');
   if (!root) return { root: { width: 0, height: 0 }, nodes: [] };
-  const rootRect = root.getBoundingClientRect();
-  const nodes = [];
-  const all = root.querySelectorAll('*');
-  for (let i = 0; i < all.length; i++) {
-    const el = all[i];
-    // Skip elements that aren't rendered
-    const rect = el.getBoundingClientRect();
+  var rootRect = root.getBoundingClientRect();
+  var nodes = [];
+  var all = root.querySelectorAll('*');
+  for (var i = 0; i < all.length; i++) {
+    var el = all[i];
+    var rect = el.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) continue;
-    const style = window.getComputedStyle(el);
+    var style = window.getComputedStyle(el);
     if (style.display === 'none') continue;
-    // Collect data
     nodes.push({
       selector: cssPath(el, root),
       tag: el.tagName.toLowerCase(),
@@ -85,17 +78,13 @@ ${CSS_PATH_FN}
         display: style.display,
         position: style.position,
         zIndex: style.zIndex,
-        overflow: style.overflow,
+        overflow: style.overflow
       },
-      parentSelector: el.parentElement && el.parentElement !== root ? cssPath(el.parentElement, root) : undefined,
+      parentSelector: el.parentElement && el.parentElement !== root ? cssPath(el.parentElement, root) : undefined
     });
   }
-  return {
-    root: { width: rootRect.width, height: rootRect.height },
-    nodes: nodes,
-  };
-})();
-`;
+  return { root: { width: rootRect.width, height: rootRect.height }, nodes: nodes };
+}`;
 
 /**
  * Capture a render snapshot for a component story.
@@ -166,7 +155,8 @@ export async function renderSnapshot(
         await page.waitForTimeout(100);
       }
 
-      const result = await page.evaluate(PROBE_SCRIPT) as unknown as { root: { width: number; height: number }; nodes: RenderNode[] };
+      const probeFn = new Function(PROBE_FN_SRC + '; return probe();') as () => { root: { width: number; height: number }; nodes: RenderNode[] };
+      const result = await page.evaluate(probeFn) as { root: { width: number; height: number }; nodes: RenderNode[] };
 
       snapshots.push({
         component,

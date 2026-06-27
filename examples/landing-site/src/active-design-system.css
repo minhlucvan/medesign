@@ -1,2 +1,2 @@
-/* active design system */
+/* Active design system. `emdesign use <id>` rewrites this import. Default: the seeded Atelier. */
 @import "../design-systems/noir/tokens.css";

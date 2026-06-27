@@ -1,0 +1,4 @@
+node_modules/
+.emdesign/state.json
+__screenshots__/
+storybook-static/

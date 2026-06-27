@@ -20,7 +20,6 @@ const config: StorybookConfig = {
     vite.resolve = vite.resolve ?? {};
     vite.resolve.alias = {
       ...(vite.resolve.alias ?? {}),
-      // `@ds` → the ACTIVE design system's primitives (set by `emdesign use <id>` → .emdesign/active-ds).
       '@ds': path.resolve(here, `../design-systems/${activeDs}/code`),
     };
     return vite;

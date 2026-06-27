@@ -2,8 +2,8 @@ export const meta = {
   name: 'production-belt',
   description:
     'Turn a prompt + design system into production-grade, gated, baselined, git-tracked components. ' +
-    'Full automated pipeline: bootstrap the workspace, analyze & decompose, build each leaf through a tight ' +
-    '2-source gate loop, capture with baselines, compose into pages, and clean up intents.',
+    'Full automated pipeline: bootstrap the workspace, analyze & decompose, build each leaf through the ' +
+    'full 5-source core-loop, capture with baselines, compose into pages, and clean up intents.',
   phases: [
     { title: 'Bootstrap' },
     { title: 'Scope' },
@@ -19,7 +19,6 @@ const NAME = (args && args.name) || 'Component';
 const INSTRUCTION = (args && args.instruction) || '';
 const DS_ID = (args && args.designSystemId) || '';
 const THRESHOLD = (args && args.threshold) || 0.8;
-const MAX_ROUNDS = (args && args.maxRounds) || 4;
 const MODE = (args && args.mode) || 'page'; // 'component' | 'page'
 const SLUG = NAME.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
@@ -121,74 +120,22 @@ const isPage = MODE === 'page' && leaves.length > 1;
 log(`Scope: ${leaves.length} leaves — author ${missing.length} (${missing.map((l) => l.component).join(', ') || 'none'}), reuse ${reused.length} (${reused.join(', ') || 'none'}), page=${isPage}`);
 
 // ── Phase 2: Build ────────────────────────────────────────────────────────
-// Build each missing leaf with 2-source critique (tokens + visual only).
-// Full 5-source critique runs at compose time.
+// Build each missing leaf through the full 5-source core-loop (no shortcuts).
 phase('Build');
 const builtComponents = await parallel(
   missing.map((leaf) => async () => {
-    const NAME_L = leaf.component;
-    const SLUG_L = NAME_L.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
-
-    // Get design context
-    const brief = await agent(
-      `Call get_design_context with componentName="${NAME_L}" and instruction=${JSON.stringify(leaf.intent)}. Return its full text.`,
-      { label: `brief:${NAME_L}`, phase: 'Build' },
-    );
-
-    let round = 0;
-    let shipped = false;
-    let feedback = '';
-    let lastGate = null;
-
-    while (round < MAX_ROUNDS && !shipped) {
-      round++;
-
-      // BUILD
-      const op = round === 1 ? 'create' : 'edit';
-      const darkNote = boot && boot.hasDarkTheme
-        ? ' DARK MODE: Generate `dark:` variants for every color utility (e.g., `dark:bg-surface dark:text-text`).'
-        : '';
-      await agent(
-        `${op === 'create' ? 'CREATE' : 'EDIT'} the React+Tailwind component "${NAME_L}" via \`${op === 'create' ? 'create_component' : 'edit_component'}\` (write a CSF story too, title "Generated/${NAME_L}").` +
-        ` Compose primitives from "@ds", reference token roles only, obey the Anti-patterns.${darkNote}` +
-        ` NON-DETERMINISTIC CODE: NEVER use \`new Date()\`, \`Date.now()\`, \`Math.random()\`, or \`crypto.randomUUID()\` in component source. Pass dynamic values via props.\n\n` +
-        `DESIGN CONTEXT:\n${brief}\n\n` +
-        (feedback ? `FIX THESE (P0 first), from the previous round:\n${feedback}\n` : ''),
-        { label: `build:${NAME_L}:r${round}`, phase: 'Build' },
-      );
-
-      // CRITIQUE — 2 sources at leaf level (tokens + visual)
-      const [tokens, visual] = await parallel([
-        () => agent(`Audit "${NAME_L}" consistency (lint + graph where-to-fix).`, {
-          agentType: 'consistency-auditor',
-          schema: TOKENS,
-          label: `tokens:${NAME_L}:r${round}`,
-          phase: 'Build',
-        }),
-        () => agent(
-          `Call run_visual_test for "${NAME_L}". Map: 'pass'|'new'→1.0, 'changed'→0.5, 'error'→0.0. Return {visual,status}.`,
-          { schema: VISUAL, label: `visual:${NAME_L}:r${round}`, phase: 'Build' },
-        ),
-      ]);
-
-      const scores = { tokens: tokens && tokens.tokens, visual: visual && visual.visual };
-      const mustFix = (tokens && tokens.mustFix) || 0;
-
-      // GATE
-      const gate = await agent(
-        `Call critique_score with scores=${JSON.stringify(scores)}, mustFix=${mustFix}, threshold=${THRESHOLD}, component="${NAME_L}". ` +
-        `Then call record_evidence with slug="${SLUG_L}", round=${round}, scores=${JSON.stringify(scores)}, mustFix=${mustFix}, ` +
-        `composite=(from result), decision=(from result), component="${NAME_L}". Return the critique_score JSON.`,
-        { schema: GATE, label: `gate:${NAME_L}:r${round}`, phase: 'Build' },
-      );
-
-      lastGate = gate;
-      shipped = gate && gate.decision === 'ship';
-      feedback = JSON.stringify({ tokens: (tokens && tokens.fixes) || [] });
-      log(`${NAME_L} round ${round}: composite=${gate && gate.composite} decision=${gate && gate.decision} mustFix=${mustFix}`);
-    }
-
-    return { component: NAME_L, shipped, rounds: round, composite: lastGate && lastGate.composite, gate: lastGate };
+    const result = await workflow('core-loop', {
+      name: leaf.component,
+      instruction: leaf.intent,
+      threshold: THRESHOLD,
+    });
+    return {
+      component: leaf.component,
+      shipped: result && result.shipped,
+      rounds: result && result.rounds,
+      composite: result && result.composite,
+      gate: result,
+    };
   }),
 );
 

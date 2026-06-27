@@ -17,7 +17,29 @@ import { ChatSidebar } from './sessions/ChatSidebar';
 
 const CHAT_CSS_ID = 'emdesign-chat-css';
 
-const chatCss = `
+function buildChatCSS(isDark: boolean): string {
+  const theme = isDark ? `
+    --background: 200 4.23% 13.92% !important;
+    --foreground: 200 4.23% 90% !important;
+    --primary: 210 30% 40% !important;
+    --primary-foreground: 210 20% 96% !important;
+    --muted: 200 4.23% 18% !important;
+    --muted-foreground: 200 4.23% 60% !important;
+    --border: 200 4.23% 21% !important;
+    --input: 200 4.23% 21% !important;
+    background: transparent !important;
+  ` : `
+    --background: 210 17% 98% !important;
+    --foreground: 210 11% 20% !important;
+    --primary: 206 100% 50% !important;
+    --primary-foreground: 0 0% 100% !important;
+    --muted: 210 17% 98% !important;
+    --muted-foreground: 208 10% 40% !important;
+    --border: 206 44% 90% !important;
+    --input: 206 44% 90% !important;
+    background: transparent !important;
+  `;
+  return `
   /* Hide the story tree and search — keep sidebar + canvas visible */
   .emdesign-chat-active #storybook-explorer-tree,
   .emdesign-chat-active .sidebar-subheading,
@@ -52,23 +74,15 @@ const chatCss = `
     position: static !important;
     flex-shrink: 0;
   }
-  /* Chat theme: AI bubbles subtle (near bg), user bubbles distinct accent */
-  .emdesign-chat-active .emdesign-chat-root {
-    --background: 200 4.23% 13.92% !important;
-    --foreground: 200 4.23% 90% !important;
-    --primary: 210 30% 40% !important;
-    --primary-foreground: 210 20% 96% !important;
-    --muted: 200 4.23% 18% !important;
-    --muted-foreground: 200 4.23% 60% !important;
-    --border: 200 4.23% 21% !important;
-    --input: 200 4.23% 21% !important;
-    background: transparent !important;
+  /* Chat theme: follows Storybook sidebar theme */
+  .emdesign-chat-active .emdesign-chat-root {${theme}
   }
   .emdesign-chat-active [class*="sidebar"]::-webkit-scrollbar { width: 6px; }
   .emdesign-chat-active [class*="sidebar"]::-webkit-scrollbar-track { background: transparent; }
   .emdesign-chat-active [class*="sidebar"]::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
   .emdesign-chat-active [class*="sidebar"]::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-`;
+  `;
+}
 
 function injectChatCSS(enabled: boolean) {
   let style = document.getElementById(CHAT_CSS_ID);
@@ -78,9 +92,22 @@ function injectChatCSS(enabled: boolean) {
     return;
   }
   if (!style) {
+    // Detect theme from Storybook sidebar background
+    let isDark = true;
+    const sidebar = document.querySelector('.sidebar-container');
+    if (sidebar) {
+      const bg = getComputedStyle(sidebar).backgroundColor;
+      const rgb = bg.match(/\d+/g);
+      if (rgb && rgb.length >= 3) {
+        const lum = 0.299 * Number(rgb[0]) + 0.587 * Number(rgb[1]) + 0.114 * Number(rgb[2]);
+        isDark = lum < 128;
+      }
+    } else {
+      isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
     style = document.createElement('style');
     style.id = CHAT_CSS_ID;
-    style.textContent = chatCss;
+    style.textContent = buildChatCSS(isDark);
     document.head.appendChild(style);
   }
   document.body.classList.add('emdesign-chat-active');

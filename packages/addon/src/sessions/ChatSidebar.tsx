@@ -687,7 +687,7 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
           </div>
 
           {/* ── Tab filters ── */}
-          <div style={{ display: 'flex', gap: 0, padding: '0 8px', marginBottom: 4 }}>
+          <div style={{ display: 'flex', gap: 0, padding: '0 8px', marginTop: 8, marginBottom: 4 }}>
             {(['story', 'project', 'design-system'] as const).map(tab => (
               <button key={tab} onClick={() => setFilterTab(tab)}
                 style={{

@@ -2,8 +2,8 @@ import React from 'react';
 import { addons, types } from '@storybook/manager-api';
 import { AddonPanel } from '@storybook/components';
 import {
-  ADDON_ID, PANEL_ID, DS_TAB_ID, CREATE_TAB_ID, TOOL_ID, CHARTERS_TAB_ID,
-  VIEW_MODE_DS, VIEW_MODE_CREATE, VIEW_MODE_CHARTERS,
+  ADDON_ID, PANEL_ID, CHARTERS_PANEL_ID, DS_TAB_ID, CREATE_TAB_ID, TOOL_ID,
+  VIEW_MODE_DS, VIEW_MODE_CREATE,
 } from './constants';
 import { SystemTab } from './SystemTab';
 import { DesignSystemTab } from './DesignSystemTab';
@@ -15,8 +15,8 @@ import { ChartersTab } from './charters/ChartersTab';
  * emdesign manager UI:
  *  - TOOL   (toolbar)      → tools + ChatModeController (sidebar header toggle + chat panel)
  *  - PANEL  (bottom drawer)→ Emdesign — system/status/logs dashboard (includes Services)
+ *  - PANEL  (bottom drawer)→ Charters — component/story charter validation results
  *  - TAB    System         → browse + edit design systems
- *  - TAB    Charters       → component/story charter validation results
  *  - TAB    + Create       → the creation wizard
  * Each TAB owns a viewMode + route so it is a top-level surface with its own URL.
  */
@@ -50,12 +50,15 @@ addons.register(ADDON_ID, () => {
     render: ({ active }) => (active ? <DesignSystemTab /> : null),
   });
 
-  addons.add(CHARTERS_TAB_ID, {
-    type: types.TAB,
+  addons.add(CHARTERS_PANEL_ID, {
+    type: types.PANEL,
     title: 'Charters',
-    route: tabRoute(VIEW_MODE_CHARTERS),
-    match: ({ viewMode }) => viewMode === VIEW_MODE_CHARTERS,
-    render: ({ active }) => (active ? <ChartersTab /> : null),
+    match: ({ viewMode }) => viewMode === 'story',
+    render: ({ active }) => (
+      <AddonPanel active={!!active}>
+        <ChartersTab />
+      </AddonPanel>
+    ),
   });
 
   addons.add(CREATE_TAB_ID, {

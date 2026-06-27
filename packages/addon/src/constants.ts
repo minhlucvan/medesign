@@ -6,7 +6,7 @@ export const CREATE_TAB_ID = `${ADDON_ID}/create`;
 export const TOOL_ID = `${ADDON_ID}/tool`;
 export const SESSIONS_TAB_ID = `${ADDON_ID}/sessions`;
 export const SERVICES_TAB_ID = `${ADDON_ID}/services`;
-export const CHARTERS_TAB_ID = `${ADDON_ID}/charters`;
+export const CHARTERS_PANEL_ID = `${ADDON_ID}/charters-panel`;
 
 /** Each full-page tab owns a viewMode + route (so it's a top-level surface, not docked). */
 export const VIEW_MODE_SYSTEM = 'emdesign';
@@ -14,7 +14,6 @@ export const VIEW_MODE_DS = 'emdesign-ds';
 export const VIEW_MODE_CREATE = 'emdesign-create';
 export const VIEW_MODE_SESSIONS = 'emdesign-sessions';
 export const VIEW_MODE_SERVICES = 'emdesign-services';
-export const VIEW_MODE_CHARTERS = 'emdesign-charters';
 
 /**
  * The emdesign Studio backend HTTP bridge. The addon (browser) talks to the backend over

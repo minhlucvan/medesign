@@ -23,9 +23,11 @@ export interface EcLoaderOptions {
  * design systems and components. They complement DS-level charters
  * (loaded via loadElementCharters) by providing universal guarantees:
  *
- *  - geometry/no-overlap:         No sibling elements overlap
- *  - geometry/no-child-overflow:  No child element overflows its parent
- *  - geometry/minimum-gap:        Adjacent siblings have breathing room (≥8px)
+ *  - geometry/no-overlap:          No elements incorrectly overlap (siblings + cross-tree)
+ *  - geometry/no-child-overflow:   No child element overflows its parent
+ *  - geometry/minimum-gap:         Adjacent siblings have breathing room (≥8px)
+ *  - geometry/z-index-collision:   Overlapping elements have explicit z-index
+ *  - geometry/no-viewport-overflow: No element extends beyond viewport bounds
  *
  * Returns a fresh array each call (immutable list of charter instances).
  */

@@ -62,6 +62,7 @@ export {
   FRAMEWORK_GEOMETRY_CHARTERS,
   noOverlap,
   noChildOverflow,
+  minimumGap,
 } from './charters/geometry/index.js';
 
 // story charters

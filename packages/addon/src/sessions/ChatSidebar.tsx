@@ -236,7 +236,7 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
   const autoSendRef = useRef<string | null>(null);
   const [selectedElement, setSelectedElement] = useState<ElementSelectedPayload | null>(null);
   const [viewContext, setViewContext] = useState<ViewContextPayload | null>(null);
-  const [filterTab, setFilterTab] = useState<'all' | 'project' | 'story'>('all');
+  const [filterTab, setFilterTab] = useState<'project' | 'story'>('project');
   const [pendingQuestion, setPendingQuestion] = useState<{
     questions: Question[];
     state: 'interactive' | 'pending' | 'answered' | 'expired';
@@ -380,11 +380,7 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
   // Split sessions into project (global) and story-scoped
   const projectSessions = useMemo(() => filtered.filter((s: any) => !s.scope || s.scope === 'global'), [filtered]);
   const storySessions = useMemo(() => filtered.filter((s: any) => s.scope && s.scope !== 'global'), [filtered]);
-  const displaySessions = useMemo(() => {
-    if (filterTab === 'project') return projectSessions;
-    if (filterTab === 'story') return storySessions;
-    return filtered;
-  }, [filterTab, projectSessions, storySessions, filtered]);
+  const displaySessions = filterTab === 'project' ? projectSessions : storySessions;
 
   const activeSession = activeSessionId ? allSessions.find(s => s.id === activeSessionId) : null;
 
@@ -410,9 +406,13 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
     setCreateError(null);
     setCreating(true);
     try {
+      // Scope the session based on the active tab
+      const scope = filterTab === 'story' && viewContext
+        ? `story:${viewContext.storyId}`
+        : 'global';
       const session = await api.createSession({
         type: mode.intentType ?? 'chat',
-        scope: 'global',
+        scope,
         origin: 'chat',
       });
       // Add to local sessions list (prepend, dedupe)
@@ -426,7 +426,7 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
       setCreateError(`Failed to create session: ${(e as Error).message}`);
     }
     setCreating(false);
-  }, []);
+  }, [filterTab, viewContext]);
 
   // Send message → stream response from Claude via SSE
   const handleSend = useCallback(async () => {
@@ -578,6 +578,23 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
       {/* ── Session list ── */}
       {!activeSession ? (
         <>
+          {/* ── Tab filters ── */}
+          <div style={{ display: 'flex', gap: 0, borderBottom: `1px solid ${css('--border')}` }}>
+            {(['project', 'story'] as const).map(tab => (
+              <button key={tab} onClick={() => setFilterTab(tab)}
+                style={{
+                  flex: 1, padding: '6px 0', fontSize: 10, fontWeight: 700, cursor: 'pointer',
+                  border: 'none', textTransform: 'uppercase', letterSpacing: '0.05em',
+                  transition: 'all 0.12s',
+                  background: filterTab === tab ? css('--background') : css('--muted'),
+                  color: filterTab === tab ? css('--foreground') : css('--muted-foreground'),
+                  borderBottom: filterTab === tab ? `2px solid ${css('--primary')}` : '2px solid transparent',
+                }}>
+                {tab === 'project' ? '💬 Project' : `📖 Story${viewContext ? `: ${viewContext.component}` : ''}`}
+              </button>
+            ))}
+          </div>
+
           <div style={{ padding: '4px 8px', ...S.border }}>
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Filter sessions..." style={S.input} />
           </div>
@@ -591,7 +608,7 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
                 fontSize: 11, fontWeight: 600, cursor: 'pointer', border: `1px solid ${css('--primary')}`,
                 background: css('--primary'), color: css('--primary-foreground'),
               }}>
-              <span style={{ fontSize: 13, lineHeight: 1 }}>+</span> New Conversation
+              <span style={{ fontSize: 13, lineHeight: 1 }}>+</span> New{filterTab === 'project' ? ' Project' : ' Story'} Conversation
             </button>
 
             {/* ── Mode picker — click a mode to start immediately ── */}
@@ -613,23 +630,6 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
                 </div>
               </div>
             )}
-          </div>
-
-          {/* ── Tab filters ── */}
-          <div style={{ display: 'flex', gap: 4, padding: '4px 8px', borderBottom: `1px solid ${css('--border')}` }}>
-            {(['all', 'project', 'story'] as const).map(tab => (
-              <button key={tab} onClick={() => setFilterTab(tab)}
-                style={{
-                  flex: 1, padding: '4px 0', fontSize: 10, fontWeight: 600, cursor: 'pointer',
-                  border: 'none', borderRadius: 'var(--radius)',
-                  background: filterTab === tab ? css('--primary') : 'transparent',
-                  color: filterTab === tab ? css('--primary-foreground') : css('--muted-foreground'),
-                  textTransform: 'uppercase', letterSpacing: '0.05em',
-                  transition: 'all 0.12s',
-                }}>
-                {tab === 'all' ? 'All' : tab === 'project' ? '💬 Project' : `📖 Story${viewContext && tab === 'story' ? `: ${viewContext.component}` : ''}`}
-              </button>
-            ))}
           </div>
 
           <div ref={listRef} onScroll={listScroll} className="emdesign-scroll" style={{ flex: 1, overflow: 'auto' }}>

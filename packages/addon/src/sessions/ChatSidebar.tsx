@@ -352,8 +352,8 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
               }),
             ]);
             if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
-            if (result.timedOut) { streamDone = true; setStreaming(false); break; }
-            if (result.done) break;
+            if (result.timedOut) { streamDone = true; setStreaming(false); setSending(false); break; }
+            if (result.done) { streamDone = true; setStreaming(false); setSending(false); break; }
             buffer += decoder.decode(result.value, { stream: true });
             const lines = buffer.split('\n');
             buffer = lines.pop() || '';
@@ -576,9 +576,15 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
           console.log('[chat] idle timeout — forcing stream end');
           streamDone = true;
           setStreaming(false);
+          setSending(false);
           break;
         }
-        if (result.done) break;
+        if (result.done) {
+          streamDone = true;
+          setStreaming(false);
+          setSending(false);
+          break;
+        }
         const value = result.value!;
         buffer += decoder.decode(value, { stream: true });
         const lines = buffer.split('\n');

@@ -6,6 +6,8 @@ export default defineWorkspace([
   'packages/graph',
   'packages/dsr',
   'packages/vision-critic',
+  // Addon (Storybook panel, toolbar tools, channel events)
+  'packages/addon',
   // Integration & surface tests
   'tests',
 ]);

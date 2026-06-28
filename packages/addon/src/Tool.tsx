@@ -143,8 +143,7 @@ export function Tool() {
           target: { selector: p.selector, tag: p.tag, text: p.text, component: p.component, storyId: p.storyId },
           payload: { placementMode: p.placementMode, selectedComponent: p.selectedComponent, sessionId: session.id },
         });
-        // Open the chat conversation for this placement
-        emit(EVT_CHAT_MODE, { enabled: true, sessionId: session.id });
+        // Placement runs in background — user can open chat optionally to see progress
       } catch { /* backend down */ }
     },
   });

@@ -264,7 +264,7 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
   }, [storyId, component]);
 
   const cancel = () => { composingRef.current = false; setComposing(null); setText(''); };
-  const cancelPlace = () => { setPlacing(null); setText(''); offAndSync(); };
+  const cancelPlace = () => { setPlacing(null); setText(''); setPlaceZone(null); setHover(null); modeRef.current = 'off'; setModeState('off'); document.body.style.cursor = ''; addons.getChannel().emit(EVT_TOOL_MODE, { mode: 'off' }); };
   const send = () => {
     if (!composing || !text.trim()) return;
     addons.getChannel().emit(EVT_COMMENT_SUBMIT, { target: composing.target, instruction: text.trim() });

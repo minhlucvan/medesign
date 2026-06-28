@@ -183,7 +183,7 @@ function processMessages(rawMessages: any[]): Message[] {
 
 // ── Styles ─────────────────────────────────────────────────────────
 
-const rootStyle: React.CSSProperties = { display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden', color: css('--foreground') };
+const rootStyle: React.CSSProperties = { display: 'flex', flexDirection: 'column', height: '100%', overflow: 'hidden', color: css('--foreground'), position: 'relative' };
 const S = {
   muted: { color: css('--muted-foreground') },
   input: {
@@ -226,9 +226,9 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
   const [files, setFiles] = useState<File[] | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showNewPicker, setShowNewPicker] = useState(false);
-  const [showIntentPicker, setShowIntentPicker] = useState(false);
-  const [intentInput, setIntentInput] = useState('');
-  const [selectedIntent, setSelectedIntent] = useState<ChatStartMode | null>(null);
+  const [showCommandPalette, setShowCommandPalette] = useState(false);
+  const [paletteInput, setPaletteInput] = useState('');
+  const [paletteSelection, setPaletteSelection] = useState<ChatStartMode>('chat');
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
   const [pendingNewScope, setPendingNewScope] = useState<{ scope: string; origin: string; intentType?: string } | null>(null);
@@ -673,7 +673,7 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
               </div>
               <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Find components" style={{ flex: 1, border: 'none', background: 'transparent', color: css('--foreground'), fontSize: 13, fontFamily: `"Nunito Sans", -apple-system, ".SFNSText-Regular", "San Francisco", "system-ui", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif`, outline: 'none', padding: 0, lineHeight: '28px', height: 28 }} />
             </div>
-            <button onClick={() => setShowIntentPicker(true)}
+            <button onClick={() => setShowCommandPalette(true)}
               style={{
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
                 padding: '0 7px', borderRadius: 6, height: 32, minHeight: 32,
@@ -686,46 +686,63 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
             </button>
           </div>
 
-          {/* ── Intent picker (command palette) ── */}
-          {showIntentPicker && (
-            <div style={{ padding: '8px', borderBottom: `1px solid ${css('--border')}` }}>
-              <div style={{ display: 'flex', gap: 4, marginBottom: 8 }}>
-                <input value={intentInput} onChange={e => setIntentInput(e.target.value)}
-                  onKeyDown={e => { if (e.key === 'Escape') setShowIntentPicker(false); }}
+          {/* ── Command palette overlay ── */}
+          {showCommandPalette && (
+            <div style={{ position: 'absolute', inset: 0, zIndex: 100, display: 'flex', flexDirection: 'column', background: css('--background'), borderRadius: 8, boxShadow: '0 8px 32px rgba(0,0,0,0.3)', overflow: 'hidden' }}>
+              {/* Backdrop click */}
+              <div onClick={() => setShowCommandPalette(false)} style={{ position: 'absolute', inset: 0, zIndex: -1 }} />
+
+              {/* Input area */}
+              <div style={{ padding: '12px', borderBottom: `1px solid ${css('--border')}` }}>
+                <input value={paletteInput} onChange={e => setPaletteInput(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === 'Escape') setShowCommandPalette(false);
+                    if (e.key === 'Enter' && paletteInput.trim()) {
+                      const text = paletteInput.trim();
+                      if (text) autoSendRef.current = text;
+                      setShowCommandPalette(false);
+                      setPaletteInput('');
+                      handleCreateSession(paletteSelection);
+                    }
+                  }}
                   placeholder="Describe what to build..." autoFocus
-                  style={{ flex: 1, padding: '6px 8px', borderRadius: 4, fontSize: 13, border: `1px solid ${css('--input')}`, background: css('--background'), color: css('--foreground'), fontFamily: `"Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco","system-ui","Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif`, outline: 'none' }} />
+                  style={{ width: '100%', padding: '10px 12px', borderRadius: 6, fontSize: 14, border: `1px solid ${css('--input')}`, background: css('--muted'), color: css('--foreground'), fontFamily: `"Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco","system-ui","Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif`, outline: 'none', boxSizing: 'border-box' }} />
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 4 }}>
-                {CHAT_MODES.map(m => (
-                  <button key={m.id} onClick={() => setSelectedIntent(selectedIntent === m.id ? null : m.id)}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: 6, padding: '6px 8px', borderRadius: 4,
-                      fontSize: 11, fontWeight: 500, cursor: 'pointer', textAlign: 'left',
-                      border: selectedIntent === m.id ? `1px solid ${css('--primary')}` : `1px solid ${css('--border')}`,
-                      background: selectedIntent === m.id ? `${css('--primary')}22` : css('--background'),
-                      color: css('--foreground'), fontFamily: 'inherit',
-                      transition: 'all 0.1s',
-                    }}>
-                    <span style={{ fontSize: 14, lineHeight: 1 }}>{m.icon}</span>
-                    <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{m.label}</span>
-                  </button>
-                ))}
+
+              {/* Suggestions */}
+              <div style={{ flex: 1, overflow: 'auto', padding: '8px' }}>
+                <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1.76px', color: css('--muted-foreground'), marginBottom: 6, padding: '0 4px' }}>Intent</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  {CHAT_MODES.filter(m => !paletteInput.trim() || m.label.toLowerCase().includes(paletteInput.toLowerCase())).map(m => (
+                    <button key={m.id} onClick={() => {
+                      const text = paletteInput.trim();
+                      if (text) autoSendRef.current = text;
+                      setShowCommandPalette(false);
+                      setPaletteInput('');
+                      handleCreateSession(m.id);
+                    }}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 8, padding: '8px 10px', borderRadius: 4,
+                        fontSize: 12, fontWeight: paletteSelection === m.id ? 600 : 400, cursor: 'pointer', textAlign: 'left',
+                        border: 'none', background: paletteSelection === m.id ? `${css('--primary')}22` : 'transparent',
+                        color: css('--foreground'), fontFamily: 'inherit',
+                        transition: 'all 0.08s',
+                      }}
+                      onMouseEnter={e => { if (paletteSelection !== m.id) (e.currentTarget as HTMLElement).style.background = css('--muted'); }}
+                      onMouseLeave={e => { if (paletteSelection !== m.id) (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
+                      onFocus={() => setPaletteSelection(m.id)}>
+                      <span style={{ fontSize: 16, lineHeight: 1, width: 20, textAlign: 'center' }}>{m.icon}</span>
+                      <span style={{ flex: 1 }}>{m.label}</span>
+                      <span style={{ fontSize: 10, color: css('--muted-foreground'), opacity: 0.6 }}>{m.description}</span>
+                    </button>
+                  ))}
+                </div>
               </div>
-              <div style={{ display: 'flex', gap: 4, marginTop: 8, justifyContent: 'flex-end' }}>
-                <button onClick={() => setShowIntentPicker(false)}
-                  style={{ padding: '4px 10px', borderRadius: 4, fontSize: 11, cursor: 'pointer', border: `1px solid ${css('--border')}`, background: 'transparent', color: css('--muted-foreground') }}>Cancel</button>
-                <button onClick={() => {
-                  const mode = CHAT_MODES.find(m => m.id === selectedIntent) || CHAT_MODES[0];
-                  const text = intentInput.trim();
-                  // Set auto-send BEFORE creating session (race condition: effect reads ref)
-                  if (text) autoSendRef.current = text;
-                  setShowIntentPicker(false);
-                  setIntentInput('');
-                  setSelectedIntent(null);
-                  // Create session with intent type → triggers activeSessionId → auto-sends
-                  handleCreateSession(mode.id);
-                }} disabled={!selectedIntent}
-                  style={{ padding: '4px 14px', borderRadius: 4, fontSize: 11, fontWeight: 600, cursor: selectedIntent ? 'pointer' : 'default', border: 'none', background: selectedIntent ? css('--primary') : css('--muted'), color: selectedIntent ? css('--primary-foreground') : css('--muted-foreground'), opacity: selectedIntent ? 1 : 0.5 }}>Start</button>
+
+              {/* Footer with hint */}
+              <div style={{ padding: '6px 12px', borderTop: `1px solid ${css('--border')}`, fontSize: 10, color: css('--muted-foreground'), opacity: 0.5, display: 'flex', gap: 12 }}>
+                <span>↵ Send</span>
+                <span>Esc Cancel</span>
               </div>
             </div>
           )}

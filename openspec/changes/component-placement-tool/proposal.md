@@ -1,3 +1,7 @@
+---
+name: "component-placement-tool"
+---
+
 ## Why
 
 The current Storybook addon has a comment tool that lets users point at an element and write a change request. But there's no tool for the opposite flow: **adding a new component into the story at a specific location**. Users who want to compose a page or add a section must describe it in chat, wait for the AI, then iterate.

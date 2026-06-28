@@ -743,16 +743,33 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
                         handleCreateSession(paletteSelection);
                       }
                     }}
-                    placeholder="./components/**/*.tsx" autoFocus
+                    placeholder="Describe what to build..." autoFocus
                     style={{ flex: 1, border: 'none', background: 'transparent', color: css('--foreground'), fontSize: 13, fontFamily: `"Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco","system-ui","Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif`, outline: 'none', padding: '8px 0', lineHeight: '20px' }} />
                 </div>
 
                 {/* Intent options */}
                 <div style={{ flex: 1, overflow: 'auto', padding: '8px 12px 12px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    {CHAT_MODES.filter(m => !paletteInput.trim() || m.label.toLowerCase().includes(paletteInput.toLowerCase())).map(m => (
+                    {CHAT_MODES.map(m => {
+                      const text = paletteInput.trim();
+                      const preview = {
+                        'chat': text ? `Chat about "${text}"` : 'Free-form conversation',
+                        'new-component': text ? `Create component "${text}"` : 'Scaffold a new React component',
+                        'new-story': text ? `Add story for "${text}"` : 'Create a new story for a component',
+                        'change-request': text ? `Request change: ${text}` : 'Request a design change',
+                        'update-design-system': 'Update design system tokens, typography, or spacing',
+                        'create-design-system': 'Import or create a new design system',
+                      }[m.id];
+                      const label = {
+                        'chat': 'Chat',
+                        'new-component': 'New Component',
+                        'new-story': 'New Story',
+                        'change-request': 'Change Request',
+                        'update-design-system': 'Update Design System',
+                        'create-design-system': 'Import Design System',
+                      }[m.id];
+                      return (
                       <button key={m.id} onClick={() => {
-                        const text = paletteInput.trim();
                         if (text) autoSendRef.current = text;
                         setShowCommandPalette(false);
                         setPaletteInput('');
@@ -767,12 +784,13 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
                         onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = css('--muted')}
                         onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}>
                         <span style={{ fontSize: 15, lineHeight: 1, width: 20, textAlign: 'center' }}>{m.icon}</span>
-                        <div style={{ flex: 1 }}>
-                          <div style={{ fontSize: 12, fontWeight: 500 }}>{m.label}</div>
-                          <div style={{ fontSize: 10, color: css('--muted-foreground'), opacity: 0.7, lineHeight: '14px' }}>{m.description}</div>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ fontSize: 12, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</div>
+                          <div style={{ fontSize: 10, color: css('--muted-foreground'), opacity: 0.7, lineHeight: '14px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{preview}</div>
                         </div>
                       </button>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </div>

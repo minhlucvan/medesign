@@ -745,6 +745,23 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
     if (!message) return res.status(400).json({ error: 'message required' });
     const interactive = !!req.body?.interactive;
     const sessionIdHint = String(req.body?.sessionId ?? '').trim() || `chat_${Date.now()}`;
+    const intentType = String(req.body?.intentType ?? '').trim() || 'chat';
+
+    // Build context from current state
+    const state = store.get();
+    let dsContext = '';
+    if (state.activeDesignSystem) {
+      try {
+        const ds = resolveDesignSystem(paths, state.activeDesignSystem);
+        const excerpt = ds.designMd.slice(0, 1000);
+        const tokens = ds.declaredTokens.slice(0, 20).join(', ');
+        dsContext = `\n\nActive design system: ${ds.name}\nDesign principles: ${excerpt.substring(0, 300)}\nKey tokens: ${tokens}`;
+      } catch {}
+    }
+
+    // Build system prompt with context
+    const systemPrompt = `You are emdesign's design engineer, connected to a live Storybook instance.${dsContext}\n\nAvailable commands: /mds:craft:component (build component), /mds:craft:update (edit component), /mds:system:update (edit tokens), /mds:review (audit component), emdesign generate, emdesign doctor.`;
+    const enrichedMessage = message; // Context is in system prompt, not appended to message
 
     res.writeHead(200, {
       'Content-Type': 'text/event-stream',
@@ -758,10 +775,12 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
       const { claudeAdapter } = await import('@emdesign/backend');
       const runner = new AgentRunner();
 
+      // System context first, then user message
+      const fullPrompt = systemPrompt + '\n\n## User request\n' + enrichedMessage;
       const handle = await runner.spawn({
         def: claudeAdapter,
         cwd: paths.root,
-        prompt: message,
+        prompt: fullPrompt,
         permissionMode: interactive ? 'interactive' : undefined,
         allowedDirs: [paths.root],
       });

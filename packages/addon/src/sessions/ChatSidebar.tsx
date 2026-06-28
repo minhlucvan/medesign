@@ -226,6 +226,9 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
   const [files, setFiles] = useState<File[] | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showNewPicker, setShowNewPicker] = useState(false);
+  const [showIntentPicker, setShowIntentPicker] = useState(false);
+  const [intentInput, setIntentInput] = useState('');
+  const [selectedIntent, setSelectedIntent] = useState<ChatStartMode | null>(null);
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState<string | null>(null);
   const [pendingNewScope, setPendingNewScope] = useState<{ scope: string; origin: string; intentType?: string } | null>(null);
@@ -670,10 +673,7 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
               </div>
               <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Find components" style={{ flex: 1, border: 'none', background: 'transparent', color: css('--foreground'), fontSize: 13, fontFamily: `"Nunito Sans", -apple-system, ".SFNSText-Regular", "San Francisco", "system-ui", "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif`, outline: 'none', padding: 0, lineHeight: '28px', height: 28 }} />
             </div>
-            <button onClick={() => {
-              const scope = filterTab === 'story' && viewContext ? `story:${viewContext.storyId}` : 'global';
-              setPendingNewScope({ scope, origin: 'chat' });
-            }}
+            <button onClick={() => setShowIntentPicker(true)}
               style={{
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
                 padding: '0 7px', borderRadius: 6, height: 32, minHeight: 32,
@@ -685,6 +685,50 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
               <span style={{ fontSize: 14, lineHeight: 1, fontWeight: 400 }}>+</span> New
             </button>
           </div>
+
+          {/* ── Intent picker (command palette) ── */}
+          {showIntentPicker && (
+            <div style={{ padding: '8px', borderBottom: `1px solid ${css('--border')}` }}>
+              <div style={{ display: 'flex', gap: 4, marginBottom: 8 }}>
+                <input value={intentInput} onChange={e => setIntentInput(e.target.value)}
+                  onKeyDown={e => { if (e.key === 'Escape') setShowIntentPicker(false); }}
+                  placeholder="Describe what to build..." autoFocus
+                  style={{ flex: 1, padding: '6px 8px', borderRadius: 4, fontSize: 13, border: `1px solid ${css('--input')}`, background: css('--background'), color: css('--foreground'), fontFamily: `"Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco","system-ui","Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif`, outline: 'none' }} />
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 4 }}>
+                {CHAT_MODES.map(m => (
+                  <button key={m.id} onClick={() => setSelectedIntent(selectedIntent === m.id ? null : m.id)}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 6, padding: '6px 8px', borderRadius: 4,
+                      fontSize: 11, fontWeight: 500, cursor: 'pointer', textAlign: 'left',
+                      border: selectedIntent === m.id ? `1px solid ${css('--primary')}` : `1px solid ${css('--border')}`,
+                      background: selectedIntent === m.id ? `${css('--primary')}22` : css('--background'),
+                      color: css('--foreground'), fontFamily: 'inherit',
+                      transition: 'all 0.1s',
+                    }}>
+                    <span style={{ fontSize: 14, lineHeight: 1 }}>{m.icon}</span>
+                    <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{m.label}</span>
+                  </button>
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: 4, marginTop: 8, justifyContent: 'flex-end' }}>
+                <button onClick={() => setShowIntentPicker(false)}
+                  style={{ padding: '4px 10px', borderRadius: 4, fontSize: 11, cursor: 'pointer', border: `1px solid ${css('--border')}`, background: 'transparent', color: css('--muted-foreground') }}>Cancel</button>
+                <button onClick={() => {
+                  const mode = CHAT_MODES.find(m => m.id === selectedIntent) || CHAT_MODES[0];
+                  const text = intentInput.trim();
+                  // Set auto-send BEFORE creating session (race condition: effect reads ref)
+                  if (text) autoSendRef.current = text;
+                  setShowIntentPicker(false);
+                  setIntentInput('');
+                  setSelectedIntent(null);
+                  // Create session with intent type → triggers activeSessionId → auto-sends
+                  handleCreateSession(mode.id);
+                }} disabled={!selectedIntent}
+                  style={{ padding: '4px 14px', borderRadius: 4, fontSize: 11, fontWeight: 600, cursor: selectedIntent ? 'pointer' : 'default', border: 'none', background: selectedIntent ? css('--primary') : css('--muted'), color: selectedIntent ? css('--primary-foreground') : css('--muted-foreground'), opacity: selectedIntent ? 1 : 0.5 }}>Start</button>
+              </div>
+            </div>
+          )}
 
           {/* ── Tab filters ── */}
           <div style={{ display: 'flex', gap: 0, padding: '0 8px', marginTop: 8, marginBottom: 4 }}>

@@ -114,8 +114,9 @@ complete -F _emdesign_completions emdesign
   const [cmd = 'help', ...rest] = argv;
 
   // Guard: detect accidental usage inside the emdesign monorepo root.
-  // Commands that are always valid (init, attach, help) bypass this check.
-  if (cmd !== 'init' && cmd !== 'attach' && cmd !== 'help' && detectMonorepoRoot(process.cwd())) {
+  // Only `help` is safe from the SDK root — all other commands scaffold
+  // or mutate consumer workspace files that don't belong here.
+  if (cmd !== 'help' && detectMonorepoRoot(process.cwd())) {
     console.error('[emdesign] This looks like the emdesign monorepo root.');
     console.error('  To develop the emdesign SDK itself, run commands from an app directory:');
     console.error('    cd apps/workspace-react/');

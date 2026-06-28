@@ -1,0 +1,9 @@
+{
+  "framework": "react-tailwind",
+  "plugins": ["react", "tailwind"],
+  "storybookUrl": "http://localhost:6006",
+  "generatedDir": "src/generated",
+  "componentsDir": "src/components",
+  "designSystemsDir": "design-systems",
+  "screenshotsDir": "__screenshots__"
+}

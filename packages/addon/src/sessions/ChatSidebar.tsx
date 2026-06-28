@@ -406,9 +406,9 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
   }, []);
 
   // Create a new session from a mode pill click
-  const handleCreateSession = useCallback(async (startMode: ChatStartMode) => {
+  const handleCreateSession = useCallback(async (startMode: ChatStartMode, text?: string) => {
     const mode = CHAT_MODES.find(m => m.id === startMode)!;
-    const instructionText = autoSendRef.current;
+    const instructionText = text || autoSendRef.current || mode.description;
     setCreateError(null);
     setCreating(true);
     try {
@@ -418,7 +418,7 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
         : 'global';
       const session = await api.createSession({
         type: mode.intentType ?? 'chat',
-        instruction: instructionText || undefined,
+        instruction: instructionText,
         scope,
         origin: 'chat',
       });
@@ -428,6 +428,8 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
         return exists ? prev : [session, ...prev];
       });
       setActiveSessionId(session.id);
+      // Set auto-send text for the conversation load effect
+      autoSendRef.current = instructionText;
       setShowNewPicker(false);
     } catch (e) {
       setCreateError(`Failed to create session: ${(e as Error).message}`);
@@ -743,10 +745,9 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
                         const prompts: Record<string, string> = { 'new-component':'Build a new component following the design system', 'new-story':'Create a new story for the current component', 'change-request':'Request a design change', 'update-design-system':'Update the design system', 'create-design-system':'Create a new design system' };
                         const instruction = text || (mode ? prompts[mode.id] || '' : '');
                         skipConversationLoadRef.current = false;
-                        if (instruction) autoSendRef.current = instruction;
                         setShowCommandPalette(false);
                         setPaletteInput('');
-                        if (mode) handleCreateSession(mode.id);
+                        if (mode) handleCreateSession(mode.id, instruction);
                       }
                     }}
                     placeholder="Describe what to build..." autoFocus
@@ -789,10 +790,9 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
                       return (
                       <button key={m.id} onClick={() => {
                         skipConversationLoadRef.current = false;
-                        if (instruction) autoSendRef.current = instruction;
                         setShowCommandPalette(false);
                         setPaletteInput('');
-                        handleCreateSession(m.id);
+                        handleCreateSession(m.id, instruction);
                       }}
                         style={{
                           display: 'flex', alignItems: 'center', gap: 10, padding: '10px 10px', borderRadius: 6,

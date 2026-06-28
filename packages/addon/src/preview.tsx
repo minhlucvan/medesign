@@ -304,7 +304,9 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
       setPlaceholders((prev) => prev.filter((ph) => ph.id !== phId));
     }, 15000);
 
-    cancelPlace();
+    // Defer mode reset to avoid React batch conflicts — ensures tool turns off
+    // before any subsequent click could re-trigger placement
+    setTimeout(() => cancelPlace(), 0);
   };
 
   const popLeft = composing ? Math.min(composing.box.x, window.innerWidth - 300) : 0;
@@ -411,13 +413,15 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
 
       {placing && (
         <>
-          <div style={{ position: 'fixed', top: placing.box.y, left: placing.box.x, width: placing.box.width, height: placing.box.height, outline: `2px solid #22c55e`, background: 'rgba(34,197,94,0.10)', zIndex: 99998, pointerEvents: 'none' }} />
-          <div style={{ position: 'fixed', top: Math.min(placing.box.y + placing.box.height + 8, window.innerHeight - 130), left: Math.min(placing.box.x, window.innerWidth - 300), width: 300, zIndex: 100000, background: '#1c1c1f', color: '#fff', border: '1px solid #333', borderRadius: 8, padding: 10, boxShadow: '0 6px 24px rgba(0,0,0,.5)', font: '13px sans-serif' }}>
+          {/* Backdrop — click anywhere outside the popup to dismiss */}
+          <div onClick={(e) => { e.stopPropagation(); cancelPlace(); }} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 99999, background: 'transparent' }} />
+          <div style={{ position: 'fixed', top: placing.box.y, left: placing.box.x, width: placing.box.width, height: placing.box.height, outline: `2px solid #22c55e`, background: 'rgba(34,197,94,0.10)', zIndex: 100000, pointerEvents: 'none' }} />
+          <div style={{ position: 'fixed', top: Math.min(placing.box.y + placing.box.height + 8, window.innerHeight - 130), left: Math.min(placing.box.x, window.innerWidth - 300), width: 300, zIndex: 100001, background: '#1c1c1f', color: '#fff', border: '1px solid #333', borderRadius: 8, padding: 10, boxShadow: '0 6px 24px rgba(0,0,0,.5)', font: '13px sans-serif' }}>
             <div style={{ opacity: 0.7, fontSize: 11, marginBottom: 4 }}>&lt;{placing.target.tag}&gt; {placing.target.text ? `"${placing.target.text.slice(0, 32)}"` : ''} — <span style={{ color: '#22c55e', fontWeight: 700 }}>{placing.zone}</span></div>
             <textarea autoFocus value={text} onChange={(e) => setText(e.target.value)} placeholder={`what component to place ${placing.zone} here? e.g. "a stats card with trend indicator"`} rows={2} style={{ width: '100%', boxSizing: 'border-box', background: '#0f0f10', color: '#fff', border: '1px solid #333', borderRadius: 4, padding: 6, font: '13px sans-serif', resize: 'vertical' }} onKeyDown={(e) => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) sendPlace(); }} />
             <div style={{ display: 'flex', gap: 8, marginTop: 8, justifyContent: 'flex-end' }}>
-              <button onClick={cancelPlace} style={{ cursor: 'pointer', background: 'transparent', color: '#aaa', border: '1px solid #444', borderRadius: 4, padding: '4px 10px' }}>Cancel</button>
-              <button onClick={sendPlace} disabled={!text.trim()} style={{ cursor: 'pointer', background: '#22c55e', color: '#fff', border: 0, borderRadius: 4, padding: '4px 12px', opacity: text.trim() ? 1 : 0.5 }}>Place (⌘↵)</button>
+              <button onClick={(e) => { e.stopPropagation(); cancelPlace(); }} style={{ cursor: 'pointer', background: 'transparent', color: '#aaa', border: '1px solid #444', borderRadius: 4, padding: '4px 10px' }}>Cancel</button>
+              <button onClick={(e) => { e.stopPropagation(); sendPlace(); }} disabled={!text.trim()} style={{ cursor: 'pointer', background: '#22c55e', color: '#fff', border: 0, borderRadius: 4, padding: '4px 12px', opacity: text.trim() ? 1 : 0.5 }}>Place (⌘↵)</button>
             </div>
           </div>
         </>

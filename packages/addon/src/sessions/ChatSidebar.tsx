@@ -335,7 +335,7 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
         setMessages(prev => [...prev, { id: asstId, role: 'assistant', content: '', createdAt: new Date() }]);
         fetch(`${BACKEND_URL}/api/chat/stream`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ message: autoText, intentType: (allSessions.find(s => s.id === activeSessionId) as any)?.emdesignType || 'chat', interactive: true, sessionId: activeSessionId || undefined }),
+          body: JSON.stringify({ message: autoText, intentType: (allSessions.find(s => s.id === activeSessionId) as any)?.emdesignType || 'chat', sessionId: activeSessionId || undefined }),
         }).then(async (res) => {
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           const reader = res.body?.getReader();

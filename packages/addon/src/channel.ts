@@ -2,7 +2,7 @@
 export const ADDON_ID = 'emdesign';
 
 /** The active canvas tool. `off` disables the picker; the others change what a click does. */
-export type ToolMode = 'off' | 'comment' | 'copy' | 'text' | 'reference' | 'wand';
+export type ToolMode = 'off' | 'comment' | 'copy' | 'text' | 'reference' | 'wand' | 'place';
 
 export const EVT_TOOL_MODE = 'emdesign/tool-mode'; // manager → preview: { mode: ToolMode }
 export const EVT_COMMENT_SUBMIT = 'emdesign/comment-submit'; // preview → manager: { target, instruction }
@@ -48,6 +48,40 @@ export interface WandResultPayload {
   gate?: string;
   improvements?: string[];
   elapsed?: number;
+  error?: string;
+}
+
+// ── EVT_PLACE_TRIGGER ─────────────────────────────────────────────
+
+/** Preview → Manager: sent when the user clicks an element in place mode to trigger component placement. */
+export const EVT_PLACE_TRIGGER = 'emdesign/place-trigger';
+
+export type PlacementMode = 'before' | 'after' | 'into' | 'replace';
+
+export interface PlaceTriggerPayload {
+  component: string;
+  tag: string;
+  selector: string;
+  text?: string;
+  rect: { x: number; y: number; width: number; height: number };
+  computedStyles: Record<string, string>;
+  storyId?: string;
+  placementMode: PlacementMode;
+  selectedComponent: string;
+}
+
+// ── EVT_PLACE_RESULT ──────────────────────────────────────────────
+
+/** Manager → Preview/Manager: sent when the placement workflow completes. */
+export const EVT_PLACE_RESULT = 'emdesign/place-result';
+
+export interface PlaceResultPayload {
+  sessionId: string;
+  status: 'running' | 'completed' | 'error';
+  componentName: string;
+  file?: string;
+  line?: number;
+  gate?: string;
   error?: string;
 }
 

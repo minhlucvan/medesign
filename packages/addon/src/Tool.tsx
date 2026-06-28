@@ -3,7 +3,7 @@ import { IconButton, Separator } from '@storybook/components';
 import { useChannel } from '@storybook/manager-api';
 import { styled } from '@storybook/theming';
 import { api } from './api';
-import { EVT_TOOL_MODE, EVT_COMMENT_SUBMIT, EVT_TEXT_SUBMIT, EVT_CHAT_MODE, EVT_ELEMENT_SELECTED, EVT_WAND_TRIGGER, type ToolMode, type CommentTarget, type ElementSelectedPayload, type WandTriggerPayload } from './channel';
+import { EVT_TOOL_MODE, EVT_COMMENT_SUBMIT, EVT_TEXT_SUBMIT, EVT_CHAT_MODE, EVT_ELEMENT_SELECTED, EVT_WAND_TRIGGER, EVT_PLACE_TRIGGER, type ToolMode, type CommentTarget, type ElementSelectedPayload, type WandTriggerPayload, type PlaceTriggerPayload } from './channel';
 import { useStudioState } from './ui';
 import { ChatModeController } from './ChatModeController';
 
@@ -39,6 +39,12 @@ const TOOLS: Array<{ mode: Exclude<ToolMode, 'off'>; title: string; label: strin
     title: 'emdesign: auto-fix an element (wand) — Shift+click for vision critique',
     label: 'Auto-fix',
     icon: <path d="M7.5 1.5L9 5l3.5 1.5L9 8l-1.5 3.5L6 8l-3.5-1.5L6 5l1.5-3.5Zm4 9l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5.5-1Zm-8-6l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5.5-1Z" fill="currentColor" />,
+  },
+  {
+    mode: 'place',
+    title: 'emdesign: place a component at this location — click an element, choose a component, and it\'s inserted',
+    label: 'Place',
+    icon: <path d="M8 2a1 1 0 0 1 1 1v4h4a1 1 0 1 1 0 2H9v4a1 1 0 1 1-2 0V9H3a1 1 0 1 1 0-2h4V3a1 1 0 0 1 1-1Z" fill="currentColor" />,
   },
 ];
 
@@ -111,6 +117,31 @@ export function Tool() {
           instruction: `Auto-fix ${p.component}`,
           target: { selector: p.selector, tag: p.tag, text: p.text, component: p.component, storyId: p.storyId },
           payload: { mode: 'guided', vision: p.vision, sessionId: session.id },
+        });
+      } catch { /* backend down */ }
+    },
+    [EVT_PLACE_TRIGGER]: async (p: PlaceTriggerPayload) => {
+      try {
+        const session = await api.createSession({
+          type: 'place',
+          instruction: `Place component "${p.selectedComponent}" ${p.placementMode} ${p.selector} (<${p.tag}>) in story "${p.storyId || component}"`,
+          scope: p.storyId ? `story:${p.storyId}` : 'global',
+          origin: 'place',
+          elementContext: {
+            selector: p.selector,
+            tag: p.tag,
+            text: p.text,
+            component: p.component,
+            rect: p.rect,
+            placementMode: p.placementMode,
+            selectedComponent: p.selectedComponent,
+          },
+        });
+        await api.submitIntent({
+          type: 'place',
+          instruction: `Place ${p.selectedComponent} ${p.placementMode} ${p.selector}`,
+          target: { selector: p.selector, tag: p.tag, text: p.text, component: p.component, storyId: p.storyId },
+          payload: { placementMode: p.placementMode, selectedComponent: p.selectedComponent, sessionId: session.id },
         });
       } catch { /* backend down */ }
     },

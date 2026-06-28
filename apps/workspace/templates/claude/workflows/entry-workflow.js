@@ -27,6 +27,13 @@ function classifyIntent(type, target, instruction, payload) {
   const i = (instruction || '').toLowerCase()
   const combined = `${t} ${i}`
 
+  // Component placement (point-and-place a component into a story)
+  if (t.includes('place') || combined.includes('place component') || combined.includes('add component') || combined.includes('insert component')) {
+    const placementMode = payload.placementMode || 'after'
+    const selectedComponent = payload.selectedComponent || ''
+    return { layer: 'element', workflow: 'placement-workflow', args: { name: target, selector: payload.selector, tag: payload.tag, placementMode, selectedComponent, instruction } }
+  }
+
   // Auto-fix / magic wand (multi-probe diagnostic + fix with user confirmation)
   if (t.includes('auto-fix') || t.includes('wand') || t.includes('magic-wand') || combined.includes('auto fix') || combined.includes('fix this') || combined.includes('fix component')) {
     const mode = payload.mode || (t.includes('guided') || combined.includes('guided') ? 'guided' : 'auto')

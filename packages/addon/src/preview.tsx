@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { addons } from '@storybook/preview-api';
-import { EVT_TOOL_MODE, EVT_COMMENT_SUBMIT, EVT_TEXT_SUBMIT, EVT_COPIED, EVT_CHAT_MODE, EVT_ELEMENT_SELECTED, EVT_WAND_TRIGGER, type ToolMode, type CommentTarget, type ElementSelectedPayload, type WandTriggerPayload } from './channel';
+import { EVT_TOOL_MODE, EVT_COMMENT_SUBMIT, EVT_TEXT_SUBMIT, EVT_COPIED, EVT_CHAT_MODE, EVT_ELEMENT_SELECTED, EVT_WAND_TRIGGER, EVT_PLACE_TRIGGER, type ToolMode, type CommentTarget, type ElementSelectedPayload, type WandTriggerPayload, type PlaceTriggerPayload, type PlacementMode } from './channel';
 
 function cssPath(el: Element, root: Element): string {
   const parts: string[] = [];
@@ -58,6 +58,7 @@ const HINTS: Record<ToolMode, string> = {
   text: 'emdesign: click a text element to edit it inline · Enter to apply · Esc to cancel',
   reference: 'emdesign: click an element to reference it in chat · Esc to cancel',
   wand: 'emdesign: click an element to auto-fix · Shift+click for vision critique · Esc to cancel',
+  place: 'emdesign: click an element to place a component · Esc to cancel',
 };
 
 /**
@@ -80,7 +81,7 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
     modeRef.current = m;
     setModeState(m);
     if (m === 'off') { setHover(null); composingRef.current = false; setComposing(null); setText(''); }
-    document.body.style.cursor = m === 'off' ? '' : m === 'wand' ? 'copy' : 'crosshair';
+    document.body.style.cursor = m === 'off' ? '' : (m === 'wand' || m === 'place') ? 'copy' : 'crosshair';
   };
   const offAndSync = () => { setMode('off'); addons.getChannel().emit(EVT_TOOL_MODE, { mode: 'off' }); };
   const flash = (msg: string) => { setToast(msg); window.setTimeout(() => setToast(null), 1600); };
@@ -212,6 +213,32 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
         addons.getChannel().emit(EVT_WAND_TRIGGER, wandPayload);
         setPins((p) => [...p, { n: p.length + 1, box: target.box as Box, text: `auto-fix <${target.tag}>` }]);
         flash(`auto-fix triggered for <${target.tag}>`);
+        offAndSync();
+      } else if (m === 'place') {
+        // Collect computed styles
+        const computedStyles: Record<string, string> = {};
+        try {
+          const cs = getComputedStyle(el);
+          for (const key of ['color', 'backgroundColor', 'fontSize', 'fontWeight', 'marginTop', 'marginRight', 'marginBottom', 'marginLeft', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'borderRadius', 'boxShadow', 'display', 'position']) {
+            computedStyles[key] = cs.getPropertyValue(key);
+          }
+        } catch { /* cross-origin iframe */ }
+        const emdesignComponent = el.closest('[data-emdesign-component]')?.getAttribute('data-emdesign-component') || undefined;
+        // Emit trigger — the manager will open a component palette dialog
+        const placePayload: PlaceTriggerPayload = {
+          tag: target.tag || '',
+          text: target.text || '',
+          selector: target.selector,
+          component: emdesignComponent || component || target.component || '',
+          rect: { x: target.box?.x ?? 0, y: target.box?.y ?? 0, width: target.box?.width ?? 0, height: target.box?.height ?? 0 },
+          computedStyles,
+          storyId,
+          placementMode: 'after' as PlacementMode, // default; the palette UI will let user change this
+          selectedComponent: '', // user will pick from palette
+        };
+        addons.getChannel().emit(EVT_PLACE_TRIGGER, placePayload);
+        setPins((p) => [...p, { n: p.length + 1, box: target.box as Box, text: `place at <${target.tag}>` }]);
+        flash(`clicked <${target.tag}> — choose a component to place`);
         offAndSync();
       }
     };

@@ -37,7 +37,8 @@ export type IntentType =
   | 'create-design-system'
   | 'update-design-system'
   | 'wand'
-  | 'auto-fix';
+  | 'auto-fix'
+  | 'place';
 
 // ── Chat mode definitions for the New Conversation picker ──────────────
 

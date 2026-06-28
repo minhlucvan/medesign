@@ -706,7 +706,7 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
             <div style={{ position: 'fixed', inset: 0, zIndex: 2147483647, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: '12vh', background: 'rgba(0,0,0,0.5)' }}>
               {/* Backdrop click */}
               <div onClick={() => setShowCommandPalette(false)} style={{ position: 'fixed', inset: 0, zIndex: -1 }} />
-              <div role="dialog" style={{ width: 440, display: 'flex', flexDirection: 'column',
+              <div role="dialog" style={{ width: 520, display: 'flex', flexDirection: 'column',
                 '--background': paletteTheme === 'dark' ? '200 4.23% 13.92%' : '210 17% 98%',
                 '--foreground': paletteTheme === 'dark' ? '200 4.23% 90%' : '210 11% 20%',
                 '--muted': paletteTheme === 'dark' ? '200 4.23% 18%' : '210 17% 98%',
@@ -716,13 +716,13 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
                 '--primary': '206 100% 50%',
                 '--primary-foreground': '0 0% 100%',
                 background: paletteTheme === 'dark' ? 'hsl(200, 4.23%, 13.92%)' : 'hsl(210, 17%, 98%)',
-                borderRadius: 8, boxShadow: '0 16px 64px rgba(0,0,0,0.35)', overflow: 'hidden', maxHeight: '60vh', pointerEvents: 'auto' }}>
+                borderRadius: 10, boxShadow: '0 24px 80px rgba(0,0,0,0.4)', overflow: 'hidden', maxHeight: '70vh', pointerEvents: 'auto' }}>
 
                 {/* Header with title + close */}
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '16px 20px 0' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '20px 24px 0' }}>
                   <div style={{ flex: 1 }}>
-                    <h2 style={{ margin: 0, fontSize: 13, fontWeight: 700, color: css('--foreground'), lineHeight: '18px' }}>New conversation</h2>
-                    <p style={{ margin: '2px 0 0', fontSize: 11, color: css('--muted-foreground'), lineHeight: '16px' }}>Choose an intent to get started</p>
+                    <h2 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: css('--foreground'), lineHeight: '22px' }}>New conversation</h2>
+                    <p style={{ margin: '2px 0 0', fontSize: 13, color: css('--muted-foreground'), lineHeight: '18px' }}>Choose an intent to get started</p>
                   </div>
                   <button onClick={() => setShowCommandPalette(false)} style={{ display:'inline-flex', alignItems:'center', justifyContent:'center', width:26, height:26, borderRadius:4, border:'none', background:'transparent', color:css('--muted-foreground'), cursor:'pointer', flexShrink:0 }}>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1.854 1.146a.5.5 0 10-.708.708L6.293 7l-5.147 5.146a.5.5 0 00.708.708L7 7.707l5.146 5.147a.5.5 0 00.708-.708L7.707 7l5.147-5.146a.5.5 0 00-.708-.708L7 6.293 1.854 1.146z" fill="currentColor"/></svg>
@@ -730,8 +730,8 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
                 </div>
 
                 {/* Search input */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '10px 20px 0', padding: '0 12px', borderRadius: 6, background: css('--muted'), border: `1px solid ${css('--input')}` }}>
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0, color: css('--muted-foreground') }}><path fill-rule="evenodd" clip-rule="evenodd" d="M9.544 10.206a5.5 5.5 0 11.662-.662.5.5 0 01.148.102l3 3a.5.5 0 01-.708.708l-3-3a.5.5 0 01-.102-.148zM10.5 6a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" fill="currentColor"/></svg>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '14px 24px 0', padding: '0 14px', borderRadius: 8, background: css('--muted'), border: `1px solid ${css('--input')}` }}>
+                  <svg width="16" height="16" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0, color: css('--muted-foreground') }}><path fill-rule="evenodd" clip-rule="evenodd" d="M9.544 10.206a5.5 5.5 0 11.662-.662.5.5 0 01.148.102l3 3a.5.5 0 01-.708.708l-3-3a.5.5 0 01-.102-.148zM10.5 6a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" fill="currentColor"/></svg>
                   <input value={paletteInput} onChange={e => setPaletteInput(e.target.value)}
                     onKeyDown={e => {
                       if (e.key === 'Escape') setShowCommandPalette(false);
@@ -744,12 +744,12 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
                       }
                     }}
                     placeholder="Describe what to build..." autoFocus
-                    style={{ flex: 1, border: 'none', background: 'transparent', color: css('--foreground'), fontSize: 13, fontFamily: `"Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco","system-ui","Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif`, outline: 'none', padding: '8px 0', lineHeight: '20px' }} />
+                    style={{ flex: 1, border: 'none', background: 'transparent', color: css('--foreground'), fontSize: 14, fontFamily: `"Nunito Sans",-apple-system,".SFNSText-Regular","San Francisco","system-ui","Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif`, outline: 'none', padding: '10px 0', lineHeight: '22px' }} />
                 </div>
 
                 {/* Intent options */}
-                <div style={{ flex: 1, overflow: 'auto', padding: '8px 12px 12px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <div style={{ flex: 1, overflow: 'auto', padding: '10px 16px 16px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                     {CHAT_MODES.map(m => {
                       const text = paletteInput.trim();
                       const preview = {
@@ -776,17 +776,17 @@ export function ChatSidebar({ onClose, defaultSessionId }: { onClose?: () => voi
                         handleCreateSession(m.id);
                       }}
                         style={{
-                          display: 'flex', alignItems: 'center', gap: 8, padding: '7px 8px', borderRadius: 4,
-                          fontSize: 12, cursor: 'pointer', textAlign: 'left', fontWeight: 400,
+                          display: 'flex', alignItems: 'center', gap: 10, padding: '10px 10px', borderRadius: 6,
+                          fontSize: 14, cursor: 'pointer', textAlign: 'left', fontWeight: 400,
                           border: 'none', background: 'transparent',
                           color: css('--foreground'), fontFamily: 'inherit',
                         }}
                         onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = css('--muted')}
                         onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}>
-                        <span style={{ fontSize: 15, lineHeight: 1, width: 20, textAlign: 'center' }}>{m.icon}</span>
+                        <span style={{ fontSize: 18, lineHeight: 1, width: 24, textAlign: 'center' }}>{m.icon}</span>
                         <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ fontSize: 12, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</div>
-                          <div style={{ fontSize: 10, color: css('--muted-foreground'), opacity: 0.7, lineHeight: '14px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{preview}</div>
+                          <div style={{ fontSize: 14, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</div>
+                          <div style={{ fontSize: 12, color: css('--muted-foreground'), opacity: 0.7, lineHeight: '16px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{preview}</div>
                         </div>
                       </button>
                       );

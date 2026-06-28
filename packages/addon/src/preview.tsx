@@ -58,7 +58,7 @@ const HINTS: Record<ToolMode, string> = {
   text: 'emdesign: click a text element to edit it inline · Enter to apply · Esc to cancel',
   reference: 'emdesign: click an element to reference it in chat · Esc to cancel',
   wand: 'emdesign: click an element to auto-fix · Shift+click for vision critique · Esc to cancel',
-  place: 'emdesign: click an element to place a component · Esc to cancel',
+  place: 'emdesign: hover top (before) · bottom (after) · middle (into) · Shift (replace) — click to place · Esc to cancel',
 };
 
 /**
@@ -66,9 +66,13 @@ const HINTS: Record<ToolMode, string> = {
  * does the mode's action: open a comment popover, copy a rich descriptor to the clipboard, or make the
  * text editable inline and emit an edit-text intent on commit.
  */
+type PlaceZone = 'before' | 'after' | 'into' | 'replace' | null;
+
 function ToolOverlay({ storyId, component }: { storyId?: string; component?: string }) {
   const [mode, setModeState] = useState<ToolMode>('off');
   const [hover, setHover] = useState<DOMRect | null>(null);
+  const [hoverEl, setHoverEl] = useState<Element | null>(null);
+  const [placeZone, setPlaceZone] = useState<PlaceZone>(null);
   const [composing, setComposing] = useState<{ target: CommentTarget; box: Box } | null>(null);
   const [text, setText] = useState('');
   const [pins, setPins] = useState<Pin[]>([]);
@@ -80,7 +84,7 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
   const setMode = (m: ToolMode) => {
     modeRef.current = m;
     setModeState(m);
-    if (m === 'off') { setHover(null); composingRef.current = false; setComposing(null); setText(''); }
+    if (m === 'off') { setHover(null); setPlaceZone(null); setHoverEl(null); composingRef.current = false; setComposing(null); setText(''); }
     document.body.style.cursor = m === 'off' ? '' : (m === 'wand' || m === 'place') ? 'copy' : 'crosshair';
   };
   const offAndSync = () => { setMode('off'); addons.getChannel().emit(EVT_TOOL_MODE, { mode: 'off' }); };
@@ -134,7 +138,24 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
     const onMove = (e: MouseEvent) => {
       if (modeRef.current === 'off' || busy()) return;
       const el = e.target as Element | null;
-      if (el && root.contains(el)) setHover(el.getBoundingClientRect());
+      if (el && root.contains(el)) {
+        setHover(el.getBoundingClientRect());
+        setHoverEl(el);
+        if (modeRef.current === 'place') {
+          // Determine insertion zone based on mouse Y position within the element
+          const rect = el.getBoundingClientRect();
+          const relY = (e.clientY - rect.top) / rect.height;
+          if (e.shiftKey) {
+            setPlaceZone('replace');
+          } else if (relY < 0.25) {
+            setPlaceZone('before');
+          } else if (relY > 0.75) {
+            setPlaceZone('after');
+          } else {
+            setPlaceZone('into');
+          }
+        }
+      }
     };
     const onClick = (e: MouseEvent) => {
       const m = modeRef.current;
@@ -223,8 +244,9 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
             computedStyles[key] = cs.getPropertyValue(key);
           }
         } catch { /* cross-origin iframe */ }
+        // Use the detected insertion zone (before/after/into/replace based on mouse position)
+        const detectedZone: PlacementMode = (placeZone as PlacementMode) || 'after';
         const emdesignComponent = el.closest('[data-emdesign-component]')?.getAttribute('data-emdesign-component') || undefined;
-        // Emit trigger — the manager will open a component palette dialog
         const placePayload: PlaceTriggerPayload = {
           tag: target.tag || '',
           text: target.text || '',
@@ -233,12 +255,12 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
           rect: { x: target.box?.x ?? 0, y: target.box?.y ?? 0, width: target.box?.width ?? 0, height: target.box?.height ?? 0 },
           computedStyles,
           storyId,
-          placementMode: 'after' as PlacementMode, // default; the palette UI will let user change this
-          selectedComponent: '', // user will pick from palette
+          placementMode: detectedZone,
+          selectedComponent: '',
         };
         addons.getChannel().emit(EVT_PLACE_TRIGGER, placePayload);
-        setPins((p) => [...p, { n: p.length + 1, box: target.box as Box, text: `place at <${target.tag}>` }]);
-        flash(`clicked <${target.tag}> — choose a component to place`);
+        setPins((p) => [...p, { n: p.length + 1, box: target.box as Box, text: `place ${detectedZone} <${target.tag}>` }]);
+        flash(`${detectedZone} <${target.tag}> — choose a component to place`);
         offAndSync();
       }
     };
@@ -295,7 +317,39 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
         </div>
       )}
 
-      {active && hover && !composing && !editingRef.current && mode !== 'wand' && (
+      {active && hover && !composing && !editingRef.current && mode === 'place' && placeZone && (
+        <>
+          {/* Element highlight */}
+          <div style={{ position: 'fixed', top: hover.top, left: hover.left, width: hover.width, height: hover.height,
+            outline: placeZone === 'replace' ? '2px solid #ef4444' : '2px solid #22c55e',
+            background: placeZone === 'replace' ? 'rgba(239,68,68,0.08)' : 'rgba(34,197,94,0.08)',
+            zIndex: 99998, pointerEvents: 'none' }} />
+          {/* Insertion guide line */}
+          {(placeZone === 'before' || placeZone === 'after') && (
+            <div style={{ position: 'fixed',
+              top: placeZone === 'before' ? hover.top - 2 : hover.bottom - 2,
+              left: hover.left + 4,
+              width: hover.width - 8,
+              height: 4,
+              background: '#22c55e',
+              borderRadius: 2,
+              boxShadow: '0 0 8px rgba(34,197,94,0.6)',
+              zIndex: 99999, pointerEvents: 'none' }} />
+          )}
+          {/* Zone badge */}
+          <div style={{ position: 'fixed',
+            top: placeZone === 'before' ? hover.top - 18 : placeZone === 'after' ? hover.bottom + 4 : hover.top + 4,
+            left: hover.left + 6,
+            fontSize: 11, lineHeight: 1,
+            background: placeZone === 'replace' ? '#ef4444' : '#22c55e',
+            color: '#fff', padding: '2px 7px', borderRadius: 4, fontWeight: 700,
+            zIndex: 99999, pointerEvents: 'none' }}>
+            {placeZone === 'before' ? '+ before' : placeZone === 'after' ? '+ after' : placeZone === 'replace' ? '× replace' : '↳ into'}
+          </div>
+        </>
+      )}
+
+      {active && hover && !composing && !editingRef.current && mode !== 'wand' && mode !== 'place' && (
         <div style={{ position: 'fixed', top: hover.top, left: hover.left, width: hover.width, height: hover.height, outline: `2px solid ${ACCENT}`, background: 'rgba(37,99,235,0.12)', zIndex: 99998, pointerEvents: 'none' }} />
       )}
 

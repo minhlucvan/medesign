@@ -3,7 +3,7 @@ import { IconButton, Separator } from '@storybook/components';
 import { useChannel } from '@storybook/manager-api';
 import { styled } from '@storybook/theming';
 import { api } from './api';
-import { EVT_TOOL_MODE, EVT_COMMENT_SUBMIT, EVT_TEXT_SUBMIT, EVT_CHAT_MODE, EVT_ELEMENT_SELECTED, type ToolMode, type CommentTarget, type ElementSelectedPayload } from './channel';
+import { EVT_TOOL_MODE, EVT_COMMENT_SUBMIT, EVT_TEXT_SUBMIT, EVT_CHAT_MODE, EVT_ELEMENT_SELECTED, EVT_WAND_TRIGGER, type ToolMode, type CommentTarget, type ElementSelectedPayload, type WandTriggerPayload } from './channel';
 import { useStudioState } from './ui';
 import { ChatModeController } from './ChatModeController';
 
@@ -33,6 +33,12 @@ const TOOLS: Array<{ mode: Exclude<ToolMode, 'off'>; title: string; label: strin
     title: 'emdesign: edit text inline (pen)',
     label: 'Edit text',
     icon: <path d="M9.5 3.5l3 3L6 13l-3.2.6L3.4 10l6.1-6.5Zm0 0l1.6-1.6a1 1 0 0 1 1.4 0l1.6 1.6a1 1 0 0 1 0 1.4L12.5 6.5" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />,
+  },
+  {
+    mode: 'wand',
+    title: 'emdesign: auto-fix an element (wand) — Shift+click for vision critique',
+    label: 'Auto-fix',
+    icon: <path d="M7.5 1.5L9 5l3.5 1.5L9 8l-1.5 3.5L6 8l-3.5-1.5L6 5l1.5-3.5Zm4 9l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5.5-1Zm-8-6l.5 1 1 .5-1 .5-.5 1-.5-1-1-.5 1-.5.5-1Z" fill="currentColor" />,
   },
 ];
 
@@ -81,6 +87,30 @@ export function Tool() {
           instruction: `Replace the text of ${p.target.selector} — was "${p.from}" — with: "${p.to}"`,
           target: p.target,
           payload: { textEdit: { from: p.from, to: p.to } },
+        });
+      } catch { /* backend down */ }
+    },
+    [EVT_WAND_TRIGGER]: async (p: WandTriggerPayload) => {
+      try {
+        const session = await api.createSession({
+          type: 'wand',
+          instruction: `Auto-fix component "${p.component}" at ${p.selector} (<${p.tag}>)${p.vision ? ' with vision critique' : ''}`,
+          scope: p.storyId ? `story:${p.storyId}` : 'global',
+          origin: 'wand',
+          elementContext: {
+            selector: p.selector,
+            tag: p.tag,
+            text: p.text,
+            component: p.component,
+            rect: p.rect,
+            vision: p.vision,
+          },
+        });
+        await api.submitIntent({
+          type: 'wand',
+          instruction: `Auto-fix ${p.component}`,
+          target: { selector: p.selector, tag: p.tag, text: p.text, component: p.component, storyId: p.storyId },
+          payload: { mode: 'guided', vision: p.vision, sessionId: session.id },
         });
       } catch { /* backend down */ }
     },

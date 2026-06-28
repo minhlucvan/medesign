@@ -7,6 +7,9 @@ export const TOOL_ID = `${ADDON_ID}/tool`;
 export const SESSIONS_TAB_ID = `${ADDON_ID}/sessions`;
 export const SERVICES_TAB_ID = `${ADDON_ID}/services`;
 export const CHARTERS_PANEL_ID = `${ADDON_ID}/charters-panel`;
+export const PROPERTIES_PANEL_ID = `${ADDON_ID}/properties`;
+export const WAND_RESULTS_PANEL_ID = `${ADDON_ID}/wand-results`;
+export const DIFF_PANEL_ID = `${ADDON_ID}/diff`;
 
 /** Each full-page tab owns a viewMode + route (so it's a top-level surface, not docked). */
 export const VIEW_MODE_SYSTEM = 'emdesign';
@@ -32,7 +35,9 @@ export type IntentType =
   | 'create-story'
   | 'create-view'
   | 'create-design-system'
-  | 'update-design-system';
+  | 'update-design-system'
+  | 'wand'
+  | 'auto-fix';
 
 // ── Chat mode definitions for the New Conversation picker ──────────────
 

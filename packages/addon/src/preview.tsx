@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { addons } from '@storybook/preview-api';
-import { EVT_TOOL_MODE, EVT_COMMENT_SUBMIT, EVT_TEXT_SUBMIT, EVT_COPIED, EVT_CHAT_MODE, EVT_ELEMENT_SELECTED, type ToolMode, type CommentTarget, type ElementSelectedPayload } from './channel';
+import { EVT_TOOL_MODE, EVT_COMMENT_SUBMIT, EVT_TEXT_SUBMIT, EVT_COPIED, EVT_CHAT_MODE, EVT_ELEMENT_SELECTED, EVT_WAND_TRIGGER, type ToolMode, type CommentTarget, type ElementSelectedPayload, type WandTriggerPayload } from './channel';
 
 function cssPath(el: Element, root: Element): string {
   const parts: string[] = [];
@@ -57,6 +57,7 @@ const HINTS: Record<ToolMode, string> = {
   copy: 'emdesign: click an element to copy its identifier · Esc to cancel',
   text: 'emdesign: click a text element to edit it inline · Enter to apply · Esc to cancel',
   reference: 'emdesign: click an element to reference it in chat · Esc to cancel',
+  wand: 'emdesign: click an element to auto-fix · Shift+click for vision critique · Esc to cancel',
 };
 
 /**
@@ -79,7 +80,7 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
     modeRef.current = m;
     setModeState(m);
     if (m === 'off') { setHover(null); composingRef.current = false; setComposing(null); setText(''); }
-    document.body.style.cursor = m === 'off' ? '' : 'crosshair';
+    document.body.style.cursor = m === 'off' ? '' : m === 'wand' ? 'copy' : 'crosshair';
   };
   const offAndSync = () => { setMode('off'); addons.getChannel().emit(EVT_TOOL_MODE, { mode: 'off' }); };
   const flash = (msg: string) => { setToast(msg); window.setTimeout(() => setToast(null), 1600); };
@@ -187,6 +188,31 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
         // place caret at the end
         const sel = window.getSelection?.();
         if (sel) { const r = document.createRange(); r.selectNodeContents(he); r.collapse(false); sel.removeAllRanges(); sel.addRange(r); }
+      } else if (m === 'wand') {
+        // Collect computed styles (same as reference mode)
+        const computedStyles: Record<string, string> = {};
+        try {
+          const cs = getComputedStyle(el);
+          for (const key of ['color', 'backgroundColor', 'fontSize', 'fontWeight', 'marginTop', 'marginRight', 'marginBottom', 'marginLeft', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft', 'borderRadius', 'boxShadow', 'display', 'position']) {
+            computedStyles[key] = cs.getPropertyValue(key);
+          }
+        } catch { /* cross-origin iframe */ }
+        // Resolve emdesign component from closest data-emdesign-component ancestor
+        const emdesignComponent = el.closest('[data-emdesign-component]')?.getAttribute('data-emdesign-component') || undefined;
+        const wandPayload: WandTriggerPayload = {
+          tag: target.tag || '',
+          text: target.text || '',
+          selector: target.selector,
+          component: emdesignComponent || component || target.component || '',
+          rect: { x: target.box?.x ?? 0, y: target.box?.y ?? 0, width: target.box?.width ?? 0, height: target.box?.height ?? 0 },
+          computedStyles,
+          storyId,
+          vision: e.shiftKey, // Shift+click enables vision critique
+        };
+        addons.getChannel().emit(EVT_WAND_TRIGGER, wandPayload);
+        setPins((p) => [...p, { n: p.length + 1, box: target.box as Box, text: `auto-fix <${target.tag}>` }]);
+        flash(`auto-fix triggered for <${target.tag}>`);
+        offAndSync();
       }
     };
     const onEditKey = (e: KeyboardEvent) => {
@@ -236,7 +262,13 @@ function ToolOverlay({ storyId, component }: { storyId?: string; component?: str
         </div>
       )}
 
-      {active && hover && !composing && !editingRef.current && (
+      {active && hover && !composing && !editingRef.current && mode === 'wand' && (
+        <div style={{ position: 'fixed', top: hover.top, left: hover.left, width: hover.width, height: hover.height, outline: `2px solid #a855f7`, background: 'rgba(168,85,247,0.10)', zIndex: 99998, pointerEvents: 'none' }}>
+          <div style={{ position: 'absolute', top: -22, right: -6, fontSize: 14, lineHeight: 1, pointerEvents: 'none' }}>🪄</div>
+        </div>
+      )}
+
+      {active && hover && !composing && !editingRef.current && mode !== 'wand' && (
         <div style={{ position: 'fixed', top: hover.top, left: hover.left, width: hover.width, height: hover.height, outline: `2px solid ${ACCENT}`, background: 'rgba(37,99,235,0.12)', zIndex: 99998, pointerEvents: 'none' }} />
       )}
 

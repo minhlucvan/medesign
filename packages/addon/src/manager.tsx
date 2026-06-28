@@ -3,6 +3,7 @@ import { addons, types } from '@storybook/manager-api';
 import { AddonPanel } from '@storybook/components';
 import {
   ADDON_ID, PANEL_ID, CHARTERS_PANEL_ID, DS_TAB_ID, CREATE_TAB_ID, TOOL_ID,
+  PROPERTIES_PANEL_ID, WAND_RESULTS_PANEL_ID, DIFF_PANEL_ID,
   VIEW_MODE_DS, VIEW_MODE_CREATE,
 } from './constants';
 import { SystemTab } from './SystemTab';
@@ -10,6 +11,9 @@ import { DesignSystemTab } from './DesignSystemTab';
 import { CreateWizard } from './CreateWizard';
 import { Tool } from './Tool';
 import { ChartersTab } from './charters/ChartersTab';
+import { PropertiesPanel } from './panels/PropertiesPanel';
+import { WandResultsPanel } from './panels/WandResultsPanel';
+import { DiffPanel } from './panels/DiffPanel';
 
 /**
  * emdesign manager UI:
@@ -67,6 +71,41 @@ addons.register(ADDON_ID, () => {
     route: tabRoute(VIEW_MODE_CREATE),
     match: ({ viewMode }) => viewMode === VIEW_MODE_CREATE,
     render: ({ active }) => (active ? <CreateWizard /> : null),
+  });
+
+  // ── Phase 1: Interactive Design Surface panels ──────────────────────
+
+  addons.add(PROPERTIES_PANEL_ID, {
+    type: types.PANEL,
+    title: 'Properties',
+    match: ({ viewMode }) => viewMode === 'story',
+    render: ({ active }) => (
+      <AddonPanel active={!!active}>
+        <PropertiesPanel active={!!active} />
+      </AddonPanel>
+    ),
+  });
+
+  addons.add(WAND_RESULTS_PANEL_ID, {
+    type: types.PANEL,
+    title: 'Wand Results',
+    match: ({ viewMode }) => viewMode === 'story',
+    render: ({ active }) => (
+      <AddonPanel active={!!active}>
+        <WandResultsPanel active={!!active} />
+      </AddonPanel>
+    ),
+  });
+
+  addons.add(DIFF_PANEL_ID, {
+    type: types.PANEL,
+    title: 'Diff',
+    match: ({ viewMode }) => viewMode === 'story',
+    render: ({ active }) => (
+      <AddonPanel active={!!active}>
+        <DiffPanel active={!!active} />
+      </AddonPanel>
+    ),
   });
 
   // Chat is managed by ChatModeController (in Tool.tsx, which is always mounted in story view).

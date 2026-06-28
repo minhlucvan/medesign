@@ -131,6 +131,7 @@ function computeSurface(store: Store, paths: RepoPaths): SurfaceData {
   };
 }
 
+/** Extract a PascalCase component name from a user message like "build a date picker" → "DatePicker". */
 /** Read a component's source from the generated dir, falling back to a captured component dir. */
 function readComponentSource(paths: RepoPaths, name: string): string | null {
   if (!name) return null;
@@ -743,52 +744,31 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
   app.post('/api/chat/stream', async (req, res) => {
     const message = String(req.body?.message ?? '').trim();
     if (!message) return res.status(400).json({ error: 'message required' });
-    const interactive = !!req.body?.interactive;
     const sessionIdHint = String(req.body?.sessionId ?? '').trim() || `chat_${Date.now()}`;
     const intentType = String(req.body?.intentType ?? '').trim() || 'chat';
 
-    // Build context from current state
+    // Build context from current state + view
     const state = store.get();
-    let dsContext = '';
-    if (state.activeDesignSystem) {
-      try {
-        const ds = resolveDesignSystem(paths, state.activeDesignSystem);
-        const excerpt = ds.designMd.slice(0, 1000);
-        const tokens = ds.declaredTokens.slice(0, 20).join(', ');
-        dsContext = `\n\nActive design system: ${ds.name}\nDesign principles: ${excerpt.substring(0, 300)}\nKey tokens: ${tokens}`;
-      } catch {}
-    }
+    let viewContext = '';
+    if (state.activeDesignSystem) viewContext += `\nActive design system: ${state.activeDesignSystem}`;
+    if (state.currentComponent) viewContext += `\nCurrent component: ${state.currentComponent}`;
 
-    // Build system prompt with context
-    const systemPrompt = `You are emdesign's design engineer embedded in Claude Code with Bash tool access. The user wants you to BUILD something — not discuss it.
-
-## RULE: DO NOT ASK QUESTIONS. JUST BUILD IT.
-Extract the component name from their request. If they said "build X" then build X. Pick something reasonable.
-${dsContext}
-
-## MANDATORY STEPS - execute each IMMEDIATELY with Bash:
-1. Run: ls src/generated/ src/components/ 2>/dev/null
-2. Extract name. Then run: cat > src/generated/NAME.tsx << 'COMPEOF'
-   ...full component code...
-   COMPEOF
-3. Run: cat > src/generated/NAME.stories.tsx << 'STOREOF'
-   ...full story code...
-   STOREOF
-4. Run: ls -la src/generated/NAME.tsx
-
-## TOKENS (mandatory - no hex colors):
-bg-surface, text-text, text-accent, border-border, rounded, gap-md, p-md
-Components: @ds/Button, @ds/Card, @ds/Input, @ds/Badge, @ds/Heading, @ds/Stack
-
-## Task: ${intentType || 'chat'}
-${intentType === 'create-component' ? 'EXECUTE THE BASH COMMANDS NOW. Build the component.' : ''}`;
-    const enrichedMessage = message;
+    // Format prompt: intent → /mds: command, no intent → raw prompt with context
+    const mdsCommands: Record<string, string> = {
+      'create-component': '/mds:craft:component',
+      'change-request': '/mds:craft:update',
+      'create-story': '/mds:craft:story',
+      'create-design-system': '/mds:system:create',
+      'update-design-system': '/mds:system:update',
+    };
+    const cmd = mdsCommands[intentType] || '';
+    const fullPrompt = cmd
+      ? `${cmd} "${message}"\n\nContext:${viewContext}`
+      : `${message}\n\nContext:${viewContext}`;
 
     res.writeHead(200, {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      Connection: 'keep-alive',
-      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache',
+      Connection: 'keep-alive', 'Access-Control-Allow-Origin': '*',
     });
 
     try {
@@ -796,14 +776,12 @@ ${intentType === 'create-component' ? 'EXECUTE THE BASH COMMANDS NOW. Build the 
       const { claudeAdapter } = await import('@emdesign/backend');
       const runner = new AgentRunner();
 
-      // System context first, then user message
-      const fullPrompt = systemPrompt + '\n\n## User request\n' + enrichedMessage;
+      // Spawn Claude in workspace so it loads CLAUDE.md, skills, commands, workflows
+      const wsCwd = paths.root;
       const handle = await runner.spawn({
-        def: claudeAdapter,
-        cwd: paths.root,
+        def: claudeAdapter, cwd: wsCwd,
         prompt: fullPrompt,
-        permissionMode: interactive ? 'interactive' : undefined,
-        allowedDirs: [paths.root],
+        allowedDirs: [wsCwd],
       });
 
       let questionDetected = false;

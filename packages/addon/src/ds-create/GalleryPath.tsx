@@ -107,12 +107,7 @@ export function GalleryPath({ onProgress, onComplete }: GalleryPathProps) {
         body: JSON.stringify({ brand, name: entry.name }),
       });
       if (res.ok) {
-        const data = await res.json();
-        if (data.sessionId) {
-          onProgress?.(data.sessionId);
-        } else {
-          onComplete?.(data.id);
-        }
+        onComplete?.();
       }
     } catch (e) {
       console.error('[GalleryPath] Import failed:', e);

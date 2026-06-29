@@ -169,10 +169,11 @@ export function DesignSystemTab() {
               <ProgressView
                 sessionId={workflowSession}
                 creationMode={creationMode === 'design-md' ? 'design-md' : creationMode === 'gallery' ? 'import-awesome' : 'from-prompt'}
-                onComplete={() => {
+                onComplete={async () => {
+                  // Load system first then clear state to avoid flash of Welcome
+                  await loadSystem();
                   setWorkflowSession(null);
                   setCreationMode(null);
-                  loadSystem();
                 }}
                 onError={() => {}}
               />

@@ -18,17 +18,17 @@
 
 ## 3. ds-from-project workflow + API
 
-- [ ] 3.1 Add `runFromProject(sessionId, { projectPath, name?, id? })` to `WorkflowOrchestrator` (`packages/backend/src/workflow.ts`) with stages `scan → extract → synthesize DESIGN.md → tokens → primitives → adopt → graph → validate`
-- [ ] 3.2 Synthesize `DESIGN.md` from extracted evidence when absent; when present, treat it as canonical, reconcile against code, and record divergences
-- [ ] 3.3 Generate `tokens.css` from proposed roles (prefer `DESIGN.md` values when present), scaffold/derive `code/` primitives, and build `graph.json` via `buildAndSave`
-- [ ] 3.4 Declare the new system in `emdesign.config.json` / write `manifest.json` with `source.type: "project"` ONLY after `validate` passes; on any stage failure stop and register nothing
-- [ ] 3.5 Add `POST /api/design-systems/from-project` in `packages/backend/src/workflow-api.ts`; validate the project path/type before starting
-- [ ] 3.6 Ensure stage progress flows through the existing `WorkflowStore` and `GET /api/design-systems/:id/workflow-stream` SSE (stage events + intermediate artifacts)
+- [x] 3.1 Add `runFromProject(sessionId, { projectPath, name?, id? })` to `WorkflowOrchestrator` (`packages/backend/src/workflow.ts`) with stages `scan → extract → synthesize DESIGN.md → tokens → primitives → adopt → graph → validate`
+- [x] 3.2 Synthesize `DESIGN.md` from extracted evidence when absent; when present, treat it as canonical, reconcile against code, and record divergences
+- [x] 3.3 Generate `tokens.css` from proposed roles (prefer `DESIGN.md` values when present), scaffold/derive `code/` primitives, and build `graph.json` via `buildAndSave`
+- [x] 3.4 Declare the new system in `emdesign.config.json` / write `manifest.json` with `source.type: "project"` ONLY after `validate` passes; on any stage failure stop and register nothing
+- [x] 3.5 Add `POST /api/design-systems/from-project` in `packages/backend/src/workflow-api.ts`; validate the project path/type before starting
+- [x] 3.6 Ensure stage progress flows through the existing `WorkflowStore` and `GET /api/design-systems/:id/workflow-stream` SSE (stage events + intermediate artifacts)
 
 ## 4. Surface API (design-surface-api)
 
-- [ ] 4.1 Expose ds-from-project workflow status (terminal state + failing stage/reason) via the surface API
-- [ ] 4.2 Serve the adoption report for a completed workflow (per-component readiness, rebinds, blocking values)
+- [x] 4.1 Expose ds-from-project workflow status (terminal state + failing stage/reason) via the surface API
+- [x] 4.2 Serve the adoption report for a completed workflow (per-component readiness, rebinds, blocking values)
 
 ## 5. MCP tools
 

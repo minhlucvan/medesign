@@ -283,6 +283,49 @@ workflowApiRouter.post('/design-systems/from-design-md', (req: Request, res: Res
   res.json({ sessionId });
 });
 
+// ── POST /api/design-systems/from-project ──────────────────────────────
+workflowApiRouter.post('/design-systems/from-project', async (req: Request, res: Response) => {
+  const { projectPath, name, id } = req.body || {};
+
+  // Path validation up front: must exist, be a directory, and look like a
+  // supported project (a JS/TS app or a Tailwind project).
+  if (!projectPath || typeof projectPath !== 'string' || projectPath.trim().length === 0) {
+    return res.status(400).json({ error: 'projectPath is required and must be a non-empty string' });
+  }
+  let stat;
+  try { stat = fs.statSync(projectPath); } catch { stat = null; }
+  if (!stat || !stat.isDirectory()) {
+    return res.status(400).json({ error: `Project path not found or not a directory: ${projectPath}` });
+  }
+  const supported =
+    fs.existsSync(path.join(projectPath, 'package.json')) ||
+    fs.existsSync(path.join(projectPath, 'tailwind.config.js')) ||
+    fs.existsSync(path.join(projectPath, 'tailwind.config.ts')) ||
+    fs.existsSync(path.join(projectPath, 'tailwind.config.cjs')) ||
+    fs.existsSync(path.join(projectPath, 'tailwind.config.mjs'));
+  if (!supported) {
+    return res.status(400).json({ error: `Unsupported project type at ${projectPath} (no package.json or tailwind config found)` });
+  }
+
+  const sessionId = id || createSessionId();
+  try {
+    await workflowOrchestrator.runFromProject(sessionId, { projectPath, name, id });
+  } catch (e) {
+    console.error('[emdesign] Failed to create design system from project:', (e as Error).message);
+    return res.status(500).json({ error: (e as Error).message });
+  }
+  res.json({ sessionId });
+});
+
+// ── GET /api/design-systems/:id/adoption-report ────────────────────────
+workflowApiRouter.get('/design-systems/:id/adoption-report', (req: Request, res: Response) => {
+  const report = workflowOrchestrator.getReport(req.params.id);
+  if (!report) {
+    return res.status(404).json({ error: `No adoption report for '${req.params.id}'` });
+  }
+  res.json(report);
+});
+
 // ── GET /api/design-systems/create-options ─────────────────────────────
 workflowApiRouter.get('/design-systems/create-options', (_req: Request, res: Response) => {
   res.json({

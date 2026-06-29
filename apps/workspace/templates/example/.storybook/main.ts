@@ -22,6 +22,11 @@ const config: StorybookConfig = {
       ...(vite.resolve.alias ?? {}),
       '@ds': path.resolve(here, `../design-systems/${activeDs}/code`),
     };
+    vite.server = vite.server ?? {};
+    vite.server.watch = vite.server.watch ?? {};
+    const existing = Array.isArray(vite.server.watch.ignored) ? vite.server.watch.ignored : [];
+    if (!existing.includes('**/design-systems/**')) existing.push('**/design-systems/**');
+    vite.server.watch.ignored = existing;
     return vite;
   },
 };

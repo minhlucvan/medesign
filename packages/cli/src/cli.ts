@@ -29,6 +29,7 @@ import { cmdLoop } from './commands/loop.js';
 import { cmdStorybookHealth } from './commands/storybook.js';
 import { cmdExplore } from './commands/explore.js';
 import { cmdSession, cmdLogs } from './commands/session.js';
+import { cmdIntent, cmdChat } from './commands/intent.js';
 
 const PORT = Number(process.env.EMDESIGN_PORT ?? 4321);
 
@@ -72,7 +73,7 @@ async function main() {
   if (argv.includes('--completion')) {
     const shellIdx = argv.indexOf('--completion');
     const shell = shellIdx >= 0 && shellIdx + 1 < argv.length && !argv[shellIdx + 1].startsWith('--') ? argv[shellIdx + 1] : 'bash';
-    const commands = ['init','attach','update','serve','up','health','ds','design','generate','doctor','vision','capture','capture-baseline','discover','doc','graph','explore','compose','help','session','logs'];
+    const commands = ['init','attach','update','serve','up','health','ds','design','generate','doctor','vision','capture','capture-baseline','discover','doc','graph','explore','compose','help','session','logs','intent','chat'];
     const dsSubs = ['list','create','use','validate','grade','scaffold','customize','update','diff','compare','conflicts','history','bases','base-detail','context','prompt'];
     if (shell === 'zsh') {
       process.stdout.write(`#compdef emdesign
@@ -587,6 +588,33 @@ complete -F _emdesign_completions emdesign
       break;
     }
 
+    // ── Intent ─────────────────────────────────────────────────────────────
+    case 'intent': {
+      const intentType = positional(rest);
+      const instruction = positional(rest, 1);
+      if (!intentType || !instruction) {
+        formatError('usage: emdesign intent <type> <instruction> [--selector <css>]');
+        process.exit(1);
+      }
+      const selector = rest.includes('--selector') ? rest[rest.indexOf('--selector') + 1] : undefined;
+      await cmdIntent({ type: intentType, instruction, selector }, paths);
+      break;
+    }
+
+    // ── Chat ───────────────────────────────────────────────────────────────
+    case 'chat': {
+      const chatMsg = positional(rest);
+      const chatType = rest.includes('--type') ? rest[rest.indexOf('--type') + 1] : undefined;
+      if (!chatMsg || !chatType) {
+        formatError('usage: emdesign chat <message> --type <intent-type> [--wait] [--interactive]');
+        process.exit(1);
+      }
+      const wait = rest.includes('--wait');
+      const interactive = rest.includes('--interactive');
+      await cmdChat({ message: chatMsg, type: chatType, wait, interactive }, paths);
+      break;
+    }
+
     // ── Help ─────────────────────────────────────────────────────────────
     case 'help':
     default: {
@@ -653,7 +681,11 @@ Run 'emdesign <command> --help' for per-command details.
     screen create <name> [--route]    Create a screen with routing
     screen list                       List all screens
 
-🧵  Session tracing and logs
+💬  Agent
+    intent <type> <instruction>       Submit a design intent
+    chat <message> --type <type>      Chat with the design agent
+
+    🧵  Session tracing and logs
     session list [--limit N]          List Claude sessions
     session show <id>                 Show session details
     session logs <id> [--tail]        View session log entries
@@ -690,8 +722,8 @@ Run 'emdesign <command> --help' for per-command details.
     --quiet                 Suppress stderr messages
 
 ── All commands ────────────────────────────────────────────────────
-    capture  compose  design  discover  doc  doctor  ds  explore
-    generate  graph  health  init  loop  logs  render  screen
+    capture  chat  compose  design  discover  doc  doctor  ds  explore
+    generate  graph  health  init  intent  loop  logs  render  screen
     session  spatial  story  storybook  update  use  vision
 
 Legacy aliases: lint, visual-test, score, vision-critique, spatial-audit

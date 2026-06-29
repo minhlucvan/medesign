@@ -16,10 +16,10 @@
 
 ## Unit 3: CLI `intent` and `chat` commands
 
-- [ ] Create `packages/cli/src/commands/intent.ts` — `intent <type> <instruction>` via `POST /api/intent`
-- [ ] Implement `chat <message> --type` via `POST /api/chat/stream` with SSE streaming
-- [ ] Support `--wait` (blocking), `--interactive` (follow-up prompt), pipe mode
-- [ ] Register commands in `packages/cli/src/cli.ts`
+- [x] Create `packages/cli/src/commands/intent.ts` — `intent <type> <instruction>` via `POST /api/intent`
+- [x] Implement `chat <message> --type` via `POST /api/chat/stream` with SSE streaming
+- [x] Support `--wait` (blocking), `--interactive` (follow-up prompt), pipe mode
+- [x] Register commands in `packages/cli/src/cli.ts`
 
 ## Unit 4: `--trace` global flag
 

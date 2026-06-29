@@ -17,29 +17,50 @@ import { buildChatCSS, injectChatCSS } from '../services/chatCssService';
 describe('buildChatCSS', () => {
   it('light mode returns CSS with light background tokens', () => {
     const css = buildChatCSS(false);
-    expect(css).toContain('--emdesign-bg');
-    expect(css).toContain('hsl(0 0% 98%)');
-    expect(css).toContain('--emdesign-text');
-    expect(css).toContain('hsl(0 0% 10%)');
+    expect(css).toContain('--background: 210 17% 98%');
+    expect(css).toContain('--foreground: 210 11% 20%');
+    expect(css).toContain('--primary: 206 100% 50%');
+    expect(css).toContain('!important');
   });
 
   it('dark mode returns CSS with dark background tokens', () => {
     const css = buildChatCSS(true);
-    expect(css).toContain('--emdesign-bg');
-    expect(css).toContain('hsl(0 0% 10%)');
-    expect(css).toContain('--emdesign-text');
-    expect(css).toContain('hsl(0 0% 90%)');
+    expect(css).toContain('--background: 200 4.23% 13.92%');
+    expect(css).toContain('--foreground: 200 4.23% 90%');
+    expect(css).toContain('--primary: 210 30% 40%');
+    expect(css).toContain('!important');
   });
 
-  it('hides sidebar items in the CSS', () => {
+  it('hides story tree and sidebar items', () => {
     const css = buildChatCSS(false);
     expect(css).toContain('.sidebar-item');
+    expect(css).toContain('.sidebar-subheading');
+    expect(css).toContain('#storybook-explorer-tree');
+    expect(css).toContain('.search-field');
     expect(css).toContain('display: none');
+  });
+
+  it('includes scroll-area flex layout rules', () => {
+    const css = buildChatCSS(false);
+    expect(css).toContain('[data-radix-scroll-area-content]');
+    expect(css).toContain('flex: 1');
+    expect(css).toContain('flex-direction: column');
+  });
+
+  it('includes scrollbar styling', () => {
+    const css = buildChatCSS(false);
+    expect(css).toContain('::-webkit-scrollbar');
+  });
+
+  it('preserves sidebar header', () => {
+    const css = buildChatCSS(false);
+    expect(css).toContain('.sidebar-header');
+    expect(css).toContain('flex-shrink: 0');
   });
 
   it('returns valid CSS syntax with opening and closing braces', () => {
     const css = buildChatCSS(false);
-    expect(css.length).toBeGreaterThan(50);
+    expect(css.length).toBeGreaterThan(200);
     expect(css).toContain('{');
     expect(css).toContain('}');
   });

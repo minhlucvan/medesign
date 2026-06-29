@@ -146,8 +146,98 @@ log(`[ds-import] Design system: id="${dsId}", name="${fetchedName}"`)
 // Save the fetched DESIGN.md path for the scaffold workflow
 const designMdPath = mdPath
 
+phase('Generate taste profile')
+log(`[ds-import] Analyzing design taste for "${dsId}"`)
+
+let tasteDials = { variance: 5, motion: 5, density: 5 }
+
+// Use agent to analyze the fetched DESIGN.md and generate a taste profile
+const tasteResult = await agent(
+  \`Read the DESIGN.md at "${designMdPath}" and generate a taste profile for this design system.
+
+Extract:
+1. The three dials: DESIGN_VARIANCE (1-10), MOTION_INTENSITY (1-10), VISUAL_DENSITY (1-10)
+   - VARIANCE: how opinionated/bold the token values are. 1-3=conventional, 4-6=characterful, 7-10=bold
+   - MOTION: how much motion the system uses. 1-3=static, 4-6=purposeful, 7-10=expressive
+   - DENSITY: how much information per view. 1-3=airy, 4-6=balanced, 7-10=compact
+2. Brand fingerprint: what makes this system distinctive
+3. Key visual characteristics: color direction, typography voice, spacing philosophy
+4. Anti-patterns that would violate this system's taste
+
+Use the DESIGN.md's section 1 (Visual Theme) and section 8 (Voice) as primary signal sources.
+If the DESIGN.md doesn't explicitly describe taste, infer it from the color palette, typography choices, and spacing values.
+
+Return the taste profile as structured data.`,
+  { label: \`taste:\${dsId}\`, phase: 'Generate taste profile', schema: {
+    type: 'object',
+    properties: {
+      VARIANCE: { type: 'number', minimum: 1, maximum: 10 },
+      MOTION: { type: 'number', minimum: 1, maximum: 10 },
+      DENSITY: { type: 'number', minimum: 1, maximum: 10 },
+      brandFingerprint: { type: 'string' },
+      visualCharacteristics: { type: 'string' },
+      antiPatterns: { type: 'string' },
+    },
+    required: ['VARIANCE', 'MOTION', 'DENSITY'],
+  }}
+)
+
+if (tasteResult) {
+  tasteDials = { variance: tasteResult.VARIANCE, motion: tasteResult.MOTION, density: tasteResult.DENSITY }
+  log(\`[ds-import] Taste profile: V\${tasteDials.variance} / M\${tasteDials.motion} / D\${tasteDials.density}\`)
+  if (tasteResult.brandFingerprint) log(\`[ds-import] \${tasteResult.brandFingerprint.slice(0, 80)}...\`)
+
+  // Write taste profile to disk
+  const tasteSkill = \`---
+name: \${dsId}-taste
+description: Design taste profile for \${fetchedName} — visual voice, three-dial settings, and brand fingerprint.
+dials:
+  DESIGN_VARIANCE: \${tasteDials.variance}
+  MOTION_INTENSITY: \${tasteDials.motion}
+  VISUAL_DENSITY: \${tasteDials.density}
+brand:
+  fingerprint: "\${(tasteResult.brandFingerprint || '').replace(/"/g, '\\"')}"
+  visual: "\${(tasteResult.visualCharacteristics || '').replace(/"/g, '\\"')}"
+---
+
+# \${fetchedName} — Design Taste Profile
+
+## Three Dials
+- **DESIGN_VARIANCE**: \${tasteDials.variance}/10 — \${tasteDials.variance <= 3 ? 'Conventional, safe' : tasteDials.variance <= 6 ? 'Characterful, one distinctive move' : 'Bold, experimental'}
+- **MOTION_INTENSITY**: \${tasteDials.motion}/10 — \${tasteDials.motion <= 3 ? 'Static, minimal' : tasteDials.motion <= 6 ? 'Purposeful micro-interactions' : 'Expressive, animated'}
+- **VISUAL_DENSITY**: \${tasteDials.density}/10 — \${tasteDials.density <= 3 ? 'Airy, generous whitespace' : tasteDials.density <= 6 ? 'Balanced, comfortable' : 'Compact, efficient'}
+
+## Brand Fingerprint
+\${tasteResult.brandFingerprint || 'Not specified'}
+
+## Visual Characteristics
+\${tasteResult.visualCharacteristics || 'Not specified'}
+
+## Anti-Patterns
+\${tasteResult.antiPatterns || 'Not specified'}
+
+## Design Principles
+1. Taste drives tokens — every token value should be justifiable from the design read
+2. Stay on-dial — if VARIANCE is low, don't introduce avant-garde layouts
+3. Consistency over cleverness — one accent, one display face, one spacing philosophy
+4. Validate with \`emdesign doctor\` and \`emdesign explore\` to maintain baseline quality
+\`
+
+  try {
+    await $\`mkdir -p ${dsDir}/skills/taste\`
+    await $\`cat > ${dsDir}/skills/taste/SKILL.md << 'SKILLEOF'
+\${tasteSkill}
+SKILLEOF\`
+    log(\`[ds-import] ✅ Taste skill saved to \${dsDir}/skills/taste/SKILL.md\`)
+  } catch (e) {
+    log(\`[ds-import] ⚠️  Failed to save taste skill: \${e.message}\`)
+  }
+} else {
+  log(\`[ds-import] ⚠️  Taste analysis failed, using defaults\`)
+}
+
 phase('Scaffold')
-log(`[ds-import] Running ds-scaffold workflow for "${dsId}"`)
+log(\`[ds-import] Running ds-scaffold workflow for "\${dsId}"\`)
 
 // Call the scaffold workflow
 const scaffoldResult = await workflow('ds-scaffold', {
@@ -156,6 +246,7 @@ const scaffoldResult = await workflow('ds-scaffold', {
   source,
   name: fetchedName,
   description: fetchedDescription,
+  dials: tasteDials,
 })
 
 if (!scaffoldResult?.id) {

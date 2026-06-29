@@ -2,10 +2,10 @@
 
 ## Unit 1: `log-sink.ts` — structured log persistence
 
-- [ ] Create `packages/session/src/log-sink.ts` with `createLogSink(bus, baseDir)`
-- [ ] Subscribe to `session:log` events, write NDJSON to `global.ndjson` and `sessions/<id>.ndjson`
-- [ ] Export `createLogSink` from `packages/session/src/index.ts`
-- [ ] Wire into HTTP bridge startup in `packages/backend/src/http.ts`
+- [x] Create `packages/session/src/log-sink.ts` with `createLogSink(bus, baseDir)`
+- [x] Subscribe to `session:log` events, write NDJSON to `global.ndjson` and `sessions/<id>.ndjson`
+- [x] Export `createLogSink` from `packages/session/src/index.ts`
+- [x] Wire into HTTP bridge startup in `packages/backend/src/http.ts`
 
 ## Unit 2: CLI `session` and `logs` commands
 

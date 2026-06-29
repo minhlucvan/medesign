@@ -58,3 +58,7 @@ export type { AgentHandle, AgentRunnerOptions } from './AgentRunner.js';
 export type { ServiceType, ServiceStatus, ServiceInfo, PlatformState } from './types.js';
 export { createSessionRouter } from './api/httpRouter.js';
 export { attachWebSocket } from './WebSocketServer.js';
+
+// Log sink
+export { createLogSink } from './log-sink.js';
+export type { LogEntry } from './log-sink.js';

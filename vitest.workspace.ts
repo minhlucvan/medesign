@@ -4,6 +4,7 @@ export default defineWorkspace([
   // Existing package tests
   'packages/backend',
   'packages/graph',
+  'packages/session',
   'packages/dsr',
   'packages/vision-critic',
   // Addon (Storybook panel, toolbar tools, channel events)

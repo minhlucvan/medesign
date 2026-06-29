@@ -999,6 +999,14 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
     } catch {
       // @emdesign/session not available — skip session routes
     }
+
+    // Wire log-sink into the HTTP bridge when orchestrator bus is available
+    try {
+      const { createLogSink } = await import('@emdesign/session');
+      createLogSink(orch.bus, paths.root);
+    } catch {
+      // log-sink not available — skip wiring
+    }
   }
 
   // Mount the workflow API router (design-system creation workflow endpoints)

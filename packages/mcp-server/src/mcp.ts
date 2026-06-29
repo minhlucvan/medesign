@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
 import { z } from 'zod';
@@ -32,6 +33,8 @@ import {
   gradeDesignSystem,
   renderSnapshot,
   spatialAudit,
+  extractProject,
+  adoptProject,
 } from '@emdesign/backend';
 import type { Store } from '@emdesign/backend';
 import { findAffected, whereToFix, consistencyBrief, getContext, query } from '@emdesign/graph';
@@ -631,6 +634,49 @@ export async function createMcpServer(store: Store, paths: RepoPaths, _orch?: an
       return text(`Wrote ${file.path} (${colorCount} color roles${hasDark ? ', dark mode enabled' : ''}).`);
     }
     return text('No config to generate.');
+  });
+
+  // ── 18. Analyze an existing project (ds-from-project) ────────
+  server.registerTool('analyze_project', {
+    description: 'Analyze an existing project to mine its design decisions. Returns a structured (machine-readable) extraction: raw observations with file:line provenance, proposed semantic token roles with confidence scores + supporting evidence, and tailwind/CSS conflicts. Use this to understand a project before adopting its components.',
+    inputSchema: {
+      path: z.string().describe('Absolute path to the project root to analyze'),
+    },
+  }, async ({ path: projectPath }) => {
+    return text(JSON.stringify(extractProject(projectPath), null, 2));
+  });
+
+  // ── 19. Adopt components from an existing project ────────────
+  server.registerTool('adopt_components', {
+    description: 'Bring an existing project\'s components under emdesign management: place them, rebind unambiguous hardcoded values to semantic token roles, generate missing stories, and classify each as loop-ready or needs-manual-fix. Returns the structured adoption report. mode="run" writes files; mode="preview" (default) computes the same report without writing.',
+    inputSchema: {
+      path: z.string().describe('Absolute path to the source project to adopt components from'),
+      mode: z.enum(['run', 'preview']).optional().describe('"run" performs adoption (writes placed components + stories); "preview" computes the report without writing. Defaults to "preview".'),
+    },
+  }, async ({ path: projectPath, mode }) => {
+    const extraction = extractProject(projectPath);
+    // Declared tokens come from the active design system when present; otherwise
+    // fall back to the proposed roles so the readiness check still has a vocabulary.
+    let declaredTokens: string[];
+    try {
+      declaredTokens = resolveDesignSystem(paths, paths.activeDesignSystem).declaredTokens;
+    } catch {
+      declaredTokens = extraction.proposedRoles.map((r) => r.role);
+    }
+
+    const run = (componentsDir: string) =>
+      adoptProject({ projectRoot: projectPath, componentsDir, proposedRoles: extraction.proposedRoles, declaredTokens });
+
+    if ((mode ?? 'preview') === 'run') {
+      return text(JSON.stringify(run(paths.componentsDir), null, 2));
+    }
+    // Preview: adopt into a throwaway dir so the workspace is never written to.
+    const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'emdesign-adopt-preview-'));
+    try {
+      return text(JSON.stringify(run(scratch), null, 2));
+    } finally {
+      fs.rmSync(scratch, { recursive: true, force: true });
+    }
   });
 
   // Register session management tools if orchestrator is provided

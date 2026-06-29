@@ -32,8 +32,8 @@
 
 ## 5. MCP tools
 
-- [ ] 5.1 Add `analyze_project` tool in `packages/mcp-server/src/mcp.ts` (path → extracted values, proposed roles, confidence, provenance) with a Zod input schema
-- [ ] 5.2 Add `adopt_components` tool (run/preview adoption, return the structured report)
+- [x] 5.1 Add `analyze_project` tool in `packages/mcp-server/src/mcp.ts` (path → extracted values, proposed roles, confidence, provenance) with a Zod input schema
+- [x] 5.2 Add `adopt_components` tool (run/preview adoption, return the structured report)
 
 ## 6. CLI
 

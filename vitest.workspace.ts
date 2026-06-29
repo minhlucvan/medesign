@@ -8,6 +8,8 @@ export default defineWorkspace([
   'packages/vision-critic',
   // Addon (Storybook panel, toolbar tools, channel events)
   'packages/addon',
+  // MCP server (the agent-facing tool surface)
+  'packages/mcp-server',
   // Integration & surface tests
   'tests',
 ]);

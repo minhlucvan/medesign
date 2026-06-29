@@ -44,9 +44,9 @@
 
 ## 7. Frontend (addon)
 
-- [ ] 7.1 Add a "From Existing Project" path to the System tab creator (project-path/current-workspace input)
-- [ ] 7.2 Subscribe to the workflow SSE and render live stage progress with intermediate artifacts
-- [ ] 7.3 Build the adoption-report triage view — client-side display only over the read-only report (mark rebinds reviewed / components for follow-up as view state; no write-back persistence): loop-ready vs needs-manual-fix
+- [x] 7.1 Add a "From Existing Project" path to the System tab creator (project-path/current-workspace input)
+- [x] 7.2 Subscribe to the workflow SSE and render live stage progress with intermediate artifacts
+- [x] 7.3 Build the adoption-report triage view — client-side display only over the read-only report (mark rebinds reviewed / components for follow-up as view state; no write-back persistence): loop-ready vs needs-manual-fix
 
 ## 8. Verification
 

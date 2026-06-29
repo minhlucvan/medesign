@@ -3,6 +3,7 @@ import { styled } from '@storybook/theming';
 import { api, BACKEND_URL } from '../api';
 import { Row, Stack, Muted, Input, Btn, Pill } from '../ui';
 import { CustomizeForm } from './CustomizeForm';
+import { GalleryDetail } from './GalleryDetail';
 import type { DesignSystemBase, RegistrySystem } from '../constants';
 
 const SearchInput = styled(Input)({ maxWidth: 360, marginBottom: 0 });
@@ -15,13 +16,13 @@ const FilterPill = styled.button<{ $active: boolean }>(({ theme, $active }) => (
   color: $active ? theme.color.lightest : theme.color.defaultText,
   font: `600 11px ${theme.typography.fonts.base}`, whiteSpace: 'nowrap',
 }));
-const CardGrid = styled.div({ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12, marginTop: 10 });
+const CardGrid = styled.div({ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 16, marginTop: 10 });
 const EmptyState = styled.div(({ theme }) => ({
   gridColumn: '1 / -1', padding: 24, textAlign: 'center', color: theme.textMutedColor, font: `13px ${theme.typography.fonts.base}`,
 }));
 
 const PreviewArea = styled.div<{ bg?: string }>(({ theme, bg }) => ({
-  height: 100, borderRadius: '6px 6px 0 0',
+  height: 140, borderRadius: '6px 6px 0 0',
   background: bg ?? `linear-gradient(135deg, ${theme.background.app}, ${theme.appBorderColor})`,
   display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
 }));
@@ -60,6 +61,7 @@ export function GalleryPath({ onProgress, onComplete }: GalleryPathProps) {
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
   const [selectedBase, setSelectedBase] = useState<string | null>(null);
   const [selectedAwesome, setSelectedAwesome] = useState<RegistrySystem | null>(null);
+  const [selectedEntry, setSelectedEntry] = useState<GalleryEntry | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -111,6 +113,26 @@ export function GalleryPath({ onProgress, onComplete }: GalleryPathProps) {
     } catch { /* */ }
   }, [onComplete]);
 
+  // Show detail page for a gallery entry
+  if (selectedEntry) {
+    return (
+      <GalleryDetail
+        entry={selectedEntry}
+        onBack={() => setSelectedEntry(null)}
+        onImport={() => {
+          if (selectedEntry.type === 'awesome') {
+            handleSelectAwesome(selectedEntry.data as RegistrySystem);
+          }
+        }}
+        onSelect={() => {
+          if (selectedEntry.type === 'vendor') {
+            setSelectedBase((selectedEntry.data as DesignSystemBase).ref);
+          }
+        }}
+      />
+    );
+  }
+
   if (selectedBase) {
     return (
       <div>
@@ -124,7 +146,7 @@ export function GalleryPath({ onProgress, onComplete }: GalleryPathProps) {
   }
 
   return (
-    <div>
+    <div style={{ padding: '12px 0' }}>
       <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 10, flexWrap: 'wrap' }}>
         <SearchInput value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search systems by name, description…" />
         <Muted>{filtered.length} of {entries.length}</Muted>
@@ -144,7 +166,7 @@ export function GalleryPath({ onProgress, onComplete }: GalleryPathProps) {
           if (e.type === 'vendor') {
             const b = e.data;
             return (
-              <Card key={`v-${b.id}`} onClick={() => setSelectedBase(b.ref)}>
+              <Card key={`v-${b.id}`} onClick={() => setSelectedEntry({ type: 'vendor', data: b })}>
                 <PreviewArea bg={b.category === 'Editorial' ? '#f5f0eb' : undefined}>
                   {/* Vendor base — try to show preview iframe */}
                 </PreviewArea>
@@ -163,7 +185,7 @@ export function GalleryPath({ onProgress, onComplete }: GalleryPathProps) {
           }
           const s = e.data;
           return (
-            <Card key={`a-${s.id}`} onClick={() => handleSelectAwesome(s)}>
+            <Card key={`a-${s.id}`} onClick={() => setSelectedEntry({ type: 'awesome', data: s })}>
               <PreviewArea bg={`linear-gradient(135deg, #667eea 0%, #764ba2 100%)`}>
                 <iframe src={`${BACKEND_URL}/api/bases/awesome/${s.id}/preview`} style={{ width: '100%', height: '100%', border: 'none' }} />
               </PreviewArea>

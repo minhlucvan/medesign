@@ -53,14 +53,13 @@ const keepBranch = !!A.keepBranch
 // PR for the record/human review. Forces the local branch to be kept on origin.
 const openPr = A.openPr === true
 // --worktree: run implementation phases inside an isolated git worktree.
-// The main checkout stays on the base branch, freeing it for parallel work.
-// When combined with --local: implementation runs in the worktree, then
-// merge/archive/cleanup runs in the main checkout (no push, no PR).
-// Without --local: worktree mode stops after implementation for human local
-// verification (the user then runs /opsx:ship-pr <change> to push + create the PR).
-let worktree = A.worktree === true
-// --local-worktree is a convenience alias for --worktree --local
-if (A.localWorktree === true) { worktree = true; local = true }
+// The main checkout stays on main, freeing it for parallel work on other changes.
+// Unlike the default remote path, worktree mode does NOT push or create a PR —
+// it stops after implementation for human local verification.
+const worktree = A.worktree === true
+if (A.worktree && local) {
+  throw new Error('--worktree is incompatible with --local; worktree mode requires the remote path (PR-gated)')
+}
 
 if (!change || typeof change !== 'string') {
   throw new Error('ship-code requires args { change, date, dryRun?, only?, retryBlocked?, reserveTokens?, local?, base?, mergeStrategy?, bump?, noPushMain?, archive?, skipReview?, keepBranch?, openPr?, worktree?, localWorktree? }; got typeof=' + (typeof args) + ' keys=' + Object.keys(A).join(','))
@@ -91,7 +90,7 @@ async function runAgentHook(event, contextLines) {
       `Context:`,
       ...contextLines,
       `1. If openspec/hooks/on-${event}.agent.md does NOT exist → return { found:false, ran:false }. STOP (normal no-op — most repos have no hook).`,
-      `2. If it exists → READ it and FOLLOW its instructions as your task, using the context above. It may use gh/git/node. It typically reads the backlog ticket from openspec/changes/${change}/proposal.md frontmatter ("ticket:") and updates the board card. Summarise what you actually did in summary; set found:true and ran:true (or ran:false + an errors[] entry if its instructions failed).`,
+      `2. If it exists → READ it and FOLLOW its instructions as your task, using the context above. It may use gh/git/node. It typically reads the linked GitHub issue from openspec/changes/${change}/github.json and updates the issue/board. Summarise what you actually did in summary; set found:true and ran:true (or ran:false + an errors[] entry if its instructions failed).`,
       `Return { found, ran, summary, errors }.`,
     ].join('\n'),
     { schema: HOOK_RESULT, label: `hook:${event}`, phase: 'Hooks', agentType: 'general-purpose' },
@@ -561,61 +560,61 @@ if (worktree) {
 if (!worktreeDidImplement) {
   phase('Implement')
   blocked = null
-for (const p of runnable) {
-  if (budget && budget.total && budget.remaining() < reserve) {
-    log(`budget reserve reached — stopping before pair ${p.pair} (${runnable.length - commits.length} pair(s) left)`); break
-  }
-  const testFiles = (p.test.deliverables || []).join(', ') || '(none)'
-  const codeFiles = (p.code.deliverables || []).join(', ') || '(none)'
-  const covers = (p.coversTasks || []).join(', ') || p.pair
-  log(`unit ${p.pair}: ${p.title} (covers tasks ${covers})`)
+  for (const p of runnable) {
+    if (budget && budget.total && budget.remaining() < reserve) {
+      log(`budget reserve reached — stopping before pair ${p.pair} (${runnable.length - commits.length} pair(s) left)`); break
+    }
+    const testFiles = (p.test.deliverables || []).join(', ') || '(none)'
+    const codeFiles = (p.code.deliverables || []).join(', ') || '(none)'
+    const covers = (p.coversTasks || []).join(', ') || p.pair
+    log(`unit ${p.pair}: ${p.title} (covers tasks ${covers})`)
 
-  // --- Red
-  const red = await agent(
-    [
-      `Unit ${p.pair} of change "${change}" — the RED step. ${await getPromptHooks('on-test', { change }).then(h => h.join(' '))}`,
-      CONTEXT,
-      TOOLCHAIN_NOTE,
-      `Read the unit file "${p.test.file}" (its "Test plan (Red)" section). Write ALL of this unit's test deliverables — ${testFiles} — in the deliverables' own language: pytest \`tests/test_*.py\` for Python members, table-driven \`*_test.go\` for Go modules, vitest \`*.test.ts(x)\` for the portal — with the assertions/table cases the unit specifies (drawn from the delta-spec scenarios).`,
-      p.test.skipRed
-        ? `This unit is marked skipRed (doc-only/non-testable). Set skipRed=true with the reason; do not fabricate a test.`
-        : `Then run the touched package's test command (py: \`uv --directory <member> run python -m pytest -q <path>\`; go: \`(cd <module> && go test -race ./...)\`; ts: \`(cd apps/portal && pnpm test)\`) — and CONFIRM IT FAILS (undefined symbols or failing assertions). Set redConfirmed=true ONLY after observing the failure. Put the failing output in failureLog.`,
-      `Write ONLY the test deliverables in this step (no production code). Do NOT commit. Update the unit file's status frontmatter to reflect the Red step done and append a one-line "## Output log" note.`,
-    ].join('\n'),
-    { schema: RED, label: `red:${p.pair}`, phase: 'Implement', agentType: 'general-purpose' },
-  )
-  if (!red) { blocked = { pair: p.pair, why: 'red agent returned null' }; break }
-  if (!red.skipRed && !red.redConfirmed) {
-    blocked = { pair: p.pair, why: 'Red not confirmed — the new test(s) did not fail before implementation. ' + (red.failureLog || '') }; break
-  }
+    // --- Red
+    const red = await agent(
+      [
+        `Unit ${p.pair} of change "${change}" — the RED step. ${await getPromptHooks('on-test', { change }).then(h => h.join(' '))}`,
+        CONTEXT,
+        TOOLCHAIN_NOTE,
+        `Read the unit file "${p.test.file}" (its "Test plan (Red)" section). Write ALL of this unit's test deliverables — ${testFiles} — in the deliverables' own language: pytest \`tests/test_*.py\` for Python members, table-driven \`*_test.go\` for Go modules, vitest \`*.test.ts(x)\` for the portal — with the assertions/table cases the unit specifies (drawn from the delta-spec scenarios).`,
+        p.test.skipRed
+          ? `This unit is marked skipRed (doc-only/non-testable). Set skipRed=true with the reason; do not fabricate a test.`
+          : `Then run the touched package's test command (py: \`uv --directory <member> run python -m pytest -q <path>\`; go: \`(cd <module> && go test -race ./...)\`; ts: \`(cd apps/portal && pnpm test)\`) — and CONFIRM IT FAILS (undefined symbols or failing assertions). Set redConfirmed=true ONLY after observing the failure. Put the failing output in failureLog.`,
+        `Write ONLY the test deliverables in this step (no production code). Do NOT commit. Update the unit file's status frontmatter to reflect the Red step done and append a one-line "## Output log" note.`,
+      ].join('\n'),
+      { schema: RED, label: `red:${p.pair}`, phase: 'Implement', agentType: 'general-purpose' },
+    )
+    if (!red) { blocked = { pair: p.pair, why: 'red agent returned null' }; break }
+    if (!red.skipRed && !red.redConfirmed) {
+      blocked = { pair: p.pair, why: 'Red not confirmed — the new test(s) did not fail before implementation. ' + (red.failureLog || '') }; break
+    }
 
-  // --- Green + single commit (red+green together)
-  const green = await agent(
-    [
-      `Unit ${p.pair} of change "${change}" — the GREEN step + commit. ${await getPromptHooks('on-implement', { change }).then(h => h.join(' '))}`,
-      CONTEXT,
-      TOOLCHAIN_NOTE,
-      `Read the unit file "${p.code.file}" (its "Code plan (Green)" section). Make the MINIMAL production change across this unit's code deliverables — ${codeFiles} — to turn the failing test(s) from the Red step GREEN. Do not over-build.`,
-      red.skipRed ? `(No Red test — implement the doc/config change described.)` : `Run the touched package's test command (py: \`uv --directory <member> run python -m pytest -q\`; go: \`(cd <module> && go test -race ./...)\`; ts: \`(cd apps/portal && pnpm test)\`) — they MUST pass. Iterate up to ${maxRepairs} times if needed (fix production code, not the tests). If still failing, set greenConfirmed=false and put the output in failureLog (do not commit).`,
-      `Tick EVERY OpenSpec task this unit realizes in ${pre.tasksPath} ("- [ ]" → "- [x]" for change task(s) ${covers}); set taskTicked.`,
-      `Update the unit file "${p.code.file}" status to "done" + a one-line Output log. ALSO set this unit's "status" to "done" in ${handoffDir}/plan.json (find the units[] entry with id "${p.pair}") so a later resume's preflight sees it done and skips re-implementing it.`,
-      `THEN make ONE commit containing the whole unit (all tests + all implementation):`,
-      `  git add -A  (note ${handoffDir}/ is gitignored and won't be staged)`,
-      `  git commit -m "feat: ${p.title} (${change} unit ${p.pair})" -m "Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"`,
-      `Set committed=true and sha=<short hash>. If greenConfirmed is false, do NOT commit (committed=false).`,
-    ].filter(Boolean).join('\n'),
-    { schema: GREEN, label: `green:${p.pair}`, phase: 'Implement', agentType: 'general-purpose' },
-  )
-  if (!green || !green.greenConfirmed || !green.committed) {
-    blocked = { pair: p.pair, why: green ? ('Green/commit failed: ' + (green.failureLog || 'no commit')) : 'green agent returned null' }; break
+    // --- Green + single commit (red+green together)
+    const green = await agent(
+      [
+        `Unit ${p.pair} of change "${change}" — the GREEN step + commit. ${await getPromptHooks('on-implement', { change }).then(h => h.join(' '))}`,
+        CONTEXT,
+        TOOLCHAIN_NOTE,
+        `Read the unit file "${p.code.file}" (its "Code plan (Green)" section). Make the MINIMAL production change across this unit's code deliverables — ${codeFiles} — to turn the failing test(s) from the Red step GREEN. Do not over-build.`,
+        red.skipRed ? `(No Red test — implement the doc/config change described.)` : `Run the touched package's test command (py: \`uv --directory <member> run python -m pytest -q\`; go: \`(cd <module> && go test -race ./...)\`; ts: \`(cd apps/portal && pnpm test)\`) — they MUST pass. Iterate up to ${maxRepairs} times if needed (fix production code, not the tests). If still failing, set greenConfirmed=false and put the output in failureLog (do not commit).`,
+        `Tick EVERY OpenSpec task this unit realizes in ${pre.tasksPath} ("- [ ]" → "- [x]" for change task(s) ${covers}); set taskTicked.`,
+        `Update the unit file "${p.code.file}" status to "done" + a one-line Output log. ALSO set this unit's "status" to "done" in ${handoffDir}/plan.json (find the units[] entry with id "${p.pair}") so a later resume's preflight sees it done and skips re-implementing it.`,
+        `THEN make ONE commit containing the whole unit (all tests + all implementation):`,
+        `  git add -A  (note ${handoffDir}/ is gitignored and won't be staged)`,
+        `  git commit -m "feat: ${p.title} (${change} unit ${p.pair})" -m "Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"`,
+        `Set committed=true and sha=<short hash>. If greenConfirmed is false, do NOT commit (committed=false).`,
+      ].filter(Boolean).join('\n'),
+      { schema: GREEN, label: `green:${p.pair}`, phase: 'Implement', agentType: 'general-purpose' },
+    )
+    if (!green || !green.greenConfirmed || !green.committed) {
+      blocked = { pair: p.pair, why: green ? ('Green/commit failed: ' + (green.failureLog || 'no commit')) : 'green agent returned null' }; break
+    }
+    commits.push({ pair: p.pair, title: p.title, sha: green.sha })
+    log(`pair ${p.pair}: committed ${green.sha} (red+green)`)
+  } // end for
+  if (blocked) {
+    return { stage: 'implement', ok: false, reason: `pair ${blocked.pair} blocked — stopping before PR. ${blocked.why}`, change, branch, commits, blockedPair: blocked.pair }
   }
-  commits.push({ pair: p.pair, title: p.title, sha: green.sha })
-  log(`pair ${p.pair}: committed ${green.sha} (red+green)`)
-}
-if (blocked) {
-  return { stage: 'implement', ok: false, reason: `pair ${blocked.pair} blocked — stopping before PR. ${blocked.why}`, change, branch, commits, blockedPair: blocked.pair }
-}
-log(`implement: ${commits.length} per-task commit(s) made`)
+  log(`implement: ${commits.length} per-task commit(s) made`)
 } // end if (!worktreeDidImplement) — inline implement done
 
 // Shared variables used by both inline and worktree paths.

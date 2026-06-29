@@ -50,7 +50,7 @@
 
 ## 8. Verification
 
-- [ ] 8.1 End-to-end: run `ds import project` against a fixture with no `DESIGN.md` → produces a system that passes `ds validate` and a report classifying every component
-- [ ] 8.2 End-to-end: run against a fixture WITH a `DESIGN.md` → `DESIGN.md` preserved as canonical, divergences reported
-- [ ] 8.3 Confirm an adopted loop-ready component passes the consistency lint and is usable by `design`/`edit`/`doctor`/`capture`
-- [ ] 8.4 Update `CLAUDE.md` CLI overview to list the new `ds import project` path
+- [x] 8.1 End-to-end: `from-project-e2e.test.ts` runs `importProjectDesign` against the `sample-project` fixture (no DESIGN.md) → produces a system that passes `validateDesignSystem` and a report classifying every component
+- [x] 8.2 End-to-end: runs against a `with-design-md` fixture → DESIGN.md preserved as canonical (`Existing Project DS`), its `--color-accent: #aabbcc` wins over code value, divergences recorded in notes
+- [x] 8.3 A loop-ready component (`TokenAware`) genuinely passes the real lint: `countMustFix === 0` and no `off-token-color` finding
+- [x] 8.4 `CLAUDE.md` CLI overview now lists `ds import project` alongside `awesome|git|vendor`

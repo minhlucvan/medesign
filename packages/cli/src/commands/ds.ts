@@ -35,6 +35,7 @@ import {
   scaffoldBlocks,
   listBlueprints,
   applyBlueprint,
+  auditDesignSystem,
 } from '@emdesign/backend';
 import { getContext, consistencyBrief } from "@emdesign/graph";
 import { formatJson, formatError } from '../lib/format.js';
@@ -104,6 +105,39 @@ export async function cmdDs(ds: DsArgs, paths: RepoPaths, store: Store): Promise
       if (ds.argv.includes('--strict') && (tokenCheck.missingRoles.length > 0 || dsrCheck.diagnostics.length > 0)) {
         process.exit(1);
       }
+      break;
+    }
+
+    case 'audit': {
+      const auditId = a1 || paths.activeDesignSystem;
+      if (!auditId) { formatError('usage: emdesign ds audit <id> [--fix] [--json]'); process.exit(1); }
+      const fixMode = ds.argv.includes('--fix');
+      const strictMode = ds.argv.includes('--strict');
+      const report = auditDesignSystem(paths, auditId, { fix: fixMode });
+      if (ds.json) {
+        formatJson(report);
+      } else {
+        process.stdout.write(
+          `═══ Audit: ${auditId} ═══\n\n` +
+          `Token Contract:        ${report.summary.tokens.pass === report.summary.tokens.total ? '✅' : '❌'} ${report.summary.tokens.pass}/${report.summary.tokens.total}\n` +
+          `DESIGN.md Quality:     ${report.summary.designMd.pass === report.summary.designMd.total ? '✅' : '❌'} ${report.summary.designMd.pass}/${report.summary.designMd.total}\n` +
+          `Taste Alignment:       ${report.summary.taste.pass === report.summary.taste.total ? '✅' : '❌'} ${report.summary.taste.pass}/${report.summary.taste.total}\n` +
+          `Lint Rules:            ${report.summary.lint.pass === report.summary.lint.total ? '✅' : '❌'} ${report.summary.lint.pass}/${report.summary.lint.total}\n` +
+          `Preview:               ${report.summary.preview.pass === report.summary.preview.total ? '✅' : '❌'} ${report.summary.preview.pass}/${report.summary.preview.total}\n` +
+          `\nScore: ${report.score}/100 — ${report.ok ? '✅ PASS' : '❌ FAIL'}\n`
+        );
+        const failing = report.findings.filter(f => !f.pass).slice(0, 5);
+        if (failing.length > 0) {
+          process.stdout.write(`\nIssues (${report.findings.filter(f => !f.pass).length} total, showing first ${failing.length}):\n`);
+          for (const f of failing) {
+            process.stdout.write(`  [${f.severity}] ${f.dimension}: ${f.message}\n`);
+            if (f.fix) process.stdout.write(`         → Fixed: ${f.fix}\n`);
+          }
+        } else {
+          process.stdout.write(`\nNo issues found.\n`);
+        }
+      }
+      if ((strictMode || ds.gate) && !report.ok) process.exit(1);
       break;
     }
 

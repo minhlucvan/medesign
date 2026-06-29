@@ -42,3 +42,5 @@ export type { AdoptionReport, AdoptedComponent, ComponentStatus, ComponentChange
 export { runAgent, resolveExecutable } from './harness/driver.js';
 export { claudeAdapter } from './harness/claude.js';
 export type { MinimalAgentDef } from './harness/types.js';
+export { auditDesignSystem } from './audit.js';
+export type { AuditReport, AuditFinding } from './audit.js';

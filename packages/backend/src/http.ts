@@ -14,7 +14,7 @@ import { resolveDesignSystem } from './designContext.js';
 import { countMustFix } from './lint/index.js';
 import { effectiveAdapter } from './adapters/index.js';
 import { runtimeFor } from './runtime.js';
-import { applyDesignSystem, listBases, listBaseCategories, baseDetail, basePreviewHtml, customizeDesignSystem, searchDesignSystems, importAwesomeDesign, parseYamlFrontmatter, generatePreviewHtml } from './scaffold.js';
+import { applyDesignSystem, listBases, listBaseCategories, baseDetail, basePreviewHtml, customizeDesignSystem, searchDesignSystems, parseYamlFrontmatter, generatePreviewHtml } from './scaffold.js';
 import type { WorkflowSession, WorkflowStage } from './workflow.js';
 import { workflowStore } from './workflow-api.js';
 import { loadOrBuild, buildAndSave } from './graph.js';
@@ -260,86 +260,29 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
   });
 
   // Import a design system from awesome-design-md by brand name.
-  // Creates a workflow session with stage progress for the frontend ProgressView.
+  // Queues an intent for the agent to process (ds-import.js workflow).
+  // The agent picks up the intent, fetches the DESIGN.md, runs ds-scaffold
+  // and ds-generate-preview — no programmatic duplicate.
   app.post('/api/design-systems/import-awesome', async (req, res) => {
     try {
-      const { brand, name, chatSessionId } = req.body;
+      const { brand, name } = req.body;
       if (!brand) return res.status(400).json({ error: 'brand is required.' });
 
-      // Create workflow session with stages
+      // Create a tracked workflow session for frontend progress display
       const sessionId = `import-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
       const stages: WorkflowStage[] = [
+        { name: 'queued', status: 'running', progress: 10 },
         { name: 'fetch', status: 'pending', progress: 0 },
-        { name: 'parse', status: 'pending', progress: 0 },
-        { name: 'generate tokens', status: 'pending', progress: 0 },
-        { name: 'scaffold primitives', status: 'pending', progress: 0 },
+        { name: 'scaffold', status: 'pending', progress: 0 },
         { name: 'generate preview', status: 'pending', progress: 0 },
-        { name: 'validate', status: 'pending', progress: 0 },
       ];
       workflowStore.create(sessionId, stages);
 
-      // Run import asynchronously — respond immediately with sessionId
-      setImmediate(async () => {
-        try {
-          const updateStage = (name: string, status: string, progress: number) => {
-            try {
-              const session = workflowStore.get(sessionId);
-              if (session) {
-                const s = session.stages.find((st: any) => st.name === name);
-                if (s) { (s as any).status = status; s.progress = progress; }
-              }
-            } catch { /* ignore */ }
-          };
-
-          updateStage('fetch', 'running', 10);
-          const designMdUrl = `https://raw.githubusercontent.com/voltagent/awesome-design-md/main/design-md/${brand}/DESIGN.md`;
-          const resp = await fetch(designMdUrl);
-          if (!resp.ok) throw new Error(`Brand '${brand}' not found (${resp.status})`);
-          const designMd = await resp.text();
-          updateStage('fetch', 'done', 100);
-
-          updateStage('parse', 'running', 20);
-          const fm = parseYamlFrontmatter(designMd);
-          updateStage('parse', 'done', 100);
-
-          updateStage('generate tokens', 'running', 30);
-          const result = await importAwesomeDesign(paths, brand, { name });
-          updateStage('generate tokens', 'done', 100);
-
-          updateStage('scaffold primitives', 'running', 50);
-          // importAwesomeDesign already scaffolds — mark done
-          updateStage('scaffold primitives', 'done', 100);
-
-          updateStage('generate preview', 'running', 50);
-          // importAwesomeDesign already generates preview — mark done
-          updateStage('generate preview', 'done', 100);
-
-          updateStage('validate', 'running', 80);
-          updateStage('validate', 'done', 100);
-
-          // Log completion message to chat session if one was created
-          if (chatSessionId) {
-            try {
-              fetch(`http://localhost:4321/api/chat/stream`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  message: `✅ Import complete for "${name || brand}". System created at design-systems/${brand}/ with DESIGN.md, tokens.css, primitives, and preview.`,
-                  intentType: 'create-design-system',
-                  sessionId: chatSessionId,
-                }),
-              }).catch(() => {});
-            } catch { /* chat logging optional */ }
-          }
-
-          const session = workflowStore.get(sessionId);
-          if (session) { session.status = 'completed'; }
-        } catch (e) {
-          try {
-            const session = workflowStore.get(sessionId);
-            if (session) { session.status = 'failed'; session.error = (e as Error).message; }
-          } catch { /* ignore */ }
-        }
+      // Queue an intent for the agent (ds-import workflow picks it up)
+      const displayName = name || brand;
+      store.enqueueIntent({
+        type: 'create-design-system',
+        instruction: `Import the "${brand}" design system from awesome-design-md using the ds-import workflow. Name it "${displayName}". Run ds-import with source "awesome/${brand}" and name "${displayName}". After import, run ds-generate-preview to create the rich preview HTML.`,
       });
 
       res.json({ sessionId, id: brand });

@@ -22,7 +22,6 @@ import {
   overlayGenerated,
   ensureDir,
   searchDesignSystems,
-  importAwesomeDesign,
   importGitDesign,
   importProjectDesign,
   summarizeReport,
@@ -285,19 +284,18 @@ export async function cmdDs(ds: DsArgs, paths: RepoPaths, store: Store): Promise
       const importNameIdx = ds.argv.indexOf('--name');
       const importName = importNameIdx >= 0 ? ds.argv[importNameIdx + 1] : undefined;
       if (importSrc === 'awesome') {
-        if (ds.trace) {
-          const { withWorkflowSession } = await import('../lib/trace.js');
-          await withWorkflowSession(ds.trace.bus, 'import-awesome', ['fetch', 'parse', 'apply', 'compile'], async (emitStage) => {
-            emitStage('fetch', `Fetching "${importId}" from awesome registry...`);
-            const r = await importAwesomeDesign(paths, importId, { name: importName });
-            emitStage('parse', 'Parsing design tokens...');
-            emitStage('apply', 'Applying token overrides...');
-            emitStage('compile', 'Compiling output...');
-            out(r, ds.json);
-          });
+        // Queue an intent for the agent — the ds-import.js workflow handles
+        // the full pipeline: fetch DESIGN.md → taste profile → ds-scaffold
+        // (tokens + primitives) → ds-generate-preview (rich preview HTML).
+        const displayName = importName || importId;
+        const cr = store.enqueueIntent({
+          type: 'create-design-system',
+          instruction: `Import the "${importId}" design system from awesome-design-md. Run the ds-import workflow with source "awesome/${importId}" and name "${displayName}". After import, run ds-generate-preview for the rich preview HTML.`,
+        });
+        if (ds.json) {
+          formatJson({ ok: true, changeRequestId: cr.id, note: `Intent queued for agent. Run agent workflow 'ds-import' with source "awesome/${importId}" to process.` });
         } else {
-          const r = await importAwesomeDesign(paths, importId, { name: importName });
-          out(r, ds.json);
+          process.stdout.write(`Intent queued (${cr.id}). The agent will run ds-import workflow to fetch DESIGN.md, extract tokens, scaffold primitives, and generate the preview.\n`);
         }
       } else if (importSrc === 'git') {
         const ref = ds.argv.includes('--ref') ? ds.argv[ds.argv.indexOf('--ref') + 1] : undefined;

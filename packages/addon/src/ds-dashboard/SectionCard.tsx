@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { styled } from '@storybook/theming';
 import type { RefinementScope } from '../constants';
-import { RefinementInput } from './RefinementInput';
+import { addons } from '@storybook/manager-api';
+import { EVT_CHAT_MODE } from '../channel';
 
 const CardWrapper = styled.div(({ theme }) => ({
   border: `1px solid ${theme.appBorderColor}`,
@@ -88,12 +89,11 @@ export function SectionCard({
       </Header>
       {!collapsed && <Body>{children}</Body>}
       <ActionBar>
-        <RefinementInput
-          scope={scope}
-          onSubmit={(text) => onAction?.({ scope, instruction: text })}
-          status={refinementStatus ?? 'idle'}
-          errorText={refinementError}
-        />
+        <AiButton onClick={() => {
+          addons.getChannel().emit(EVT_CHAT_MODE, { enabled: true, sessionId: undefined });
+        }}>
+          ✦ AI
+        </AiButton>
       </ActionBar>
     </CardWrapper>
   );

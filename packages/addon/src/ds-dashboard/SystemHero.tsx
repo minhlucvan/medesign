@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { styled } from '@storybook/theming';
 import { Btn, Muted, Input, Pill, Row, Section } from '../ui';
+import { addons } from '@storybook/manager-api';
+import { EVT_CHAT_MODE } from '../channel';
 import { ColorStrip } from './ColorStrip';
 
 const HeroSection = styled(Section)({
@@ -52,7 +54,7 @@ export function SystemHero({
   tokensCount,
   onRequestChange,
 }: SystemHeroProps) {
-  const [aiInput, setAiInput] = useState('');
+
 
   const colorTokens = tokens.filter((t) => t.kind === 'color');
   const bodyToken = tokens.find(
@@ -60,18 +62,6 @@ export function SystemHero({
   );
   const bodyLabel = bodyToken ? `Body: ${bodyToken.value}` : null;
 
-  const handleSubmit = () => {
-    if (aiInput.trim()) {
-      onRequestChange(aiInput.trim());
-      setAiInput('');
-    }
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && aiInput.trim()) {
-      handleSubmit();
-    }
-  };
 
   return (
     <HeroSection>
@@ -124,19 +114,14 @@ export function SystemHero({
         <Muted>{tokensCount} tokens</Muted>
       </Row>
 
-      {/* Quick AI input */}
-      <AiRow style={{ marginTop: 8 }}>
-        <Input
-          value={aiInput}
-          onChange={(e) => setAiInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Ask AI to change the system..."
-          style={{ flex: 1 }}
-        />
-        <Btn onClick={handleSubmit} disabled={!aiInput.trim()}>
-          Send
+      {/* AI action link — opens chat panel */}
+      <div style={{ marginTop: 8, display: 'flex', gap: 6 }}>
+        <Btn onClick={() => {
+          addons.getChannel().emit(EVT_CHAT_MODE, { enabled: true, sessionId: undefined });
+        }}>
+          ✦ Ask AI
         </Btn>
-      </AiRow>
+      </div>
 
       {/* Preview section */}
       {previewUrl && <PreviewSection url={previewUrl} />}

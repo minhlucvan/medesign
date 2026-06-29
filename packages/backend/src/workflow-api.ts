@@ -384,27 +384,28 @@ workflowApiRouter.get('/design-systems/:id/workflow-stream', (req: Request, res:
     return;
   }
 
-  // Emit each stage
   let idx = 0;
-  const emitNext = () => {
-    if (idx < session.stages.length) {
-      const stage = session.stages[idx];
-      res.write(`event: stage\ndata: ${JSON.stringify({ id: idx, status: stage.status, detail: stage.name })}\n\n`);
-      idx++;
-      setImmediate(emitNext);
-    } else {
-      // Final done event
-      res.write(`event: done\ndata: ${JSON.stringify({ status: 'completed' })}\n\n`);
+  let closed = false;
+  const emitStages = () => {
+    if (closed) return;
+    const current = workflowStore.get(session.sessionId);
+    if (!current) return;
+    for (let i = 0; i < current.stages.length; i++) {
+      const s = current.stages[i];
+      res.write(`event: stage\ndata: ${JSON.stringify({ id: i, status: s.status, detail: s.name })}\n\n`);
+    }
+    // Emit done only when session is actually completed
+    if (current.status === 'completed' || current.status === 'failed') {
+      res.write(`event: done\ndata: ${JSON.stringify({ status: current.status })}\n\n`);
       res.end();
+    } else {
+      setTimeout(emitStages, 800);
     }
   };
 
-  req.on('close', () => {
-    // Client disconnected — stop emitting
-    idx = session.stages.length; // terminate the loop
-  });
+  req.on('close', () => { closed = true; });
 
-  setImmediate(emitNext);
+  setTimeout(emitStages, 200);
 });
 
 // ── POST /api/design-systems/:id/tokens ────────────────────────────────

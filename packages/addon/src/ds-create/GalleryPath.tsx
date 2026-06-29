@@ -52,7 +52,7 @@ type GalleryEntry = {
 
 interface GalleryPathProps {
   onProgress?: (sessionId: string) => void;
-  onComplete?: (id: string) => void;
+  onComplete?: (id?: string) => void;
 }
 
 export function GalleryPath({ onProgress, onComplete }: GalleryPathProps) {
@@ -107,12 +107,15 @@ export function GalleryPath({ onProgress, onComplete }: GalleryPathProps) {
         body: JSON.stringify({ brand, name: entry.name }),
       });
       if (res.ok) {
-        onComplete?.();
+        const data = await res.json();
+        // Import succeeded — wait briefly for backend to settle, then load dashboard
+        await new Promise(r => setTimeout(r, 2000));
+        onComplete?.(data.id || brand);
       }
     } catch (e) {
       console.error('[GalleryPath] Import failed:', e);
     }
-  }, [onComplete, onProgress]);
+  }, [onComplete]);
 
   // Show detail page for a gallery entry
   if (selectedEntry) {

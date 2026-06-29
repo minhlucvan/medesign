@@ -185,9 +185,17 @@ export function DesignSystemTab() {
         ) : creationMode === 'gallery' ? (
           <GalleryPath
             onProgress={(sessionId) => { setWorkflowSession(sessionId); }}
-            onComplete={() => {
+            onComplete={(systemId?: string) => {
               setCreationMode(null);
-              loadSystem();
+              // If we know the system ID, load it directly
+              if (systemId) {
+                api.getDesignSystemFull(systemId).then((d) => {
+                  setDetail(d);
+                  setView('dashboard');
+                }).catch(() => loadSystem());
+              } else {
+                loadSystem();
+              }
             }}
           />
         ) : creationMode === 'from-prompt' ? (

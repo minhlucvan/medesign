@@ -146,7 +146,7 @@ export const HeaderBrand = styled.span(({ theme }) => ({
 
 // ---- full-page tab primitives ----
 
-export const Page = styled.div({ width: '100%', height: '100%', overflow: 'auto', padding: 16 });
+export const Page = styled.div({ width: '100%', height: '100%', overflow: 'auto', padding: 16, boxSizing: 'border-box' });
 
 export const PageTitle = styled.h2(({ theme }) => ({ font: `700 18px ${theme.typography.fonts.base}`, margin: '0 0 2px' }));
 

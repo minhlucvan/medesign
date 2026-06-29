@@ -276,15 +276,7 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
         { name: 'generate preview', status: 'pending', progress: 0 },
         { name: 'validate', status: 'pending', progress: 0 },
       ];
-      try {
-        workflowStore.create(sessionId, stages.map((s, i) => ({
-          name: s.name, status: s.status, detail: '', progress: s.progress,
-          id: i.toString()
-        })));
-      } catch {
-        // WorkflowStore.create may expect different args — just log and continue
-        console.log('[emdesign] Workflow session created for import:', sessionId);
-      }
+      workflowStore.create(sessionId, stages);
 
       // Run import asynchronously — respond immediately with sessionId
       setImmediate(async () => {

@@ -26,6 +26,7 @@ import { cmdA11y, cmdComponentTest, cmdComponentDiff } from './commands/componen
 import { cmdStoryAuto } from './commands/story.js';
 import { cmdScreenCreate, cmdScreenList } from './commands/screen.js';
 import { cmdLoop } from './commands/loop.js';
+import type { TraceContext } from './lib/trace.js';
 import { cmdStorybookHealth } from './commands/storybook.js';
 import { cmdExplore } from './commands/explore.js';
 import { cmdSession, cmdLogs } from './commands/session.js';
@@ -133,6 +134,15 @@ complete -F _emdesign_completions emdesign
   const json = rest.includes('--json');
   const gate = rest.includes('--gate');
   const quiet = rest.includes('--quiet');
+  const trace = rest.includes('--trace');
+  const logLevel = rest.includes('--log-level') ? rest[rest.indexOf('--log-level') + 1] : undefined;
+
+  // Create trace context if --trace is set
+  let traceCtx: TraceContext | undefined;
+  if (trace) {
+    const { createTraceContext } = await import('./lib/trace.js');
+    traceCtx = createTraceContext(process.cwd(), { logLevel });
+  }
 
   // ── Top-level --help dispatch ──────────────────────────────────────────
   if (rest.includes('--help') || rest.includes('-h')) {
@@ -248,7 +258,7 @@ complete -F _emdesign_completions emdesign
     // ── Design system ────────────────────────────────────────────────────
     case 'ds': {
       const [subcommand = 'list', ...dsArgs] = rest;
-      await cmdDs({ subcommand, args: dsArgs, argv: rest, json, gate }, paths, store);
+      await cmdDs({ subcommand, args: dsArgs, argv: rest, json, gate, trace: traceCtx }, paths, store);
       break;
     }
 
@@ -621,6 +631,11 @@ complete -F _emdesign_completions emdesign
       showMainHelp();
       break;
     }
+  }
+
+  // Teardown trace context after command completes
+  if (traceCtx) {
+    traceCtx.teardown();
   }
 }
 

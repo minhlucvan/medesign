@@ -39,6 +39,7 @@ import {
 } from '@emdesign/backend';
 import { getContext, consistencyBrief } from "@emdesign/graph";
 import { formatJson, formatError } from '../lib/format.js';
+import type { TraceContext } from '../lib/trace.js';
 
 export interface DsArgs {
   subcommand: string;
@@ -46,6 +47,7 @@ export interface DsArgs {
   argv: string[];
   json?: boolean;
   gate?: boolean;
+  trace?: TraceContext;
 }
 
 export async function cmdDs(ds: DsArgs, paths: RepoPaths, store: Store): Promise<void> {
@@ -283,8 +285,20 @@ export async function cmdDs(ds: DsArgs, paths: RepoPaths, store: Store): Promise
       const importNameIdx = ds.argv.indexOf('--name');
       const importName = importNameIdx >= 0 ? ds.argv[importNameIdx + 1] : undefined;
       if (importSrc === 'awesome') {
-        const r = await importAwesomeDesign(paths, importId, { name: importName });
-        out(r, ds.json);
+        if (ds.trace) {
+          const { withWorkflowSession } = await import('../lib/trace.js');
+          await withWorkflowSession(ds.trace.bus, 'import-awesome', ['fetch', 'parse', 'apply', 'compile'], async (emitStage) => {
+            emitStage('fetch', `Fetching "${importId}" from awesome registry...`);
+            const r = await importAwesomeDesign(paths, importId, { name: importName });
+            emitStage('parse', 'Parsing design tokens...');
+            emitStage('apply', 'Applying token overrides...');
+            emitStage('compile', 'Compiling output...');
+            out(r, ds.json);
+          });
+        } else {
+          const r = await importAwesomeDesign(paths, importId, { name: importName });
+          out(r, ds.json);
+        }
       } else if (importSrc === 'git') {
         const ref = ds.argv.includes('--ref') ? ds.argv[ds.argv.indexOf('--ref') + 1] : undefined;
         const subPath = ds.argv.includes('--path') ? ds.argv[ds.argv.indexOf('--path') + 1] : undefined;
@@ -528,7 +542,8 @@ export async function cmdDs(ds: DsArgs, paths: RepoPaths, store: Store): Promise
       const secondaryIdx = ds.argv.indexOf('--secondary');
       const bodyFontIdx = ds.argv.indexOf('--body-font');
       const spacingIdx = ds.argv.indexOf('--spacing');
-      const c = customizeDesignSystem(paths, {
+
+      const customizeOpts = {
         baseRef: normalizeDsRef(a1),
         id: idIdx >= 0 ? ds.argv[idIdx + 1] : a1,
         name: nameIdx >= 0 ? ds.argv[nameIdx + 1] : a1,
@@ -539,8 +554,22 @@ export async function cmdDs(ds: DsArgs, paths: RepoPaths, store: Store): Promise
           surfaceColor: secondaryIdx >= 0 ? ds.argv[secondaryIdx + 1] : undefined,
           spacing: spacingIdx >= 0 ? Number(ds.argv[spacingIdx + 1]) : undefined,
         },
-      });
-      out(c, ds.json);
+      };
+
+      if (ds.trace) {
+        const { withWorkflowSession } = await import('../lib/trace.js');
+        await withWorkflowSession(ds.trace.bus, 'customize', ['fetch-base', 'apply-customizations', 'compile'], async (emitStage) => {
+          const baseRef = customizeOpts.baseRef;
+          emitStage('fetch-base', `Fetching base design system "${baseRef}"...`);
+          const c = customizeDesignSystem(paths, customizeOpts);
+          emitStage('apply-customizations', 'Applying brand customizations...');
+          emitStage('compile', 'Compiling customized design tokens...');
+          out(c, ds.json);
+        });
+      } else {
+        const c = customizeDesignSystem(paths, customizeOpts);
+        out(c, ds.json);
+      }
       break;
     }
 

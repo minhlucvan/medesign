@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { styled } from '@storybook/theming';
-import { addons } from '@storybook/manager-api';
 import { api, BACKEND_URL } from '../api';
-import { EVT_CHAT_MODE } from '../channel';
 import { Row, Stack, Muted, Input, Btn, Pill } from '../ui';
 import { CustomizeForm } from './CustomizeForm';
 import { GalleryDetail } from './GalleryDetail';
@@ -99,27 +97,14 @@ export function GalleryPath({ onProgress, onComplete }: GalleryPathProps) {
   });
 
   // When selecting an awesome entry, import via backend with workflow session
-  // AND create a background chat session for record keeping
   const handleSelectAwesome = useCallback(async (entry: RegistrySystem) => {
     setSelectedAwesome(entry);
     try {
       const brand = entry.source.replace('awesome/', '');
-      let chatSessionId: string | undefined;
-      // Create a background chat session first (user sees it later)
-      try {
-        const session = await api.createSession({
-          type: 'chat',
-          scope: `design-system-import:${brand}`,
-          origin: 'gallery',
-        });
-        if (session?.id) chatSessionId = session.id;
-      } catch { /* chat session optional */ }
-
-      // Direct import for ProgressView stages
       const res = await fetch(`${BACKEND_URL}/api/design-systems/import-awesome`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ brand, name: entry.name, chatSessionId }),
+        body: JSON.stringify({ brand, name: entry.name }),
       });
       if (res.ok) {
         const data = await res.json();
@@ -129,7 +114,9 @@ export function GalleryPath({ onProgress, onComplete }: GalleryPathProps) {
           onComplete?.(data.id);
         }
       }
-    } catch { /* */ }
+    } catch (e) {
+      console.error('[GalleryPath] Import failed:', e);
+    }
   }, [onComplete, onProgress]);
 
   // Show detail page for a gallery entry

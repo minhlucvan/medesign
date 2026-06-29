@@ -304,8 +304,6 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
 
           updateStage('generate tokens', 'running', 30);
           const result = await importAwesomeDesign(paths, brand, { name });
-          // Apply the system so it can be loaded by the runtime/dashboard
-          try { applyDesignSystem(paths, result.id); } catch { /* apply is optional */ }
           updateStage('generate tokens', 'done', 100);
 
           updateStage('scaffold primitives', 'running', 50);

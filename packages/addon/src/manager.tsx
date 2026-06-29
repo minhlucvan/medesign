@@ -31,14 +31,14 @@ addons.register(ADDON_ID, () => {
   addons.add(TOOL_ID, {
     type: types.TOOL,
     title: 'emdesign tools',
-    match: ({ viewMode }) => viewMode === 'story',
+    match: ({ viewMode }) => viewMode === 'story' || viewMode === 'docs',
     render: () => <Tool />,
   });
 
   addons.add(PANEL_ID, {
     type: types.PANEL,
     title: 'Emdesign',
-    match: ({ viewMode }) => viewMode === 'story',
+    match: ({ viewMode }) => viewMode === 'story' || viewMode === 'docs',
     render: ({ active }) => (
       <AddonPanel active={!!active}>
         <SystemTab />
@@ -57,7 +57,7 @@ addons.register(ADDON_ID, () => {
   addons.add(CHARTERS_PANEL_ID, {
     type: types.PANEL,
     title: 'Charters',
-    match: ({ viewMode }) => viewMode === 'story',
+    match: ({ viewMode }) => viewMode === 'story' || viewMode === 'docs',
     render: ({ active }) => (
       <AddonPanel active={!!active}>
         <ChartersTab />
@@ -78,7 +78,7 @@ addons.register(ADDON_ID, () => {
   addons.add(PROPERTIES_PANEL_ID, {
     type: types.PANEL,
     title: 'Properties',
-    match: ({ viewMode }) => viewMode === 'story',
+    match: ({ viewMode }) => viewMode === 'story' || viewMode === 'docs',
     render: ({ active }) => (
       <AddonPanel active={!!active}>
         <PropertiesPanel active={!!active} />
@@ -89,7 +89,7 @@ addons.register(ADDON_ID, () => {
   addons.add(WAND_RESULTS_PANEL_ID, {
     type: types.PANEL,
     title: 'Wand Results',
-    match: ({ viewMode }) => viewMode === 'story',
+    match: ({ viewMode }) => viewMode === 'story' || viewMode === 'docs',
     render: ({ active }) => (
       <AddonPanel active={!!active}>
         <WandResultsPanel active={!!active} />
@@ -100,7 +100,7 @@ addons.register(ADDON_ID, () => {
   addons.add(DIFF_PANEL_ID, {
     type: types.PANEL,
     title: 'Diff',
-    match: ({ viewMode }) => viewMode === 'story',
+    match: ({ viewMode }) => viewMode === 'story' || viewMode === 'docs',
     render: ({ active }) => (
       <AddonPanel active={!!active}>
         <DiffPanel active={!!active} />

@@ -36,7 +36,7 @@ The thin client the agent, `/mds:*` commands, and gates invoke. Dev-invoke it wi
 
 **Workspace:** `init <framework>` | `attach` | `update` | `serve [--port]` | `up` | `health`
 
-**Design System Registry:** `ds create` | `ds import awesome|git|vendor` | `ds info` | `ds list` | `ds bases`
+**Design System Registry:** `ds create` | `ds import awesome|git|vendor|project` | `ds info` | `ds list` | `ds bases`
 
 **Design System Management:** `ds customize --primary --font` | `ds update` | `ds validate [--strict]` | `ds grade [--timeout]` | `ds conflicts` | `ds history`
 

@@ -15,8 +15,6 @@ import { countMustFix } from './lint/index.js';
 import { effectiveAdapter } from './adapters/index.js';
 import { runtimeFor } from './runtime.js';
 import { applyDesignSystem, listBases, listBaseCategories, baseDetail, basePreviewHtml, customizeDesignSystem, searchDesignSystems, parseYamlFrontmatter, generatePreviewHtml } from './scaffold.js';
-import type { WorkflowSession, WorkflowStage } from './workflow.js';
-import { workflowStore, workflowQueue } from './workflow-api.js';
 import { loadOrBuild, buildAndSave } from './graph.js';
 import { RULES, RULES_BY_ID } from '@emdesign/graph';
 import { lintFrameworkCharters, lintDesignSystem, lintRendered, mergeReports } from '@emdesign/doctor';
@@ -260,47 +258,41 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
   });
 
   // Import a design system from awesome-design-md by brand name.
-  // Creates a background session (fetches DESIGN.md, runs the workflow
-  // pipeline via SessionQueue). Returns immediately with the sessionId
-  // so the frontend can poll for progress. Max concurrent sessions are
-  // managed by the SessionQueue (default 3).
+  // Creates a real Claude session that runs the ds-import.js agent workflow.
+  // No programmatic fetching, no background queue — the agent handles everything.
+  // The session appears in the sidebar automatically.
   app.post('/api/design-systems/import-awesome', async (req, res) => {
     try {
       const { brand, name } = req.body;
       if (!brand) return res.status(400).json({ error: 'brand is required.' });
 
-      const sessionId = `import-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`;
-      const stages: WorkflowStage[] = [
-        { name: 'fetch', status: 'pending', progress: 0 },
-        { name: 'parse', status: 'pending', progress: 0 },
-        { name: 'generate tokens', status: 'pending', progress: 0 },
-        { name: 'scaffold primitives', status: 'pending', progress: 0 },
-        { name: 'validate', status: 'pending', progress: 0 },
-      ];
+      const displayName = name || brand;
+      const systemId = displayName.toLowerCase().replace(/[^a-z0-9-]/g, '-');
+      const prompt = `workflow('ds-import', { source: "awesome/${brand}", name: "${displayName}", id: "${systemId}" })`;
 
-      // Store the import params so the runner can use them
-      const importMeta = { brand, name: name || brand, sessionId };
-      workflowStore.create(sessionId, stages);
-      (workflowStore.get(sessionId) as any).importMeta = importMeta;
+      const { AgentRunner } = await import('@emdesign/session');
+      const { claudeAdapter } = await import('@emdesign/backend');
+      const runner = new AgentRunner();
+      const handle = await runner.spawn({
+        def: claudeAdapter,
+        cwd: paths.root,
+        prompt,
+        allowedDirs: [paths.root],
+      });
 
-      // Enqueue — runs when a slot is available (max 3 concurrent)
-      workflowQueue.enqueue(sessionId);
+      // Fire and forget — Claude processes the import, creates the design system,
+      // and the session appears in the sidebar for the user to watch.
+      handle.waitForExit().catch((e) => {
+        console.error('[emdesign] Import session failed:', e.message);
+      });
 
-      const systemId = (name || brand).toLowerCase().replace(/[^a-z0-9-]/g, '-');
-      res.json({ sessionId, id: systemId, queued: true, running: workflowQueue.runningCount, pending: workflowQueue.queuedCount });
+      res.json({ sessionId: handle.sessionId, id: systemId });
     } catch (e) {
       res.status(500).json({ error: (e as Error).message });
     }
   });
 
-  // Session queue status — used by the frontend to show queue depth / position.
-  app.get('/api/sessions/queue', (_req, res) => {
-    res.json({
-      running: workflowQueue.runningCount,
-      queued: workflowQueue.queuedCount,
-      active: workflowQueue.activeCount,
-    });
-  });
+
 
   // Generate a rich preview HTML for an awesome-design-md entry from its DESIGN.md.
   // Cache DESIGN.md fetches in-memory for 5 minutes.

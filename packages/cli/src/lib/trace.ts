@@ -6,7 +6,7 @@
  * Used by the `--trace` / `--log-level` CLI flags.
  */
 
-import { PlatformEventBus } from '@emdesign/session';
+import { PlatformEventBus } from '@emdesign/agent-manager';
 import path from 'node:path';
 import fs from 'node:fs';
 

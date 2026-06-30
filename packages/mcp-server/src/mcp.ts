@@ -682,7 +682,7 @@ export async function createMcpServer(store: Store, paths: RepoPaths, _orch?: an
   // Register session management tools if orchestrator is provided
   if (_orch) {
     try {
-      const { registerSessionMcpTools } = await import('@emdesign/session');
+      const { registerSessionMcpTools } = await import('@emdesign/agent-manager');
       registerSessionMcpTools(server, _orch);
     } catch { /* @emdesign/session not available */ }
   }

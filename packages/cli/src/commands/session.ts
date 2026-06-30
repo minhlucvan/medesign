@@ -7,7 +7,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { getSessions, getConversation } from '@emdesign/session';
+import { getSessions, getConversation } from '@emdesign/agent-manager';
 import type { RepoPaths } from '@emdesign/backend';
 import { formatError } from '../lib/format.js';
 

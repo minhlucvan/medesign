@@ -207,7 +207,7 @@ complete -F _emdesign_completions emdesign
 
       let orch: any;
       try {
-        const { PlatformManager } = await import('@emdesign/session');
+        const { PlatformManager } = await import('@emdesign/agent-manager');
         orch = new PlatformManager(paths);
       } catch { /* session not available */ }
 
@@ -217,7 +217,7 @@ complete -F _emdesign_completions emdesign
       });
       if (orch) {
         try {
-          const { attachWebSocket } = await import('@emdesign/session');
+          const { attachWebSocket } = await import('@emdesign/agent-manager');
           attachWebSocket(server as any, orch.bus);
         } catch { /* ws not supported */ }
         orch.services.startHealthChecks();
@@ -228,7 +228,7 @@ complete -F _emdesign_completions emdesign
     case 'up': {
       let orch: any;
       try {
-        const { PlatformManager, attachWebSocket } = await import('@emdesign/session');
+        const { PlatformManager, attachWebSocket } = await import('@emdesign/agent-manager');
         orch = new PlatformManager(paths);
         const server = await startHttpBridge(store, paths, PORT, orch);
         try { attachWebSocket(server as any, orch.bus); } catch { /* ws not available */ }

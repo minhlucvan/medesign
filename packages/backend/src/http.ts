@@ -294,12 +294,12 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
         const historyPath = path.join(os.homedir(), '.claude', 'history.jsonl');
         fs.appendFileSync(historyPath, JSON.stringify(historyEntry) + '\n');
         // Invalidate the in-memory cache so next API call picks it up
-        const { invalidateHistoryCache } = await import('@emdesign/session');
+        const { invalidateHistoryCache } = await import('@emdesign/agent-manager');
         invalidateHistoryCache();
       } catch { /* history registration optional */ }
 
       // Spawn Claude Code with the ds-import workflow
-      const { AgentRunner } = await import('@emdesign/session');
+      const { AgentRunner } = await import('@emdesign/agent-worker');
       const { claudeAdapter } = await import('@emdesign/backend');
       const runner = new AgentRunner();
       const prompt = `workflow('ds-import', { source: "awesome/${brand}", name: "${displayName}", id: "${systemId}" })`;
@@ -921,7 +921,7 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
     });
 
     try {
-      const { AgentRunner } = await import('@emdesign/session');
+      const { AgentRunner } = await import('@emdesign/agent-worker');
       const { claudeAdapter } = await import('@emdesign/backend');
       const runner = new AgentRunner();
 
@@ -946,7 +946,7 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
         handle.cancel().catch(() => {});
       });
 
-      handle.onLog((line) => {
+      handle.onLog((line: string) => {
         try {
           const ev = JSON.parse(line);
           if (ev.type === 'assistant' && ev.message?.content) {
@@ -975,7 +975,7 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
   if (orch) {
     try {
       // Dynamic import to avoid hard dependency on @emdesign/session
-      const { createSessionRouter } = await import('@emdesign/session');
+      const { createSessionRouter } = await import('@emdesign/agent-manager');
       const router = createSessionRouter(orch);
       app.use('/api', router);
     } catch {
@@ -984,7 +984,7 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
 
     // Wire log-sink into the HTTP bridge when orchestrator bus is available
     try {
-      const { createLogSink } = await import('@emdesign/session');
+      const { createLogSink } = await import('@emdesign/agent-manager');
       createLogSink(orch.bus, paths.root);
     } catch {
       // log-sink not available — skip wiring
@@ -1016,7 +1016,7 @@ export async function createHttpBridge(store: Store, paths: RepoPaths, orch?: an
           const { appendFileSync } = await import('node:fs');
           const { join } = await import('node:path');
           appendFileSync(join(homedir(), '.claude', 'history.jsonl'), JSON.stringify(entry) + '\n');
-          const { invalidateHistoryCache } = await import('@emdesign/session');
+          const { invalidateHistoryCache } = await import('@emdesign/agent-manager');
           invalidateHistoryCache();
         } catch {}
       },

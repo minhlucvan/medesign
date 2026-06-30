@@ -33,7 +33,7 @@ const { mockGetSessions, mockGetConversation } = vi.hoisted(() => ({
   mockGetConversation: vi.fn(),
 }));
 
-vi.mock('@emdesign/session', () => ({
+vi.mock('@emdesign/agent-manager', () => ({
   getSessions: mockGetSessions,
   getConversation: mockGetConversation,
 }));

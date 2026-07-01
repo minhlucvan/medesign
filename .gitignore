@@ -26,3 +26,11 @@ uploads/
 examples/
 .env.claude
 
+
+# Temp workflow design systems
+design-systems/wf_*/
+design-systems/*test*/
+packages/backend/design-systems/
+packages/backend/emdesign.config.json
+packages/backend/src/active-design-system.css
+src/

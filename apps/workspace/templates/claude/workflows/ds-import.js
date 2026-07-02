@@ -15,6 +15,7 @@ export const meta = {
     { title: 'Fetch preview', detail: 'Fetch reference preview HTML (visual reality)' },
     { title: 'Analyze preview', detail: 'Extract branding, design language, sections, primitives → manifest' },
     { title: 'Generate skills', detail: 'Build + taste skills from DESIGN.md + tokens + preview + manifest' },
+    { title: 'Validate', detail: 'Validate DESIGN.md 9 sections + tokens.css 11 roles + manifest' },
     { title: 'Build primitives', detail: 'RED/GREEN each manifest primitive with preview HTML as ground truth' },
     { title: 'Compose overview', detail: 'Build React overview page matching preview via ds-compose-overview' },
   ],
@@ -240,7 +241,41 @@ Return "done".`,
 log(`[ds-import] Skills generated for "${dsId}"`)
 
 // ═══════════════════════════════════════════════════════════════════════
-// Phase 5: Build primitives — RED/GREEN each primitive from manifest
+// Phase 5: Validate — check DESIGN.md sections + tokens.css roles + manifest
+// ═══════════════════════════════════════════════════════════════════════
+phase('Validate')
+log('[ds-import] Validating design system contract')
+
+await agent(
+  `Validate that DS "${dsId}" at "${dsDir}" meets the contract.
+
+Read:
+- cat "${dsDir}/DESIGN.md"
+- cat "${dsDir}/tokens.css"
+- cat "${dsDir}/preview-manifest.json"
+
+Check:
+1. DESIGN.md has all 9 sections (Visual Theme, Color, Typography, Spacing, Layout, Components, Motion, Voice, Anti-patterns)
+2. tokens.css declares all 11 SEMANTIC_TOKEN_ROLES (color-surface, color-surface-raised, color-text, color-text-muted, color-accent, color-accent-hover, color-border, radius, space-unit, font-sans, shadow-raised)
+3. Any issues found
+
+For any missing sections in DESIGN.md, generate a brief default section and append it.
+For any missing token roles, add them with reasonable defaults from the DESIGN.md values.
+
+Return JSON: { ok: boolean, missingSections: string[], missingRoles: string[], fixesApplied: string[] }`,
+  { label: `validate:${dsId}`, phase: 'Validate', schema: {
+    type: 'object', properties: {
+      ok: { type: 'boolean' },
+      missingSections: { type: 'array', items: { type: 'string' } },
+      missingRoles: { type: 'array', items: { type: 'string' } },
+      fixesApplied: { type: 'array', items: { type: 'string' } },
+    }, required: ['ok'],
+  }}
+)
+log(`[ds-import] ✅ Design system validated`)
+
+// ═══════════════════════════════════════════════════════════════════════
+// Phase 6: Build primitives — RED/GREEN each primitive from manifest
 // Ground truth: preview HTML + DESIGN.md + tokens.css + build skill
 // ═══════════════════════════════════════════════════════════════════════
 phase('Build primitives')
@@ -362,7 +397,7 @@ Return "done".`,
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// Phase 6: Compose overview — build React page matching preview HTML
+// Phase 7: Compose overview — build React page matching preview HTML
 // ═══════════════════════════════════════════════════════════════════════
 phase('Compose overview')
 log('[ds-import] Building React overview page matching preview — ds-compose-overview')

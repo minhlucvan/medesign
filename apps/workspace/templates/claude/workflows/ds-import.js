@@ -120,7 +120,7 @@ log(`[ds-import] Created ${componentCount} primitive component(s)`)
 phase('Compose overview')
 log('[ds-import] Delegating overview to ds-compose-overview (Red-Green)')
 
-const overviewResult = await workflow('ds-compose-overview', {
+const overviewResult = await workflow({scriptPath: 'apps/workspace/templates/claude/workflows/ds-compose-overview.js'}, {
   dsId,
   dsPath: dsDir,
   maxAttempts: 3,

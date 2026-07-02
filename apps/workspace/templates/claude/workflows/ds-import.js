@@ -13,8 +13,8 @@ export const meta = {
   phases: [
     { title: 'Fetch & tokens', detail: 'Fetch DESIGN.md, LLM extracts tokens.css + manifest' },
     { title: 'Fetch preview', detail: 'Fetch reference preview HTML (visual reality)' },
-    { title: 'Generate skills', detail: 'Skills/build + taste from DESIGN.md + tokens.css + preview' },
     { title: 'Analyze preview', detail: 'Extract branding, design language, sections, primitives → preview-manifest.json' },
+    { title: 'Generate skills', detail: 'Skills/build + taste from DESIGN.md + tokens.css + preview + manifest' },
     { title: 'Build sections', detail: 'Loop manifest sections: RED/GREEN each primitive, compose section story' },
   ],
 }
@@ -97,58 +97,8 @@ const previewBytes = previewFetch?.bytes ?? 0
 log(`[ds-import] Preview HTML: ${previewBytes} bytes at ${previewPath}`)
 
 // ═══════════════════════════════════════════════════════════════════════
-// Phase 3: Generate per-DS skills (build skill + taste profile)
-// Uses DESIGN.md + tokens.css + preview HTML for richer context
-// ═══════════════════════════════════════════════════════════════════════
-phase('Generate skills')
-log('[ds-import] Generating skills/build/SKILL.md and skills/taste/SKILL.md')
-
-await agent(
-  `Generate the design-language build skill and taste profile for DS "${dsId}" at ${dsDir}.
-
-Inputs — read ALL three for maximum context:
-- cat "${dsDir}/DESIGN.md"        (text contract: principles, colors, typography, spacing)
-- cat "${dsDir}/tokens.css"       (token values: exact hex variables)
-- cat "${dsDir}/reference-example.html"  (RENDERED preview: actual visual layout, component examples, color usage in context)
-
-The preview HTML is especially important — it shows how the design actually looks on screen,
-giving you concrete visual examples of spacing, color pairing, typography hierarchy,
-component composition, and layout patterns. Use it to make the build skill's
-Component Patterns section reflect REAL usage, not generic examples.
-
-Write to:
-1. ${dsDir}/skills/build/SKILL.md — the build skill with these 8 sections:
-   # <Name> Build Skill
-   ## Token Roles — table each SEMANTIC_TOKEN_ROLE with Tailwind class + CSS var + usage
-   ## Type Scale — display / h1 / h2 / h3 / body / caption
-   ## Spacing Scale — base unit + each stop
-   ## Radius & Depth — radius stops, shadow rules
-   ## Motion — fast/base/ease tokens
-   ## Component Patterns — 3-5 examples based on REAL usage from the preview HTML
-   ## Anti-Patterns — explicit DO NOT list
-   ## Reuse vs Author — "if @ds/<Name> exists, import, don't re-author"
-
-2. ${dsDir}/skills/taste/SKILL.md — the taste profile with YAML frontmatter:
-   ---
-   name: ${dsId}-taste
-   dials:
-     DESIGN_VARIANCE: <1-10>    // derived from actual visual boldness in preview
-     MOTION_INTENSITY: <1-10>   // derived from animation patterns
-     VISUAL_DENSITY: <1-10>     // derived from spacing/info density
-   ---
-   # ${dsId} Taste Profile
-   **Brand fingerprint:** <1-2 sentences describing the design language>
-   **Visual characteristics:** <1-2 sentences from preview observation>
-   **Anti-patterns:** <1-2 sentences of what to avoid>
-
-Return "done".`,
-  { label: `skills:${dsId}`, phase: 'Generate skills' }
-)
-log(`[ds-import] Skills generated for "${dsId}"`)
-
-// ═══════════════════════════════════════════════════════════════════════
-// Phase 4: Analyze DESIGN.md + preview HTML → preview-manifest.json
-// Structured manifest: sections, primitives, visual patterns
+// Phase 3: Analyze DESIGN.md + preview HTML → preview-manifest.json
+// Structured manifest: branding, design language, sections, primitives
 // ═══════════════════════════════════════════════════════════════════════
 phase('Analyze preview')
 log('[ds-import] Analyzing DESIGN.md + preview HTML → preview-manifest.json')
@@ -230,6 +180,57 @@ const primitives = manifestResult?.primitives ?? {}
 const manifestPath = `${dsDir}/preview-manifest.json`
 await $`mkdir -p "${dsDir}" && echo '${JSON.stringify(manifestResult, null, 2)}' > "${manifestPath}"`
 log(`[ds-import] Preview manifest: ${sections.length} sections, ${Object.keys(primitives).length} primitives`)
+
+// ═══════════════════════════════════════════════════════════════════════
+// Phase 4: Generate per-DS skills (build skill + taste profile)
+// Uses DESIGN.md + tokens.css + preview HTML + manifest for rich context
+// ═══════════════════════════════════════════════════════════════════════
+phase('Generate skills')
+log('[ds-import] Generating skills/build/SKILL.md and skills/taste/SKILL.md')
+
+await agent(
+  `Generate the design-language build skill and taste profile for DS "${dsId}" at ${dsDir}.
+
+Inputs — read ALL for maximum context:
+- cat "${dsDir}/DESIGN.md"                          (text contract)
+- cat "${dsDir}/tokens.css"                         (exact token values)
+- cat "${dsDir}/reference-example.html"             (RENDERED preview: actual visual execution)
+- cat "${dsDir}/preview-manifest.json"              (ANALYZED manifest: branding, design language, sections)
+
+The preview-manifest.json already contains extracted branding, design language principles,
+visual concepts, and section structure. Use it alongside the raw preview HTML to create
+skills that accurately reflect the design system's real character.
+
+Write to:
+1. ${dsDir}/skills/build/SKILL.md — the build skill with these 8 sections:
+   # <Name> Build Skill
+   ## Token Roles — table each SEMANTIC_TOKEN_ROLE with Tailwind class + CSS var + usage
+   ## Type Scale — display / h1 / h2 / h3 / body / caption
+   ## Spacing Scale — base unit + each stop
+   ## Radius & Depth — radius stops, shadow rules
+   ## Motion — fast/base/ease tokens
+   ## Component Patterns — 3-5 examples based on REAL usage from the preview HTML
+   ## Anti-Patterns — explicit DO NOT list
+   ## Reuse vs Author — "if @ds/<Name> exists, import, don't re-author"
+
+2. ${dsDir}/skills/taste/SKILL.md — the taste profile with YAML frontmatter:
+   ---
+   name: ${dsId}-taste
+   dials:
+     DESIGN_VARIANCE: <1-10>    // from branding/manifest character
+     MOTION_INTENSITY: <1-10>   // from visual patterns
+     VISUAL_DENSITY: <1-10>     // from spacing/info density in preview
+   ---
+   # ${dsId} Taste Profile
+   **Brand fingerprint:** <from manifest.branding>
+   **Design language:** <from manifest.designLanguage.principles>
+   **Visual characteristics:** <from manifest.visual concepts>
+   **Anti-patterns:** <what to avoid>
+
+Return "done".`,
+  { label: `skills:${dsId}`, phase: 'Generate skills' }
+)
+log(`[ds-import] Skills generated for "${dsId}"`)
 
 // ── Helper: build one section (RED/GREEN its primitives, compose section story) ──
 async function buildSection(section, dsDir, dsId) {

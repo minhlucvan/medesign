@@ -11,10 +11,11 @@ export const meta = {
   name: 'ds-import',
   description: 'Import DESIGN.md from awesome-design-md, scaffold primitives, delegate overview to ds-compose-overview.',
   phases: [
-    { title: 'Fetch & tokens', detail: 'Fetch DESIGN.md, extract tokens.css, write manifest' },
-    { title: 'Fetch preview', detail: 'Fetch reference preview HTML (visual context for skills + compose)' },
-    { title: 'Generate skills', detail: 'Generate skills/build + taste from DESIGN.md + tokens.css + preview' },
-    { title: 'Compose overview', detail: 'ds-compose-overview: analyze preview → discover primitives dynamically → RED/GREEN each → compose Showcase' },
+    { title: 'Fetch & tokens', detail: 'Fetch DESIGN.md, LLM extracts tokens.css + manifest' },
+    { title: 'Fetch preview', detail: 'Fetch reference preview HTML (visual reality)' },
+    { title: 'Generate skills', detail: 'Skills/build + taste from DESIGN.md + tokens.css + preview' },
+    { title: 'Analyze preview', detail: 'Extract branding, design language, sections, primitives → preview-manifest.json' },
+    { title: 'Build sections', detail: 'Loop manifest sections: RED/GREEN each primitive, compose section story' },
   ],
 }
 
@@ -146,21 +147,165 @@ Return "done".`,
 log(`[ds-import] Skills generated for "${dsId}"`)
 
 // ═══════════════════════════════════════════════════════════════════════
-// Phase 4: Delegate overview to ds-compose-overview (Red-Green)
-// Uses the preview HTML already fetched in Phase 2
+// Phase 4: Analyze DESIGN.md + preview HTML → preview-manifest.json
+// Structured manifest: sections, primitives, visual patterns
 // ═══════════════════════════════════════════════════════════════════════
+phase('Analyze preview')
+log('[ds-import] Analyzing DESIGN.md + preview HTML → preview-manifest.json')
+
+const manifestResult = await agent(
+  `Analyze the design system at "${dsDir}" and produce a structured preview-manifest.json.
+
+Read these THREE inputs for maximum context:
+- cat "${dsDir}/DESIGN.md"              (text contract: principles, brand voice, design rationale)
+- cat "${dsDir}/reference-example.html" (RENDERED preview: actual visual execution)
+- cat "${dsDir}/tokens.css"             (exact token values)
+
+Extract the design system's full character from BOTH the DESIGN.md (what it says) and the preview HTML (what it actually looks like). The preview shows real visual execution — color in context, spacing, typography hierarchy, layout patterns, component behavior.
+
+Return a JSON object with these fields:
+
+1. "branding": {
+     "name": "string",
+     "tagline": "string",
+     "voice": "string — e.g. confident, playful, technical, editorial",
+     "personality": "string — brand character description",
+     "targetAudience": "string"
+   }
+
+2. "designLanguage": {
+     "principles": ["list of design principles observed"],
+     "visualConcepts": ["key visual concepts — e.g. monochrome canvas, pastel color blocks"],
+     "layoutPhilosophy": "string — grid, asymmetry, whitespace approach",
+     "spacingPhilosophy": "string — generous, compact, rhythmic",
+     "typographyHierarchy": "string — how type sizes and weights create hierarchy"
+   }
+
+3. "sections": [
+     {
+       "id": "hero",
+       "name": "Hero",
+       "description": "string",
+       "primitives": ["Button", "Heading", "Text"],
+       "visualNotes": "what this section looks like in the preview",
+       "order": 1
+     }
+   ]
+
+4. "primitives": {
+     "Button": { "variants": ["primary", "secondary"], "sizes": ["sm", "md", "lg"], "behavior": "hover/focus/disabled states" },
+     "Heading": { "levels": [1, 2, 3, 4, 5, 6] }
+   }
+
+5. "visual": {
+     "colorStory": "string — overall color narrative",
+     "tokens": { "surface": "#fff", "text": "#000" },
+     "typography": { "display": "font name", "body": "font name" },
+     "spacing": { "unit": "8px", "character": "generous/compact" },
+     "radius": { "default": "8px", "character": "sharp/rounded/pill" },
+     "motion": { "character": "bouncy/static/purposeful" }
+   }
+
+Extract ALL sections visible in the preview HTML, in DOM order. For each section,
+include visual notes about what it contains and how it looks. For each primitive,
+note the exact variants observed in the preview.`,
+  {
+    label: `manifest:${dsId}`, phase: 'Analyze preview',
+    schema: {
+      type: 'object',
+      properties: {
+        branding: { type: 'object' },
+        designLanguage: { type: 'object' },
+        sections: { type: 'array', items: { type: 'object' } },
+        primitives: { type: 'object' },
+        visual: { type: 'object' },
+      },
+      required: ['sections', 'primitives'],
+    },
+  }
+)
+
+const sections = manifestResult?.sections ?? []
+const primitives = manifestResult?.primitives ?? {}
+const manifestPath = `${dsDir}/preview-manifest.json`
+await $`mkdir -p "${dsDir}" && echo '${JSON.stringify(manifestResult, null, 2)}' > "${manifestPath}"`
+log(`[ds-import] Preview manifest: ${sections.length} sections, ${Object.keys(primitives).length} primitives`)
+
+// ── Helper: build one section (RED/GREEN its primitives, compose section story) ──
+async function buildSection(section, dsDir, dsId) {
+  const sectionId = section.id || section.name.toLowerCase().replace(/\s+/g, '-')
+  const sectionName = section.name
+  const neededPrimitives = section.primitives || []
+  let builtCount = 0
+
+  for (const primName of neededPrimitives) {
+    const primPath = `${dsDir}/code/${primName}.tsx`
+    const exists = String(await $`test -f "${primPath}" && echo "yes" || echo "no"`).trim()
+    if (exists === 'yes') { builtCount++; continue }
+
+    // RED: write test
+    log(`  🔴 ${sectionName}: ${primName} (RED — test that fails)`)
+    await agent(
+      `Write a vitest test for "${primName}" at "${dsDir}/__tests__/${primName}.test.ts".
+Read "${dsDir}/DESIGN.md" and "${dsDir}/reference-example.html" first.
+The component does NOT exist yet at "${primPath}".
+Write the test file, then run "npx vitest run \"${dsDir}/__tests__/${primName}.test.ts\"" — it must fail.
+Return "RED confirmed: test failed".`,
+      { label: `red:${dsId}/${primName}`, phase: 'Build sections' }
+    )
+
+    // GREEN: implement
+    log(`  🟩 ${sectionName}: ${primName} (GREEN — implement)`)
+    await agent(
+      `Implement "${primName}" component for design system at "${dsDir}".
+Read "${dsDir}/DESIGN.md", "${dsDir}/tokens.css", "${dsDir}/skills/build/SKILL.md" first.
+Also look at "${dsDir}/reference-example.html" to see how this component is used in context.
+
+Write to "${primPath}".
+Requirements: CSS variables for all values, forwardRef, TypeScript props, displayName, interactive states.
+Then run "npx vitest run \"${dsDir}/__tests__/${primName}.test.ts\"" — must pass.
+Return JSON: { "file": "${primName}.tsx", "green": true }`,
+      { label: `green:${dsId}/${primName}`, phase: 'Build sections', schema: {
+        type: 'object', properties: { file: { type: 'string' }, green: { type: 'boolean' } }, required: ['file'],
+      }}
+    )
+    builtCount++
+  }
+
+  // Compose section story from primitives
+  const storyPath = `${dsDir}/code/${sectionName}.stories.tsx`
+  log(`  📝 ${sectionName}: composing section story`)
+  await agent(
+    `Compose a React Storybook story for the "${sectionName}" section of the "${dsId}" design system.
+Read "${dsDir}/DESIGN.md", "${dsDir}/reference-example.html", and the existing primitives
+at "${dsDir}/code/" to understand how this section looks and what components it uses.
+
+Write a story file at "${storyPath}" that:
+- Imports primitives from './index'
+- Arranges them to match the reference preview HTML layout
+- Uses CSS variables (var(--token-*)) for all styling
+- Has proper Storybook meta with title "Design System/${dsId}/${sectionName}"
+
+Write the file and run "npx vitest run \"${dsDir}/__tests__/${sectionName}.test.ts\"" if it exists — must pass.
+Return "ok".`,
+    { label: `story:${dsId}/${sectionName}`, phase: 'Build sections' }
+  )
+
+  log(`  ✅ ${sectionName} done — ${builtCount} primitive(s) built`)
+  return { section: sectionName, primitivesBuilt: builtCount }
+}
+
 // ═══════════════════════════════════════════════════════════════════════
-phase('Compose overview')
-log('[ds-import] Delegating overview to ds-compose-overview — analyzes preview, RED/GREEN primitives, composes Showcase')
+// Phase 5: Per-section RED/GREEN primitives + compose section story
+// Loop through manifest, spawn sub-workflow per section in parallel
+// ═══════════════════════════════════════════════════════════════════════
+phase('Build sections')
+log('[ds-import] Building sections from preview-manifest — RED/GREEN per primitive')
 
-const overviewResult = await workflow({scriptPath: 'apps/workspace/templates/claude/workflows/ds-compose-overview.js'}, {
-  dsId,
-  dsPath: dsDir,
-  maxAttempts: 3,
-})
+const sectionResults = await parallel(sections.map((section) => () => buildSection(section, dsDir, dsId)))
 
-log(`[ds-import] Overview: ${overviewResult?.overviewFile ?? 'N/A'}`)
-log(`[ds-import]   Tests: ${overviewResult?.testFile ?? 'N/A'} (${overviewResult?.testsPassed ? 'pass' : 'fail'})`)
+const successfulSections = sectionResults.filter(Boolean).length
+log(`[ds-import] Sections: ${successfulSections}/${sections.length} built`)
 
 // ═══════════════════════════════════════════════════════════════════════
 // Summary

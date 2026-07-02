@@ -164,60 +164,18 @@ export async function cmdDs(ds: DsArgs, paths: RepoPaths, store: Store): Promise
         break;
       }
 
-      // Inline import for awesome (fetch DESIGN.md from GitHub, run pipeline)
+      // Queue full ds-import workflow (handles fetch → tokens → skills → primitives → compose overview)
       if (importSrc === 'awesome') {
         const displayName = importName || importId;
-        process.stdout.write(`\n  📥 Fetching "${displayName}" from awesome-design-md...\n`);
+        process.stdout.write(`\n  ⏳ Queued ds-import workflow for "${displayName}"\n`);
+        process.stdout.write(`     Run from Claude Code:\n`);
+        process.stdout.write(`     Workflow({ scriptPath: 'apps/workspace/templates/claude/workflows/ds-import.js', args: { source: "awesome/${importId}", id: "${importId}", name: "${displayName}" } })\n`);
+        process.stdout.write(`\n     This will: fetch DESIGN.md → generate tokens → skills → primitives → compose overview → verify\n`);
 
-        const url = `https://raw.githubusercontent.com/voltagent/awesome-design-md/main/design-md/${importId}/DESIGN.md`;
-        let content: string;
-        try {
-          const resp = await fetch(url);
-          if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);
-          content = await resp.text();
-          if (content.length < 100) throw new Error('DESIGN.md too short — likely not found');
-        } catch (e: any) {
-          formatError(`Failed to fetch DESIGN.md from awesome-design-md: ${e.message}`);
-          process.exit(1);
-          return;
-        }
-        process.stdout.write(`  ✅ Fetched DESIGN.md (${content.length} bytes)\n`);
-
-        // Run the pipeline inline
-        const { WorkflowOrchestrator } = await import('@emdesign/backend');
-        const orch = new WorkflowOrchestrator();
-        const result = await orch.runFromDesignMd({
-          content,
-          id: importId,
-          name: displayName,
-          workspaceRoot: paths.root,
-        });
-
-        if (result.completed) {
-          process.stdout.write(`\n  ✅ Contract generated: "${displayName}"\n`);
-          process.stdout.write(`     📁 ${path.join(paths.designSystemsDir, importId)}/\n`);
-          process.stdout.write(`     skills/build/SKILL.md, skills/taste/SKILL.md\n`);
-
-          // Fetch reference preview HTML for overview compose
-          const previewUrl = `https://getdesign.md/design-md/${importId}/preview.html`;
-          try {
-            const previewResp = await fetch(previewUrl);
-            if (previewResp.ok) {
-              const previewHtml = await previewResp.text();
-              if (previewHtml.length > 1000) {
-                const previewPath = path.join(paths.designSystemsDir, importId, 'reference-example.html');
-                fs.writeFileSync(previewPath, previewHtml);
-                process.stdout.write(`     🔍 reference-example.html (${(previewHtml.length / 1024).toFixed(0)} KB)\n`);
-              }
-            }
-          } catch { /* preview fetch is best-effort */ }
-
-          process.stdout.write(`\n  ▶️  Next: run overview composition to build stories matching the preview.\n`);
-          process.stdout.write(`     From Claude Code: Workflow({ scriptPath: 'apps/workspace/templates/claude/workflows/ds-compose-overview.js', args: { dsId: "${importId}", dsPath: "${path.join(paths.designSystemsDir, importId)}" } })\n`);
-          out({ ok: true, name: displayName, id: importId }, ds.json);
+        if (ds.json) {
+          formatJson({ ok: true, note: `Run ds-import workflow for "${displayName}"` });
         } else {
-          formatError(`Import failed at stage "${result.failedStage}": ${result.error}`);
-          process.exit(1);
+          out({ ok: true, name: displayName, id: importId }, ds.json);
         }
         break;
       }
